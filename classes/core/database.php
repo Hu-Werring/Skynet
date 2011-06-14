@@ -6,7 +6,19 @@
 
 class Core_Database {
     
+    
+    /**
+     * $reg
+     * Link to registery
+     * @access private
+    */
     private $reg = null;
+    
+    /**
+     * $sql
+     * Link to mysqli
+     * @access private
+    */
     private $sql = null;
     
     /**
