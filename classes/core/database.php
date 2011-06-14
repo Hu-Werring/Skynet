@@ -162,10 +162,14 @@ class Core_Database {
      * query
      * executes complete SQL query and tries to return data as good as possible
      * @param String $qry a mysqlQry
+     * @param Boolean $returnResult should the $result variable be returned in the return array (Default: false)
      * @return Array array with return data
     */
-    public function query($qry){
+    public function query($qry,$returnResult=false){
         $result = $this->sql->query($qry);
+        if($returnResult){
+            $return["result"] = $result;
+        }
         switch($result) {
             case false:
                 $return["error"] = $this->sql->error;
@@ -184,7 +188,21 @@ class Core_Database {
                 $result->close();
             break;
         }
+        
+        return $return;
     }
+        /**
+     * qry (Alias for Query)
+     * executes complete SQL query and tries to return data as good as possible
+     * @param String $qry a mysqlQry
+     * @param Boolean $returnResult should the $result variable be returned in the return array (Default: false)
+     * @return Array array with return data
+    */
+    public function qry($qry,$returnResult=false){
+        return $this->query($qry,$returnResult);
+    }
+    
+
     
     /**
      * clearTable
