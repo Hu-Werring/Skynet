@@ -17,6 +17,7 @@ class Core_Config  {
         $this->storage["db_user"] = "project4";
         $this->storage["db_pass"] = "project4";
         $this->storage["db_daba"] = "project4";
+        $this->storage["cms_debug"] = true;
         
     }
     
