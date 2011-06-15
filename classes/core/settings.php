@@ -16,9 +16,9 @@ class Core_Settings
      * $settings
      * Contains the loaded settings
      * @access public
-     * @staticvar static
+     * @var Array contains all settings
     */
-    public static $settings;
+    public $settings;
     
     /**
      * __construct
@@ -41,10 +41,15 @@ class Core_Settings
          * Define DS
          * Defining the directory seperator
          */
-        define(DS, DIRECTORY_SEPARATOR);
+        define('DS', DIRECTORY_SEPARATOR);
         
         //Deze functie eigenlijk vanaf de index.php aanroepen. Voor developing nu even zo.
         $this->setIni('settings'. DS .'settings.ini');
+        if($this->settings['system']['modus'] === 'debug' || ($_SERVER['REMOTE_ADDR'] && $this->settings['system']['modus'] === 'localdebug'))
+        {
+            new Debug_Main();
+        }
+        $this->reg->debug->print_pre($this->settings);
     }
     
     public function setIni($file) 
