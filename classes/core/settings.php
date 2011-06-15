@@ -36,9 +36,15 @@ class Core_Settings
          * @global base_url
         */
         //define(base_url, __FILE__);
-       
+        
+        /**
+         * Define DS
+         * Defining the directory seperator
+         */
+        define(DS, DIRECTORY_SEPARATOR);
+        
         //Deze functie eigenlijk vanaf de index.php aanroepen. Voor developing nu even zo.
-        $this->setIni('../../settings/settings.ini');
+        $this->setIni('settings'. DS .'settings.ini');
     }
     
     public function setIni($file) 
@@ -47,10 +53,6 @@ class Core_Settings
         if(!is_readable($file) == true)
         {
                 throw new Exception('Ini file not found ' . $file);
-        }
-        else
-        {
-            echo '';
         }
         
         #set ini vars in class
