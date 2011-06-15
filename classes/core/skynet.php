@@ -61,14 +61,14 @@ class Core_Skynet {
      * initiate main website
     */
     public function main(){
-        echo "INIT MAIN SITE" . PHP_EOL;
+        $this->reg->debug->dump("main");
     }
     /**
      * main
      * initiate Admin Control Paneld
     */
     public function acp(){
-        echo "INIT Admin Control Panel" . PHP_EOL;
+        $this->reg->debug->dump("acp");
     }
 }
 
