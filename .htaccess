@@ -42,6 +42,7 @@ RewriteRule ^(.*) %{REQUEST_URI}/ [R=301,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !^/acp/
+RewriteCond %{REQUEST_URI} !^/install/
 RewriteRule ^(.+)$ index.php?page=$1 [QSA]
 
 # Rewrite for the acp directory
@@ -49,5 +50,14 @@ RewriteRule ^(.+)$ index.php?page=$1 [QSA]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} ^/acp/
+RewriteCond %{REQUEST_URI} !^/install/
 RewriteRule ^(.+)$ /acp/index.php?page=$1 [QSA]
+
+# Rewrite for the install directory
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/acp/
+RewriteCond %{REQUEST_URI} ^/install/
+RewriteRule ^(.+)$ /install/index.php?page=$1 [QSA]
 </IfModule>
