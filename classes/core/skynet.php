@@ -30,6 +30,7 @@ class Core_Skynet {
     private function initBaseClasses(){
         $this->reg = new Core_Registery();
         new Core_Settings();
+        new Debug_Main();
         new Core_Database();
     }
     
