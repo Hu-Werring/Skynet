@@ -191,7 +191,7 @@ class Core_Database {
         
         return $return;
     }
-        /**
+    /**
      * qry (Alias for Query)
      * executes complete SQL query and tries to return data as good as possible
      * @param String $qry a mysqlQry
@@ -202,8 +202,43 @@ class Core_Database {
         return $this->query($qry,$returnResult);
     }
     
-
-    
+    /**
+     * createTable
+     * creates table in database
+     * @param String $table Table Name
+     * @param Array $fields Field data
+     * Format: array(
+     *      fieldname1"=>array(
+     *          "type"=>"fieldtype", 
+     *          "primary"=>true/false,
+     *          "advance"=>"NOT NULL AUTO_INCREMENT etc"
+     *      ),
+     *      "fieldname2"=>array(
+     *          ...
+     *       )
+     * )
+     * @param String $advance advance SQL Create query (optional)
+    */
+    public function createTable($table,$fields,$advance=""){
+        $query = "CREATE TABLE IF NOT EXISTS " . $table . " (" . PHP_EOL;
+        foreach($fields as $field=>$description){
+            if(!isset($description["type"])){
+               trigger_error("No type defined for " . $field, E_USER_ERROR);
+            }
+            $query.= $field . " " .  $description['type'] . " ";
+            
+            if($description['primary'] === true){
+                $query .= "PRIMARY KEY ";
+            }
+            if(isset($description['advance'])){
+                $query .= $description['advance'];
+            }
+            $query.= "," . PHP_EOL;
+        }
+        $query = substr($query,0,-2);
+        $query .= PHP_EOL . ") " . $advance;
+        return $this->sql->query($query);
+    }
     /**
      * clearTable
      * truncates an entire table
@@ -225,4 +260,3 @@ class Core_Database {
     }
 }
 
-?>
