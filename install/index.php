@@ -19,7 +19,7 @@
     
     
 
-    $dbStruct = file_get_contents(basedir . "install" . DS . "databaseStructure.json");
+    $dbStruct = base64_decode(file_get_contents(basedir . "install" . DS . "databaseStructure"));
     
     $tables = json_decode($dbStruct,true);
 
