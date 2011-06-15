@@ -30,10 +30,10 @@ class Core_Database {
     function __construct() {
         $this->reg = Core_Registery::singleton();
         if(is_null($this->reg->sql)) {
-            $db_host = $this->reg->config->getvar("db_host");
-            $db_user = $this->reg->config->getvar("db_user");
-            $db_pass = $this->reg->config->getvar("db_pass");
-            $db_daba = $this->reg->config->getvar("db_daba");
+            $db_host = $this->reg->settings->settings['db']['host'];
+            $db_user = $this->reg->settings->settings['db']['user'];
+            $db_pass = $this->reg->settings->settings['db']['pass'];
+            $db_daba = $this->reg->settings->settings['db']['name'];
             $this->sql = new mysqli($db_host,$db_user,$db_pass,$db_daba);
         }
         $this->reg->database = $this;
