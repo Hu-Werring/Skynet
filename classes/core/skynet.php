@@ -34,7 +34,7 @@ class Core_Skynet {
     }
     
     /**
-     * 
+     * testing of base classes
     */
     private function testBaseClasses(){
         //test config & registery
@@ -54,6 +54,20 @@ class Core_Skynet {
             echo PHP_EOL;
             var_export($this->reg->database->clearTable("testje"));
         }
+    }
+    /**
+     * main
+     * initiate main website
+    */
+    public function main(){
+        echo "INIT MAIN SITE" . PHP_EOL;
+    }
+    /**
+     * main
+     * initiate Admin Control Paneld
+    */
+    public function acp(){
+        echo "INIT Admin Control Panel" . PHP_EOL;
     }
 }
 
