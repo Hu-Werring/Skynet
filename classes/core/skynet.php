@@ -70,6 +70,14 @@ class Core_Skynet {
     public function acp(){
         $this->reg->debug->dump("acp");
     }
+    
+    /**
+     * Install
+     * runs the installer
+    */
+    public function install(){
+        
+    }
 }
 
 ?>
