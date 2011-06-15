@@ -33,7 +33,6 @@ class Core_Settings
         
         //Deze functie eigenlijk vanaf de index.php aanroepen. Voor developing nu even zo.
         $this->setIni(basedir .'settings'. DS .'settings.ini');
-        $this->reg->debug->print_pre($this->settings);
     }
     
     public function setIni($file) 
