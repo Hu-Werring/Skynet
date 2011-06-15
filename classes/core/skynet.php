@@ -76,7 +76,7 @@ class Core_Skynet {
      * runs the installer
     */
     public function install(){
-        $this->reg->debug->dump("install");
+        
     }
 }
 
