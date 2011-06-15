@@ -7,7 +7,7 @@
 class Debug_Main  {
     
     
-    private $allowDebug;
+    private $allowDebug = false;
     
     private $reg;
     
@@ -22,10 +22,9 @@ class Debug_Main  {
         if($this->reg->settings->settings['system']['modus'] === 'debug' || ($_SERVER['REMOTE_ADDR'] === '127.0.0.1' && $this->reg->settings->settings['system']['modus'] === 'localdebug'))
         {
             $this->allowDebug = true;
-        }
-        else
-        {
-            unset($this);
+            error_reporting(E_ALL | E_STRICT);
+        } else {
+            error_reporting(E_ALL ^ E_NOTICE);
         }
     }
     
