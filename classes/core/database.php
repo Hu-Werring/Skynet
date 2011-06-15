@@ -49,9 +49,7 @@ class Core_Database {
      * @return Array all rows within the query, and an assoc entry with affected rows or array with errors
     */
     public function select($table,$select,$advance = ""){
-        if(!isset($table,$select)){
-            return false;
-        }
+        $table = $this->prefixTable($table);
         $qry = "SELECT " . $select . " FROM " . $table . " " . $advance . ";";
         $result = $this->sql->query($qry);
         if($result){
@@ -76,9 +74,10 @@ class Core_Database {
      * @param Boolean succes
     */
     public function insert($table,$data){
-        if(!isset($table) || !is_array($data)){
+        if(!is_array($data) || !is_string($table)){
             return false;
         }
+        $table = $this->prefixTable($table);
         $query = "INSERT INTO " . $table . " (";
         $fields = "";
         $values = "";
@@ -103,6 +102,7 @@ class Core_Database {
      * @return Array an array containing affected rows or sql Error
     */
     public function delete($table,$where,$type="AND"){
+        $table = $this->prefixTable($table);
         $query = "DELETE FROM " . $table . " WHERE ";
         $whereqry = "";
         foreach($where as $field=>$value){
@@ -133,6 +133,7 @@ class Core_Database {
      * @return Array an array containing affected rows or sql Error
     */
     public function update($table,$data,$where,$type="and",$advance=""){
+        $table = $this->prefixTable($table);
         $query = "UPDATE " . $table . " SET ";
         $set = "";
         foreach($data as $field => $value){
@@ -161,6 +162,7 @@ class Core_Database {
     /**
      * query
      * executes complete SQL query and tries to return data as good as possible
+     * REMEMBER TO PREFIX YOUR TABLE NAME! (Core_Database()->prefixTable($table))
      * @param String $qry a mysqlQry
      * @param Boolean $returnResult should the $result variable be returned in the return array (Default: false)
      * @return Array array with return data
@@ -194,6 +196,7 @@ class Core_Database {
     /**
      * qry (Alias for Query)
      * executes complete SQL query and tries to return data as good as possible
+     * REMEMBER TO PREFIX YOUR TABLE NAME! (Core_Database()->prefixTable($table))
      * @param String $qry a mysqlQry
      * @param Boolean $returnResult should the $result variable be returned in the return array (Default: false)
      * @return Array array with return data
@@ -220,6 +223,7 @@ class Core_Database {
      * @param String $advance advance SQL Create query (optional)
     */
     public function createTable($table,$fields,$advance=""){
+        $table = $this->prefixTable($table);
         $query = "CREATE TABLE IF NOT EXISTS " . $table . " (" . PHP_EOL;
         foreach($fields as $field=>$description){
             if(!isset($description["type"])){
@@ -246,6 +250,7 @@ class Core_Database {
      * @return Boolean succes
     */
     public function clearTable($table){
+        $table = $this->prefixTable($table);
         return $this->sql->query("Truncate table " . $table);
     }
     
@@ -257,6 +262,16 @@ class Core_Database {
     */
     public function res($string){
         return $this->sql->real_escape_string($string);
+    }
+    
+    /**
+     * prefixTable
+     * Prefixes string with the table prefix
+     * @param String $table Table name without prefix
+     * @return Sting Table name with prefix
+    */
+    public function prefixTable($table){
+        return $this->reg->settings->setting['db']['prefix'] . $table;
     }
 }
 
