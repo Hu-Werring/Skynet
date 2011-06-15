@@ -222,7 +222,7 @@ class Core_Database {
      * )
      * @param String $advance advance SQL Create query (optional)
     */
-    public function createTable($table,$fields,$advance=""){
+    public function createTable($table,$fields,$advance="ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci"){
         $table = $this->prefixTable($table);
         $query = "CREATE TABLE IF NOT EXISTS " . $table . " (" . PHP_EOL;
         foreach($fields as $field=>$description){
@@ -234,10 +234,8 @@ class Core_Database {
             if($description['primary'] === true){
                 $query .= "PRIMARY KEY ";
             }
-            if(isset($description['advance'])){
-                $query .= $description['advance'];
-            }
-            $query.= "," . PHP_EOL;
+            $query .= $description['advance'];
+            $query .= "," . PHP_EOL;
         }
         $query = substr($query,0,-2);
         $query .= PHP_EOL . ") " . $advance;
