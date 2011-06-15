@@ -1,5 +1,7 @@
 <?php
-    define("basedir","./");
+    define("DS",DIRECTORY_SEPARATOR);
+    define("basedir",$_SERVER['DOCUMENT_ROOT'] . DS);
+    echo basedir;
     /**
      * Autoloader for functions, easy include
      * Using lazyman namespaces
