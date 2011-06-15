@@ -28,6 +28,16 @@ class Core_Config  {
             return null;
         }
     }
+    
+    //Deze functie beter???
+    /*
+    public function __get($name){
+        if(isset($this->storage[$name])){
+            return $this->storage[$name];
+        } else {
+            return null;
+        }
+    }*/
 }
 
 ?>
