@@ -231,10 +231,12 @@ class Core_Database {
             }
             $query.= $field . " " .  $description['type'] . " ";
             
-            if($description['primary'] === true){
+            if(isset($description['primary']) && $description['primary'] === true){
                 $query .= "PRIMARY KEY ";
             }
-            $query .= $description['advance'];
+            if(isset($description['advance'])){
+                $query .= $description['advance'];
+            }
             $query .= "," . PHP_EOL;
         }
         $query = substr($query,0,-2);
