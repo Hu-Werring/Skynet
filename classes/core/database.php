@@ -22,6 +22,12 @@ class Core_Database {
     private $sql = null;
     
     /**
+     * $lastQuery
+     * Stores last query done
+    */
+    private $lastQuery = null;
+    
+    /**
      * __construct
      * Constructor, initialize class, connects to mysql
      * and adds itself to registery
@@ -51,18 +57,8 @@ class Core_Database {
     public function select($table,$select,$advance = ""){
         $table = $this->prefixTable($table);
         $qry = "SELECT " . $select . " FROM " . $table . " " . $advance . ";";
-        $result = $this->sql->query($qry);
-        if($result){
-            while($row = $result->fetch_assoc()){
-                $rows[] = $row;
-            }
-            $rows['affected'] = $result->num_rows;
-            $result->close();
-        } else {
-            $rows["sqlError"]   = $this->sql->error;
-            $rows["sqlErrno"] = $this->sql->errno;
-        }
-        return $rows;
+        $result = $this->query($qry);
+        return $result;
     }
     
     
@@ -89,7 +85,8 @@ class Core_Database {
         $values = substr($values,0,-2);
         $query .= $fields . ") " . PHP_EOL .
         "VALUES (" . $values . ")";
-        return $this->sql->query($query);
+        $result = $this->query($query);
+        return $result['succes'];
     }
     
     
@@ -111,15 +108,8 @@ class Core_Database {
         $whereqry = substr($whereqry,0,-4);
         
         $query .= $whereqry;
-        $result = $this->sql->query($query);
-        
-        if($result){
-            $rows['affected'] = $this->sql->affected_rows;
-        } else {
-            $rows["sqlError"]   = $this->sql->error;
-            $rows["sqlErrno"] = $this->sql->errno;
-        }
-        return $rows;
+        $result = $this->query($query);
+        return $result;
     }
     
     /**
@@ -149,14 +139,8 @@ class Core_Database {
         
         $query .= $whereqry;
         $query .= " " . $advance;
-        $result = $this->sql->query($query);
-        if($result){
-            $rows['affected'] = $this->sql->affected_rows;
-        } else {
-            $rows["sqlError"]   = $this->sql->error;
-            $rows["sqlErrno"] = $this->sql->errno;
-        }
-        return $rows;
+        $result = $this->query($query);
+        return $result;
     }
     
     /**
@@ -168,6 +152,8 @@ class Core_Database {
      * @return Array array with return data
     */
     public function query($qry,$returnResult=false){
+        $this->lastQuery = $qry;
+        
         $result = $this->sql->query($qry);
         if($returnResult){
             $return["result"] = $result;
@@ -220,10 +206,15 @@ class Core_Database {
      *          ...
      *       )
      * )
+     * @param Boolean $force Force creation of table THIS CAN PERMANENTLY DESTROY DATA
      * @param String $advance advance SQL Create query (optional)
+     * @return Boolean result
     */
-    public function createTable($table,$fields,$advance="ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci"){
+    public function createTable($table,$fields,$force=false,$advance="ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci"){
         $table = $this->prefixTable($table);
+        if($force){
+            $this->query("DROP TABLE IF EXISTS " . $table);
+        }
         $query = "CREATE TABLE IF NOT EXISTS " . $table . " (" . PHP_EOL;
         foreach($fields as $field=>$description){
             if(!isset($description["type"])){
@@ -241,7 +232,8 @@ class Core_Database {
         }
         $query = substr($query,0,-2);
         $query .= PHP_EOL . ") " . $advance;
-        return $this->sql->query($query);
+        $result = $this->query($query,true);
+        return $result['succes'];
     }
     /**
      * clearTable
@@ -271,7 +263,11 @@ class Core_Database {
      * @return Sting Table name with prefix
     */
     public function prefixTable($table){
-        return $this->reg->settings->setting['db']['prefix'] . $table;
+        return $this->reg->settings->settings['db']['prefix'] . $table;
+    }
+    
+    public function lastError(){
+        return $this->sql->errno . " " . $this->sql->error . PHP_EOL . "The complete query was \"" . $this->lastQuery . "\"" . PHP_EOL . PHP_EOL;
     }
 }
 
