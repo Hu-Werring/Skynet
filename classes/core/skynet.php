@@ -19,7 +19,7 @@ class Core_Skynet {
     */
     function __construct() {
         $this->initBaseClasses();
-        $this->testBaseClasses();
+       //$this->testBaseClasses();
     }
     
     /**
@@ -29,7 +29,7 @@ class Core_Skynet {
     */
     private function initBaseClasses(){
         $this->reg = new Core_Registery();
-        new Core_Config();
+        new Core_Settings();
         new Core_Database();
     }
     
@@ -38,7 +38,7 @@ class Core_Skynet {
     */
     private function testBaseClasses(){
         //test config & registery
-        if($this->reg->config->getvar("cms_debug")){
+        if($this->reg->settings->settings["system"]["modus"] === "debug"){
             //test database
             var_export($this->reg->database->insert("testje",array("id"=>1)));
             echo PHP_EOL;
