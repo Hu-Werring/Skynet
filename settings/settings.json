@@ -5,12 +5,12 @@
         "pass":"project4",
         "name":"project4",
         "prefix":"skynet_"
-        },
+    },
     "system":{
         "Name":"Skynet",
         "status":"pre-alpha",
         "modus":"debug"
-        },
+    },
     "debug":{
         "core":true,
         "query":true,
