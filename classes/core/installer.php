@@ -13,17 +13,66 @@ class Core_Installer {
     */
     private $reg = null;
     
-    private $output;
+    private $output = "";
     /*
      * __construct()
      */
     
     function __construct() {
         $this->reg = Core_Registery::singleton();
-        $this->checkTables();
-        //$this->createTables();
         
+        //$this->checkTables();
+        //$this->createTables();
+        $this->showSettings();
         echo nl2br($this->output);
+    }
+    
+    private function showSettings(){
+            $sets = $this->reg->settings->settings;
+            $this->output.="<style>";
+            $this->output.=<<<CSS
+            .settings {    width: 30%;    float: left;} .clear{clear:both;}
+CSS;
+            $this->output.="</style>";
+            $this->output.="<form action='/install/' method='POST'>";
+            $i=0;
+            foreach($sets as $key => $value){
+                $i++;
+                if(is_array($value)){
+                    $this->output.= "<fieldset id='setting_".$i."' class='settings'><legend>" . $key . "</legend><dl>";
+                    
+                    foreach($value as $set=>$setValue){
+                        if(!is_numeric($setValue) || $setValue>1) {
+                            $this->output.="<dt>".$set . "</dt> <dd><input name='".$key."_".$set."' type='text' value='" . $setValue . "' /></dd>". PHP_EOL;
+                        }
+                        else {
+                            $this->output.="<dt>".$set . "</dt> <dd><label><input name='".$key."_".$set."' type='radio'";
+                            if($setValue == 1){
+                                $this->output.=" checked='checked'";
+                            }
+                            $this->output.=" value='1' /> Aan</label> <label><input name='".$key."_".$set."' type='radio'";
+                            if($setValue == 0){
+                                $this->output.=" checked='checked'";
+                            }
+                            $this->output.=" value='0' /> Uit</label></dd>". PHP_EOL;;
+                            
+                            
+                           
+                        }
+                    }
+                    
+                    $this->output.="</dl></fieldset>";
+                }
+            }
+            
+            $this->output.="<div class='clear'><input type='submit' value='Update' /></div><form>";
+            
+            
+            
+            /*$sets['db']['prefix']=uniqid() . "_";
+            rename(basedir .'settings'. DS .'settings.ini',basedir .'settings'. DS .'settings.ini.old');
+            $this->reg->settings->write_php_ini($sets,basedir .'settings'. DS .'settings.ini');
+            */
     }
     
     private function checkTables(){
@@ -39,14 +88,18 @@ class Core_Installer {
         }
         foreach($oldTables as $key=>$table){
             if(!is_numeric($key)) continue;
-            if($tlist[$table['Tables_in_project4']] === true){
+            if(isset($tlist[$table['Tables_in_project4']])){
                 $exists = true;
                 break;
             }
         }
         if($exists){
-            $this->output = "We have detected a possible earlier install of skynet, do you want to override these tables?";
+            $this->output = "We have detected a possible earlier install of skynet, please change the settings.ini file";
+        } else {
+            $this->output = "Checked your database, install is possible.";
         }
+        
+        
     }
     private function createTables(){
         $dbStruct = base64_decode(file_get_contents(basedir . "install" . DS . "databaseStructure"));
