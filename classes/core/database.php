@@ -267,10 +267,10 @@ class Core_Database {
      * prefixTable
      * Prefixes string with the table prefix
      * @param String $table Table name without prefix
-     * @return Sting Table name with prefix
+     * @return Sting Table name with prefix without capitals
     */
     public function prefixTable($table){
-        return $this->reg->settings->settings['db']['prefix'] . $table;
+        return strtolower($this->reg->settings->settings['db']['prefix'] . $table);
     }
     
     public function lastError(){
