@@ -1,6 +1,7 @@
 <?php
 /*
  * Class Core_Settings
+ * @todo: Use JSON instead of INI
  */
 
 class Core_Settings
@@ -45,6 +46,7 @@ class Core_Settings
         
         #set ini vars in class
         $this->settings = parse_ini_file($file, true);
+        var_dump($this->settings);
     }
     
     public function write_php_ini($array, $file)
