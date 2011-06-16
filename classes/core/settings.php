@@ -33,35 +33,25 @@ class Core_Settings
         $this->reg->settings = $this;
         
         //Deze functie eigenlijk vanaf de index.php aanroepen. Voor developing nu even zo.
-        $this->setIni(basedir .'settings'. DS .'settings.ini');
+        $this->setJson(basedir .'settings'. DS .'settings.json');
     }
     
-    public function setIni($file) 
+    public function setJson($file) 
     {	
         #check if file exists
         if(!is_readable($file) == true)
         {
-                throw new Exception('Ini file not found ' . $file);
+                throw new Exception('json file not found ' . $file);
         }
         
-        #set ini vars in class
-        $this->settings = parse_ini_file($file, true);
-        var_dump($this->settings);
+        #set json vars in class
+        $this->settings = json_decode(file_get_contents($file), true);
     }
     
-    public function write_php_ini($array, $file)
+    public function write_json_file($array, $file)
     {
-        $res = array();
-        foreach($array as $key => $val)
-        {
-            if(is_array($val))
-            {
-                $res[] = "[$key]";
-                foreach($val as $skey => $sval) $res[] = "$skey = ".(is_numeric($sval) ? $sval : '"'.$sval.'"');
-            }
-            else $res[] = "$key = ".(is_numeric($val) ? $val : '"'.$val.'"');
-        }
-        $this->safefilerewrite($file, implode("\r\n", $res));
+
+        $this->safefilerewrite($file, json_encode($array));
     }
 
     private function safefilerewrite($fileName, $dataToSave)
