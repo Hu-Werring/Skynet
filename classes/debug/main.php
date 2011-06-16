@@ -61,6 +61,11 @@ class Debug_Main  {
             @file_put_contents(date("d_m_y") . ".log","DEBUG:" . $name . " called with " . var_export($args,true));
         return false;
     }
+    
+    public function __get($name)
+    {
+        return $this->$name;
+    }
 }
 
 ?>
