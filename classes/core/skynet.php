@@ -14,12 +14,19 @@ class Core_Skynet {
     private $reg = null;
     
     /**
+     *$tpl
+     *Link to the template engine
+     *@access private
+     */
+    
+    private $tpl;
+    /**
      * __construct
      * creates base for CMS
     */
     function __construct() {
         $this->initBaseClasses();
-       //$this->testBaseClasses();
+        $this->testBaseClasses();
     }
     
     /**
@@ -32,13 +39,40 @@ class Core_Skynet {
         new Core_Settings();
         new Debug_Main();
         new Core_Database();
+        new Core_View();
+        //new Lib_RainTPL(); Wont include?? HELP?
+        //$this->tpl = new Lib_RainTPL();
+        $this->initTemplateEngine();
     }
     
+    /**
+     * initTemplateEngine
+     * Initializes the template engine rainTPL
+     * @access private
+    */
+    private function initTemplateEngine()
+    {
+        include_once basedir.'classes/lib/raintpl.php';
+        //raintpl::$tpl_dir = "view/"; // template directory
+        //raintpl::$cache_dir = "tmp/"; // cache directory
+        $this->tpl = new RainTPL();
+        $this->tpl->configure('tpl_dir', 'view/');
+        $this->tpl->configure('cache_dir', 'tmp/');
+    }
     /**
      * testing of base classes
     */
     private function testBaseClasses(){
+        
+        //---------------DEBUG/TESTING------------------//
+        if($this->reg->debug->allowDebug)
+        {
+           // $this->tpl->assign('lol', 'hoi');
+            $this->tpl->draw('home');
+        }
+        
         //test config & registery
+        /*
         if($this->reg->settings->settings["system"]["modus"] === "debug"){
             //test database
             var_export($this->reg->database->insert("testje",array("id"=>1)));
@@ -54,7 +88,7 @@ class Core_Skynet {
             print_r($this->reg->database->select("testje","*"));
             echo PHP_EOL;
             var_export($this->reg->database->clearTable("testje"));
-        }
+        }*/
     }
     /**
      * main
