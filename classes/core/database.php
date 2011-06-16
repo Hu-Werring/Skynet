@@ -213,15 +213,22 @@ class Core_Database {
     public function createTable($table,$fields,$force=false,$advance="ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci"){
         $table = $this->prefixTable($table);
         if($force){
-            $this->query("DROP TABLE IF EXISTS " . $table);
+            $succes = $this->query("DROP TABLE IF EXISTS " . $table);
+            if(!$succes)
+                echo $this->reg->debug->print_pre($this->lastError());
         }
         $query = "CREATE TABLE IF NOT EXISTS " . $table . " (" . PHP_EOL;
         foreach($fields as $field=>$description){
-            if(!isset($description["type"])){
+            if(!isset($description["type"]) && is_array($description)){
                trigger_error("No type defined for " . $field, E_USER_ERROR);
+            } elseif(!is_array($description)){
+                $type = $description;
+                unset($description);
+            } else {
+                $type = $description['type'];
             }
-            $query.= $field . " " .  $description['type'] . " ";
-            
+            $query.= $field . " " .  $type . " ";
+            ;
             if(isset($description['primary']) && $description['primary'] === true){
                 $query .= "PRIMARY KEY ";
             }
