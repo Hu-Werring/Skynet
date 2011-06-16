@@ -10,7 +10,7 @@
  */
 
 
-class Lib_RainTPL{
+class RainTPL{
 
 	// -------------------------
 	// 	CONFIGURATION 
@@ -21,7 +21,7 @@ class Lib_RainTPL{
 		 *
 		 * @var string
 		 */
-		static $tpl_dir = "view";
+		static $tpl_dir = "tpl/";
 
 
 		/**
@@ -29,7 +29,7 @@ class Lib_RainTPL{
 		 *
 		 * @var string
 		 */
-		static $cache_dir = "view/tmp/";
+		static $cache_dir = "tmp/";
 
 
 		/**
