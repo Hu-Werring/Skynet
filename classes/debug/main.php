@@ -6,11 +6,19 @@
 
 class Debug_Main  {
     
-    
-    private $allowDebug = false;
-    
+    /**
+     * $reg
+     * Link to registery
+     * @access private
+    */
     private $reg;
     
+    /**
+     * $allowDebug
+     * Setting that can be used to check if debugging is enabled
+     * @access private
+    */
+    private $allowDebug = false;
     
     /**
      * __construct
@@ -19,6 +27,7 @@ class Debug_Main  {
     function __construct() {
         $this->reg = Core_Registery::singleton();
         $this->reg->debug = $this;
+        
         if($this->reg->settings->settings['system']['modus'] === 'debug' || ($_SERVER['REMOTE_ADDR'] === '127.0.0.1' && $this->reg->settings->settings['system']['modus'] === 'localdebug'))
         {
             $this->allowDebug = true;
