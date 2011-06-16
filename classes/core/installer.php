@@ -42,19 +42,19 @@ CSS;
                     $this->output.= "<fieldset id='setting_".$i."' class='settings'><legend>" . $key . "</legend><dl>";
                     
                     foreach($value as $set=>$setValue){
-                        if(!is_numeric($setValue) || $setValue>1) {
+                        if(!is_bool($setValue)) {
                             $this->output.="<dt>".$set . "</dt> <dd><input name='".$key."_".$set."' type='text' value='" . $setValue . "' /></dd>". PHP_EOL;
                         }
                         else {
                             $this->output.="<dt>".$set . "</dt> <dd><label><input name='".$key."_".$set."' type='radio'";
-                            if($setValue == 1){
+                            if($setValue == true){
                                 $this->output.=" checked='checked'";
                             }
-                            $this->output.=" value='1' /> Aan</label> <label><input name='".$key."_".$set."' type='radio'";
-                            if($setValue == 0){
+                            $this->output.=" value='true' /> Aan</label> <label><input name='".$key."_".$set."' type='radio'";
+                            if($setValue == false){
                                 $this->output.=" checked='checked'";
                             }
-                            $this->output.=" value='0' /> Uit</label></dd>". PHP_EOL;;
+                            $this->output.=" value='false' /> Uit</label></dd>". PHP_EOL;;
                             
                             
                            
@@ -70,8 +70,8 @@ CSS;
             
             
             /*$sets['db']['prefix']=uniqid() . "_";
-            rename(basedir .'settings'. DS .'settings.ini',basedir .'settings'. DS .'settings.ini.old');
-            $this->reg->settings->write_php_ini($sets,basedir .'settings'. DS .'settings.ini');
+            rename(basedir .'settings'. DS .'settings.json',basedir .'settings'. DS .'settings.json.old');
+            $this->reg->settings->write_json_file($sets,basedir .'settings'. DS .'settings.json');
             */
     }
     
