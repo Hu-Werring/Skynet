@@ -1,0 +1,22 @@
+{
+    "db":{
+        "host":"localhost",
+        "user":"project4",
+        "pass":"project4",
+        "name":"project4",
+        "prefix":"skynet_"
+    },
+    "system":{
+        "Name":"Skynet",
+        "status":"pre-alpha",
+        "modus":"debug"
+    },
+    "debug":{
+        "core":true,
+        "query":true,
+        "errors":true,
+        "notice":true,
+        "output":true,
+        "log":true
+    }
+}

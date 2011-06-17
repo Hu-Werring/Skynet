@@ -167,8 +167,6 @@ class Core_Database {
             case true:
                 $return['affected'] = $this->sql->affected_rows;
                 $return['succes'] = true;
-            break;
-            default:
                 while($row = $result->fetch_assoc()){
                     $return[] = $row;
                 }
