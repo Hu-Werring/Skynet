@@ -33,9 +33,9 @@ class Controllers_Install {
         if(isset($_GET['page']))
         {
             //remove install/ from begin of string and change / to "_"
-            $_GET['page'] = str_replace("/","_",str_replace("install/","",$_GET['page']));
+            $action = str_replace("/","_",str_replace("install/","",$_GET['page']));
             //substr last char since that is always a /
-            $action = strtolower(substr($_GET['page'],0,-1)).'Action';
+            $action = strtolower(substr($action,0,-1)).'Action';
             if(method_exists($this,$action))
             {
                 call_user_func(array($this,$action));
