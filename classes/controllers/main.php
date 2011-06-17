@@ -60,6 +60,7 @@ class Controllers_Main {
     private function testAction()
     {
         $this->view->assign('contentTpl', 'home');
+        $this->view->assign('content', 'grapjes');
         $this->view->draw('main');
     }
     
