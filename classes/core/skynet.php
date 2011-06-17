@@ -52,7 +52,7 @@ class Core_Skynet {
         if($this->reg->debug->allowDebug)
         {
            // $this->tpl->assign('lol', 'hoi');
-            $this->view->draw('home');
+            $this->view->draw('main');
         }
         
         //test config & registery
