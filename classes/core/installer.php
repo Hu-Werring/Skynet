@@ -13,7 +13,7 @@ class Core_Installer {
     */
     private $reg = null;
     
-    private $output = "";
+    public $output = "";
     /*
      * __construct()
      */
@@ -24,7 +24,7 @@ class Core_Installer {
         //$this->checkTables();
         //$this->createTables();
         $this->showSettings();
-        echo $this->output;
+        $this->output;
     }
     
     private function showSettings(){
