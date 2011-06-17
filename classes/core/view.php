@@ -83,6 +83,25 @@ class Core_View
     {
         $templatePath = $string;
     }
+    
+    public function __get($var)
+    {
+        return $this->tpl->$var;
+    }
+    
+    public function __call($functionName, $args)
+    {
+        if(method_exists($this->tpl, $functionName))  
+        {
+                return $this->tpl->$functionName($args);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
 }
 
 ?>

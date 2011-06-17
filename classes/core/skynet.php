@@ -14,12 +14,12 @@ class Core_Skynet {
     private $reg = null;
     
     /**
-     *$tpl
-     *Link to the template engine
+     *$view
+     *Direct link to view class. (From registry).
      *@access private
      */
-    
-    private $tpl;
+    private $view;
+
     /**
      * __construct
      * creates base for CMS
@@ -39,26 +39,10 @@ class Core_Skynet {
         new Core_Settings();
         new Debug_Main();
         new Core_Database();
-        new Core_View();
-        //new Lib_RainTPL(); Wont include?? HELP?
-        //$this->tpl = new Lib_RainTPL();
-        $this->initTemplateEngine();
+        $this->view = new Core_View();
     }
     
-    /**
-     * initTemplateEngine
-     * Initializes the template engine rainTPL
-     * @access private
-    */
-    private function initTemplateEngine()
-    {
-        include_once basedir.'classes/lib/raintpl.php';
-        //raintpl::$tpl_dir = "view/"; // template directory
-        //raintpl::$cache_dir = "tmp/"; // cache directory
-        $this->tpl = new RainTPL();
-        $this->tpl->configure('tpl_dir', 'view/');
-        $this->tpl->configure('cache_dir', 'tmp/');
-    }
+    
     /**
      * testing of base classes
     */
@@ -68,7 +52,7 @@ class Core_Skynet {
         if($this->reg->debug->allowDebug)
         {
            // $this->tpl->assign('lol', 'hoi');
-            $this->tpl->draw('home');
+            $this->view->draw('home');
         }
         
         //test config & registery
