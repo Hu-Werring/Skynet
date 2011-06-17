@@ -56,8 +56,8 @@ class Core_Skynet {
         //raintpl::$tpl_dir = "view/"; // template directory
         //raintpl::$cache_dir = "tmp/"; // cache directory
         $this->tpl = new RainTPL();
-        $this->tpl->configure('tpl_dir', 'view/');
-        $this->tpl->configure('cache_dir', 'tmp/');
+        $this->tpl->configure('tpl_dir', basedir.'view/');
+        $this->tpl->configure('cache_dir', basedir.'tmp/');
     }
     /**
      * testing of base classes
@@ -67,8 +67,8 @@ class Core_Skynet {
         //---------------DEBUG/TESTING------------------//
         if($this->reg->debug->allowDebug)
         {
-           // $this->tpl->assign('lol', 'hoi');
-            $this->tpl->draw('home');
+           $this->tpl->assign('lol', 'hoi');
+            $this->tpl->draw('main');
         }
         
         //test config & registery
