@@ -29,10 +29,11 @@ class Controllers_Main {
         $this->reg->controller = $this;
         $this->view = $this->reg->view;
         
-        //Actie aanroepen. Dus: als www.skynet.nl/test dan TestAction();
+        //Actie aanroepen. Dus: als www.skynet.nl/test/ dan TestAction();
         if(isset($_GET['page']))
         {
-            $action = strtolower($_GET['page']).'Action';
+            //substr last char since that is always a /
+            $action = strtolower(substr($_GET['page'],0,-1)).'Action';
             if(function_exists($action))
             {
                 $this->$action.'()';
