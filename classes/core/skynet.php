@@ -48,8 +48,6 @@ class Core_Skynet {
     */
     public function main(){
         new Controllers_Main();
-        $this->view->assign('content', "main");
-        $this->view->draw('main');
     }
     
     /**
