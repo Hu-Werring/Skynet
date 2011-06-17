@@ -56,7 +56,6 @@ class Core_Skynet {
     */
     public function acp(){
         //new Controllers_Main();
-        $this->view->assign('content', "acp");
         $this->view->draw('main');
     }
     
@@ -66,8 +65,7 @@ class Core_Skynet {
     */
     public function install(){
         $installer = new Core_Installer();
-        $this->view->assign('content', $installer->output);
-        $this->view->draw('main');
+        new Controllers_install();
     }
 }
 
