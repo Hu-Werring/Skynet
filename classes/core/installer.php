@@ -13,6 +13,10 @@ class Core_Installer {
     */
     private $reg = null;
     
+    
+    /**
+     * Stores Output to send to template
+    */
     public $output = "";
     /*
      * __construct()
@@ -27,6 +31,10 @@ class Core_Installer {
         $this->output;
     }
     
+    /**
+     * showSettings
+     * Sends settings in settings.json to $output in nice HTML format
+    */
     private function showSettings(){
             $sets = $this->reg->settings->settings;
             $this->output.="<style>".PHP_EOL;
@@ -87,7 +95,7 @@ CSS;
             
             
             
-            /*$sets['db']['prefix']=uniqid() . "_";
+            /*
             rename(basedir .'settings'. DS .'settings.json',basedir .'settings'. DS .'settings.json.old');
             $this->reg->settings->write_json_file($sets,basedir .'settings'. DS .'settings.json');
             */
@@ -112,9 +120,10 @@ CSS;
             }
         }
         if($exists){
-            $this->output = "We have detected a possible earlier install of skynet, please change the settings.ini file";
+            $this->output = "We have detected a possible earlier install of skynet,<br /> please go back to step 1 and change your prefix.";
         } else {
-            $this->output = "Checked your database, install is possible.";
+            $this->output = "Start creating tables...<br />";
+            $this->createTables();
         }
         
         
@@ -124,12 +133,11 @@ CSS;
     
         $tables = json_decode($dbStruct,true);
     
-        $this->output = "";
         foreach($tables as $table=>$fields){
             
             $this->output .= $this->reg->database->prefixTable($table) . ": ";
             $succes = $this->reg->database->createTable($table,$fields,true);
-            $this->output .= var_export($succes,true) . PHP_EOL;
+            $this->output .= ($succes ? "Succeeded" : "Failed") . PHP_EOL;
             if(!$succes){
                 $this->output .= $this->reg->database->lastError();
             }
