@@ -14,4 +14,3 @@
     //create skynet website
     $skynet = new Core_Skynet();
     $skynet->main();
-
