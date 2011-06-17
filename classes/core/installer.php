@@ -25,17 +25,17 @@ class Core_Installer {
     function __construct() {
         $this->reg = Core_Registery::singleton();
         
+        $this->reg->installer = $this;
+        
         //$this->checkTables();
         //$this->createTables();
-        $this->showSettings();
-        $this->output;
     }
     
     /**
      * showSettings
      * Sends settings in settings.json to $output in nice HTML format
     */
-    private function showSettings(){
+    public function showSettings(){
             $sets = $this->reg->settings->settings;
             $this->output.="<style>".PHP_EOL;
             $this->output.=<<<CSS
@@ -49,7 +49,7 @@ class Core_Installer {
 
 CSS;
             $this->output.="</style>" . PHP_EOL;
-            $this->output.="<form action='/install/' method='POST'>" . PHP_EOL;
+            $this->output.="<form action='/install/step/2/' method='POST'>" . PHP_EOL;
             $i=0;
             foreach($sets as $key => $value){
                 $i++;
@@ -101,7 +101,7 @@ CSS;
             */
     }
     
-    private function checkTables(){
+    public function checkTables(){
         
         $exists = false;
         $oldTables = $this->reg->database->query("show tables");
@@ -130,18 +130,28 @@ CSS;
     }
     private function createTables(){
         $dbStruct = base64_decode(file_get_contents(basedir . "install" . DS . "databaseStructure"));
-    
         $tables = json_decode($dbStruct,true);
-    
         foreach($tables as $table=>$fields){
             
             $this->output .= $this->reg->database->prefixTable($table) . ": ";
             $succes = $this->reg->database->createTable($table,$fields,true);
-            $this->output .= ($succes ? "Succeeded" : "Failed") . PHP_EOL;
+            $this->output .= ($succes ? "Succeeded" : "Failed") . "<br />" . PHP_EOL;
             if(!$succes){
                 $this->output .= $this->reg->database->lastError();
             }
         }
+    }
+    
+    public function createAdminAccount($name,$email,$pass){
+        $sql = $this->reg->database;//new Core_Database();
+        $sql->insert("groups",array("Name"=>"Admin","Description"=>"Highest level account, has full access."));
+        $sql->insert("users",array("Name"=>$name,"Email"=>$email,"Pass"=>sha1($pass)));
+        $select = $sql->select("users","ID","WHERE Name='" . $name . "' AND Email='".$email."' AND Pass='".sha1($pass)."'");
+        $uID = $select[0]['ID'];
+        unset($select);
+        $select = $sql->select("groups","ID","WHERE Name='Admin'");
+        $gID = $select[0]['ID'];
+        $sql->insert("groupmembers",array("uID"=>$uID,"gID"=>$gID));
     }
 }
 
