@@ -58,8 +58,8 @@ class Core_View
         //raintpl::$tpl_dir = "view/"; // template directory
         //raintpl::$cache_dir = "tmp/"; // cache directory
         $this->tpl = new RainTPL();
-        $this->tpl->configure('tpl_dir', 'view/');
-        $this->tpl->configure('cache_dir', 'tmp/');
+        $this->tpl->configure('tpl_dir', basedir.'view/');
+        $this->tpl->configure('cache_dir', basedir.'tmp/');
     }
     
     /**
@@ -93,7 +93,7 @@ class Core_View
     {
         if(method_exists($this->tpl, $functionName))  
         {
-                return $this->tpl->$functionName($args);
+                return call_user_func_array(array($this->tpl, $functionName),$args);
         }
         else
         {
