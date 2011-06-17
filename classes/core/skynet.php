@@ -26,7 +26,6 @@ class Core_Skynet {
     */
     function __construct() {
         $this->initBaseClasses();
-        $this->testBaseClasses();
     }
     
     /**
@@ -42,52 +41,24 @@ class Core_Skynet {
         $this->view = new Core_View();
     }
     
-    
-    /**
-     * testing of base classes
-    */
-    private function testBaseClasses(){
-        
-        //---------------DEBUG/TESTING------------------//
-        if($this->reg->debug->allowDebug)
-        {
-           // $this->tpl->assign('lol', 'hoi');
-            //$this->view->draw('main');
-        }
-        
-        //test config & registery
-        /*
-        if($this->reg->settings->settings["system"]["modus"] === "debug"){
-            //test database
-            var_export($this->reg->database->insert("testje",array("id"=>1)));
-            echo PHP_EOL;
-            var_export($this->reg->database->insert("testje",array("id"=>2)));
-            echo PHP_EOL;
-            var_export($this->reg->database->insert("testje",array("id"=>3)));
-            echo PHP_EOL;
-            print_r($this->reg->database->update("testje",array("id"=>5),array("id"=>3)));
-            echo PHP_EOL;
-            print_r($this->reg->database->delete("testje",array("id"=>2)));
-            echo PHP_EOL;
-            print_r($this->reg->database->select("testje","*"));
-            echo PHP_EOL;
-            var_export($this->reg->database->clearTable("testje"));
-        }*/
-    }
+    #############ROUTING#################
     /**
      * main
      * initiate main website
     */
     public function main(){
-        $this->reg->debug->dump("main");
+        new Controllers_Main();
+        $this->view->assign('content', "main");
         $this->view->draw('main');
     }
+    
     /**
      * main
-     * initiate Admin Control Paneld
+     * initiate Admin Control Panel
     */
     public function acp(){
-        $this->reg->debug->dump("acp");
+        //new Controllers_Main();
+        $this->view->assign('content', "acp");
         $this->view->draw('main');
     }
     
