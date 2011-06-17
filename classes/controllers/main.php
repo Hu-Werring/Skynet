@@ -33,10 +33,11 @@ class Controllers_Main {
         if(isset($_GET['page']))
         {
             //substr last char since that is always a /
-            $action = strtolower(substr($_GET['page'],0,-1)).'Action';
-            if(function_exists($action))
+            $action = str_replace("/","_",$_GET['page']);
+            $action = strtolower(substr($action,0,-1)).'Action';
+            if(method_exists($this,$action))
             {
-                $this->$action.'()';
+                call_user_func(array($this,$action));
             }
             else
             {
