@@ -134,7 +134,7 @@ CSS;
                 $this->output .= $this->reg->database->lastError();
             }
         }
-}
+    }
 }
 
 ?>
