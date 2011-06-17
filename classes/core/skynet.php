@@ -52,7 +52,7 @@ class Core_Skynet {
         if($this->reg->debug->allowDebug)
         {
            // $this->tpl->assign('lol', 'hoi');
-            $this->view->draw('main');
+            //$this->view->draw('main');
         }
         
         //test config & registery
@@ -80,6 +80,7 @@ class Core_Skynet {
     */
     public function main(){
         $this->reg->debug->dump("main");
+        $this->view->draw('main');
     }
     /**
      * main
@@ -87,6 +88,7 @@ class Core_Skynet {
     */
     public function acp(){
         $this->reg->debug->dump("acp");
+        $this->view->draw('main');
     }
     
     /**
@@ -94,7 +96,9 @@ class Core_Skynet {
      * runs the installer
     */
     public function install(){
-        new Core_Installer();
+        $installer = new Core_Installer();
+        $this->view->assign('content', $installer->output);
+        $this->view->draw('main');
     }
 }
 
