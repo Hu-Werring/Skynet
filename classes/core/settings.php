@@ -50,8 +50,27 @@ class Core_Settings
     
     public function write_json_file($array, $file)
     {
+        $json = str_replace('{','{' . PHP_EOL,json_encode($array));
+        $json = str_replace('}',PHP_EOL. '}',$json);
+        $json = str_replace(',',','.PHP_EOL,$json);
+        
+        $eJson = explode(PHP_EOL,$json);
+        
+        $indent = 0;
+        for($i=0;$i<count($eJson);$i++){
+            trim($eJson[$i]);
+            if(strpos($eJson[$i],"}")!==false){
+                $indent--;
+            }
+            $eJson[$i] = str_repeat("\t",$indent) . $eJson[$i];
+            if(strpos($eJson[$i],"{")!==false){
+                $indent++;
+            }
+        
+        }
+        $json = implode(PHP_EOL,$eJson);
 
-        $this->safefilerewrite($file, json_encode($array));
+        $this->safefilerewrite($file, $json);
     }
 
     private function safefilerewrite($fileName, $dataToSave)
