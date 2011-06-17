@@ -1,10 +1,15 @@
 {
     "db":{
         "host":"localhost",
+        "host_info":"Hostname for MySQL server, if you dont know it, assume its localhost.",
         "user":"project4",
+        "user_info":"Username for MySQL, ask your hosting provider for your mysql login.",
         "pass":"project4",
+        "pass_info":"Password for MySQL.",
         "name":"project4",
-        "prefix":"skynet_"
+        "name_info":"MySQL database name.",
+        "prefix":"skynet_",
+        "prefix_info":"If you want to install skynet multiple times in the same database, you can use the prefix."
     },
     "system":{
         "Name":"Skynet",
