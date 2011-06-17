@@ -13,7 +13,7 @@ class Core_Installer {
     */
     private $reg = null;
     
-    private $output = "";
+    public $output = "";
     /*
      * __construct()
      */
@@ -24,48 +24,66 @@ class Core_Installer {
         //$this->checkTables();
         //$this->createTables();
         $this->showSettings();
-        echo nl2br($this->output);
+        $this->output;
     }
     
     private function showSettings(){
             $sets = $this->reg->settings->settings;
-            $this->output.="<style>";
+            $this->output.="<style>".PHP_EOL;
             $this->output.=<<<CSS
-            .settings {    width: 30%;    float: left;} .clear{clear:both;}
+            .settings {
+                width: 30%;
+                float: left;
+            }
+            .clear{
+                clear:both;
+            }
+
 CSS;
-            $this->output.="</style>";
-            $this->output.="<form action='/install/' method='POST'>";
+            $this->output.="</style>" . PHP_EOL;
+            $this->output.="<form action='/install/' method='POST'>" . PHP_EOL;
             $i=0;
             foreach($sets as $key => $value){
                 $i++;
+                if(strpos($key,"_info")!=false) continue;
                 if(is_array($value)){
-                    $this->output.= "<fieldset id='setting_".$i."' class='settings'><legend>" . $key . "</legend><dl>";
+                    $this->output.= "<fieldset id='setting_".$key."' class='settings'><legend>" . $key . "</legend>" . PHP_EOL;;
+                    if(isset($sets[$key . "_info"])){
+                        $this->output.="<div id='setting_info_".$key."'>" . $sets[$key . "_info"] . "</div>" . PHP_EOL;
+                    }
+                    
+                    $this->output.= "<dl>" . PHP_EOL;
                     
                     foreach($value as $set=>$setValue){
+                        if(isset($value[$set . "_info"])){
+                            $comment="<div id='setting_info_".$key."_".$set."'>" . $value[$set . "_info"] . "</div>" . PHP_EOL;
+                        } else {
+                            $comment="";
+                        }
+
+                        if(strpos($set,"_info")!=false) continue;
                         if(!is_bool($setValue)) {
-                            $this->output.="<dt>".$set . "</dt> <dd><input name='".$key."_".$set."' type='text' value='" . $setValue . "' /></dd>". PHP_EOL;
+                            $this->output.="<dt>".$set . "</dt>" . PHP_EOL. "<dd>".$comment."<input name='".$key."_".$set."' type='text' value='" . $setValue . "' />". PHP_EOL;
                         }
                         else {
-                            $this->output.="<dt>".$set . "</dt> <dd><label><input name='".$key."_".$set."' type='radio'";
+                            $this->output.="<dt>".$set . "</dt>" . PHP_EOL. "<dd>".$comment."<label><input name='".$key."_".$set."' type='radio'";
                             if($setValue == true){
                                 $this->output.=" checked='checked'";
                             }
-                            $this->output.=" value='true' /> Aan</label> <label><input name='".$key."_".$set."' type='radio'";
+                            $this->output.=" value='true' />" . PHP_EOL. " Aan</label> <label><input name='".$key."_".$set."' type='radio'";
                             if($setValue == false){
                                 $this->output.=" checked='checked'";
                             }
-                            $this->output.=" value='false' /> Uit</label></dd>". PHP_EOL;;
-                            
-                            
-                           
+                            $this->output.=" value='false' /> Uit</label>". PHP_EOL;;  
                         }
+                        $this->output.= "</dd>" . PHP_EOL;
                     }
                     
-                    $this->output.="</dl></fieldset>";
+                    $this->output.="</dl>" . PHP_EOL. "</fieldset>" . PHP_EOL;
                 }
             }
             
-            $this->output.="<div class='clear'><input type='submit' value='Update' /></div><form>";
+            $this->output.="<div class='clear'>" . PHP_EOL. "<input type='submit' value='Update' />" . PHP_EOL. "</div>" . PHP_EOL. "<form>";
             
             
             
@@ -116,7 +134,7 @@ CSS;
                 $this->output .= $this->reg->database->lastError();
             }
         }
-}
+    }
 }
 
 ?>
