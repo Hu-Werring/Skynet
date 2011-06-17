@@ -26,6 +26,13 @@ class Core_View
     private $template;
     private $templatePath;
     
+    /**
+     *$tpl
+     *Link to the template engine
+     *@access public
+     */
+    
+    public $tpl;
     
     /**
      * __construct
@@ -37,6 +44,22 @@ class Core_View
     {
         $this->reg = Core_Registery::singleton();
         $this->reg->view = $this;
+        $this->initTemplateEngine();
+    }
+    
+    /**
+     * initTemplateEngine
+     * Initializes the template engine rainTPL
+     * @access private
+    */
+    private function initTemplateEngine()
+    {
+        include_once basedir.'classes/lib/raintpl.php';
+        //raintpl::$tpl_dir = "view/"; // template directory
+        //raintpl::$cache_dir = "tmp/"; // cache directory
+        $this->tpl = new RainTPL();
+        $this->tpl->configure('tpl_dir', 'view/');
+        $this->tpl->configure('cache_dir', 'tmp/');
     }
     
     /**
