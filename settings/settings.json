@@ -21,16 +21,16 @@
 	},
 	"debug":{
 		"core_info":"Display debug messages from core.",
-		"core":"true",
+		"core":true,
 		"query_info":"Dunnow what this does Lucas??",
-		"query":"true",
+		"query":true,
 		"errors_info":"Enable to display php errors.",
-		"errors":"true",
+		"errors":true,
 		"notice_info":"Enable to display php errors.",
-		"notice":"true",
+		"notice":true,
 		"output_info":"Output errors to screen.",
-		"output":"true",
+		"output":true,
 		"log_info":"Output errors to log file.",
-		"log":"true"
+		"log":true
 	}
 }

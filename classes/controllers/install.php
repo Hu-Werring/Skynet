@@ -77,6 +77,12 @@ class Controllers_Install {
                 $eKey = explode("_",$key);
                 $type = $eKey[0];
                 $setting = $eKey[1];
+                if($value==="true"){
+                    $value=true;
+                }
+                if($value==="false"){
+                    $value=false;
+                }
                 $newSet[$type][$setting] = $value;
             }
             
@@ -85,6 +91,7 @@ class Controllers_Install {
                 if(is_array($val)){
                     foreach($val as $setting=>$val2){
                         if(isset($newSet[$type][$setting])){
+                            
                             $sets[$type][$setting] = $newSet[$type][$setting];
                         }
                     }
@@ -95,12 +102,8 @@ class Controllers_Install {
         
         rename(basedir .'settings'. DS .'settings.json',basedir .'settings'. DS .'settings.json.old');
         $this->reg->settings->write_json_file($sets,basedir .'settings'. DS .'settings.json');
-        $nextForm = <<<HTML
-<form action="/install/step/3/" method="POST">
-<input type="submit" value='Next step' />
-</form>
-HTML;
-        $this->view->assign("content","Created the new settings.json file<br />" . $nextForm);
+        $this->reg->installer->nextStep(3);
+        $this->view->assign("content","Created the new settings.json file<br />" . $this->reg->installer->output);
         $this->view->draw('main');
         } else {
             header("Location: /install/step/1/");
@@ -110,13 +113,18 @@ HTML;
     private function step_3Action(){
         if($_SERVER['REQUEST_METHOD'] === "POST"){
         $this->reg->installer->checkTables();
-        $this->reg->installer->createAdminAccount("test","test","test");
+        $this->reg->installer->nextStep(4);
         $this->view->assign("content",$this->reg->installer->output);
         $this->view->draw('main');
         } else {
             header("Location: /install/step/1/");
             exit();
         }
+    }
+   
+    private function step_4Action(){
+        $this->view->assign("content",$this->reg->installer->output);
+        $this->view->draw('main');
     }
    
 }

@@ -153,6 +153,15 @@ CSS;
         $gID = $select[0]['ID'];
         $sql->insert("groupmembers",array("uID"=>$uID,"gID"=>$gID));
     }
+    
+    public function nextStep($step){
+        $this->output .= <<<HTML
+<form action="/install/step/$step/" method="POST">
+<input type="submit" value='Next step' />
+</form>
+HTML;
+    
+    }
 }
 
 ?>
