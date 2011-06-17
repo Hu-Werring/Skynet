@@ -124,6 +124,7 @@ class Controllers_Install {
    
     private function step_4Action(){
         $this->view->assign("content",$this->reg->installer->output);
+        
         $this->view->draw('main');
     }
    
