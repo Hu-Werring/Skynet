@@ -12,5 +12,5 @@
     
     
     
-    $skynet = new Core_Skynet();
+    $skynet = new Core_Skynet(false);
     $skynet->install();
