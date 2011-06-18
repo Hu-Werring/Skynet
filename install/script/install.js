@@ -77,10 +77,16 @@ function step1(){
   });  
 }
 function step2(){
-  
+  $("#submitButton").css("width","30%");
+  $("#submitButton").css("text-align","right");
+  $("#submitButton").css("margin-left","auto");
+  $("#submitButton").css("margin-right","auto");
 }
 function step3(){
-  
+  $("#submitButton").css("width","30%");
+  $("#submitButton").css("text-align","right");
+  $("#submitButton").css("margin-left","auto");
+  $("#submitButton").css("margin-right","auto");
 }
 function step4(){
   
