@@ -59,11 +59,6 @@ class Controllers_Install {
         $this->view->draw('main');
     }
     
-    private function testAction()
-    {
-        $this->view->assign('contentTpl', 'install');
-        $this->view->draw('main');
-    }
     
     private function step_1Action(){
         $this->reg->installer->showSettings();
@@ -72,6 +67,20 @@ class Controllers_Install {
     }
     private function step_2Action(){
         if($_SERVER['REQUEST_METHOD'] === "POST"){
+        $output="<style>".PHP_EOL;
+            $output.=<<<CSS
+            .step {
+                width: 30%;
+                margin-left: auto;
+                margin-right: auto;
+                height: 90%;
+            }
+            .clear{
+                clear:both;
+                text-align: right;
+            }
+CSS;
+            $output.="</style>" . PHP_EOL;
             foreach($_POST as $key => $value){
                 $eKey = explode("_",$key);
                 $type = $eKey[0];
@@ -102,7 +111,7 @@ class Controllers_Install {
         rename(basedir .'settings'. DS .'settings.json',basedir .'settings'. DS .'settings.json.old');
         $this->reg->settings->write_json_file($sets,basedir .'settings'. DS .'settings.json');
         $this->reg->installer->nextStep(3);
-        $this->view->assign("content","Created the new settings.json file<br />" . $this->reg->installer->output);
+        $this->view->assign("content",$output . "<fieldset class='step'><legend>Step 2</legend>Created the new settings.json file</fieldset><div class='clear' id='submitButton'>" . $this->reg->installer->output . "</div>");
         $this->view->draw('main');
         } else {
             header("Location: /install/step/1/");
@@ -111,10 +120,24 @@ class Controllers_Install {
     }
     private function step_3Action(){
         if($_SERVER['REQUEST_METHOD'] === "POST"){
-        $this->reg->installer->checkTables();
-        $this->reg->installer->nextStep(4);
-        $this->view->assign("content",$this->reg->installer->output);
-        $this->view->draw('main');
+            $output="<style>".PHP_EOL;
+            $output.=<<<CSS
+            .step {
+                width: 30%;
+                margin-left: auto;
+                margin-right: auto;
+                height: 90%;
+            }
+            .clear{
+                clear:both;
+                text-align: right;
+            }
+CSS;
+            $output.="</style>" . PHP_EOL;
+            $this->reg->installer->checkTables();
+            $this->reg->installer->nextStep(4);
+            $this->view->assign("content",$output . "<fieldset class='step'><legend>Step 3</legend>" . $this->reg->installer->output . "</div>");
+            $this->view->draw('main');
         } else {
             header("Location: /install/step/1/");
             exit();
