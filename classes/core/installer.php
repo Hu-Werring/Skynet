@@ -18,6 +18,9 @@ class Core_Installer {
      * Stores Output to send to template
     */
     public $output = "";
+    
+    private $disAllowNextStep=false;
+    
     /*
      * __construct()
      */
@@ -50,6 +53,7 @@ class Core_Installer {
             }
             .clear{
                 clear:both;
+                text-align: right;
             }
             #advancedHolder {
                 display: none;
@@ -112,14 +116,11 @@ CSS;
             
             
             
-            /*
-            rename(basedir .'settings'. DS .'settings.json',basedir .'settings'. DS .'settings.json.old');
-            $this->reg->settings->write_json_file($sets,basedir .'settings'. DS .'settings.json');
-            */
     }
     
     public function checkTables(){
-        
+        //Init Core_Database, it won't autostart in the installer due to step 1
+        new Core_Database();
         $exists = false;
         $oldTables = $this->reg->database->query("show tables");
         $dbStruct = base64_decode(file_get_contents(basedir . "install" . DS . "databaseStructure"));
@@ -138,11 +139,12 @@ CSS;
         }
         if($exists){
             $this->output = "We have detected a possible earlier install of skynet,<br /> please go back to step 1 and change your prefix.";
+            $this->disAllowNextStep=true;
         } else {
             $this->output = "Start creating tables...<br />";
             $this->createTables();
         }
-        
+        $this->output.="</fieldset><div class='clear' id='submitButton'>";
         
     }
     private function createTables(){
@@ -160,7 +162,11 @@ CSS;
     }
     
     public function createAdminAccount($name,$email,$pass){
-        $sql = $this->reg->database;//new Core_Database();
+        if(!isset($this->reg->database)){
+            $sql = new Core_Database();
+        } else {
+            $sql = $this->reg->database;
+        }
         $sql->insert("groups",array("Name"=>"Admin","Description"=>"Highest level account, has full access."));
         $sql->insert("users",array("Name"=>$name,"Email"=>$email,"Pass"=>sha1($pass)));
         $select = $sql->select("users","ID","WHERE Name='" . $name . "' AND Email='".$email."' AND Pass='".sha1($pass)."'");
@@ -172,12 +178,19 @@ CSS;
     }
     
     public function nextStep($step){
+        if(!$this->disAllowNextStep){
         $this->output .= <<<HTML
 <form action="/install/step/$step/" method="POST">
 <input type="submit" value='Next step' />
 </form>
 HTML;
-    
+        } else {
+            $this->output .= <<<HTML
+            <form action="/install/step/1/" method="POST">
+<input type="submit" value='Back to step 1' />
+</form>
+HTML;
+        }
     }
 }
 
