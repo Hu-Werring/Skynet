@@ -28,7 +28,7 @@ class Controllers_Install {
         $this->reg = Core_Registery::singleton();
         $this->reg->controller = $this;
         $this->view = $this->reg->view;
-        
+         $this->view->assign("JS","<script src='/script/jquery.js' ></script> <script src='/install/script/install.js' ></script>");
         //Actie aanroepen. Dus: als www.skynet.nl/test/ dan testAction();
         if(isset($_GET['page']))
         {
@@ -49,7 +49,6 @@ class Controllers_Install {
         {
             $this->indexAction();
         }
-        
         
     }
     

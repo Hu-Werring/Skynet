@@ -42,11 +42,24 @@ class Core_Installer {
             .settings {
                 width: 30%;
                 float: left;
+                height: 90%;
+            }
+            .settings div.holder {
+                overflow-y: auto;
+                max-height: 100%;
             }
             .clear{
                 clear:both;
             }
-
+            #advancedHolder {
+                display: none;
+            }
+            span.prev {
+                float:left;
+            }
+            span.next {
+                float: right;
+            }
 CSS;
             $this->output.="</style>" . PHP_EOL;
             $this->output.="<form action='/install/step/2/' method='POST'>" . PHP_EOL;
@@ -55,7 +68,7 @@ CSS;
                 $i++;
                 if(strpos($key,"_info")!=false) continue;
                 if(is_array($value)){
-                    $this->output.= "<fieldset id='setting_".$key."' class='settings'><legend>" . $key . "</legend>" . PHP_EOL;;
+                    $this->output.= "<fieldset id='setting_".$key."' class='settings'><legend>" . $key . "</legend><div class='holder'>" . PHP_EOL;;
                     if(isset($sets[$key . "_info"])){
                         $this->output.="<div id='setting_info_".$key."'>" . $sets[$key . "_info"] . "</div>" . PHP_EOL;
                     }
@@ -87,11 +100,15 @@ CSS;
                         $this->output.= "</dd>" . PHP_EOL;
                     }
                     
-                    $this->output.="</dl>" . PHP_EOL. "</fieldset>" . PHP_EOL;
+                    $this->output.="</dl>" . PHP_EOL;
+                    if($i == 1){
+                        $this->output.="<p id='advancedHolder' style='text-align: right; padding-right: 5px;'><input type='checkbox' id='goAdvanced'> AdvancedOptions</p>";
+                    }
+                    $this->output.="</div></fieldset>" . PHP_EOL;
                 }
             }
             
-            $this->output.="<div class='clear'>" . PHP_EOL. "<input type='submit' value='Update' />" . PHP_EOL. "</div>" . PHP_EOL. "<form>";
+            $this->output.="<div class='clear' id='submitButton'>" . PHP_EOL. "<input type='submit' value='Update' />" . PHP_EOL. "</div>" . PHP_EOL. "<form>";
             
             
             
