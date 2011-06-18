@@ -64,6 +64,10 @@ class Core_Installer {
             span.next {
                 float: right;
             }
+            .close {
+                float: right;
+                cursor: pointer;
+            }
 CSS;
             $this->output.="</style>" . PHP_EOL;
             $this->output.="<form action='/install/step/2/' method='POST'>" . PHP_EOL;
@@ -74,7 +78,7 @@ CSS;
                 if(is_array($value)){
                     $this->output.= "<fieldset id='setting_".$key."' class='settings'><legend>" . $key . "</legend><div class='holder'>" . PHP_EOL;;
                     if(isset($sets[$key . "_info"])){
-                        $this->output.="<div id='setting_info_".$key."'>" . $sets[$key . "_info"] . "</div>" . PHP_EOL;
+                        $this->output.="<div class='setting_info' id='setting_info_".$key."'>" . $sets[$key . "_info"] . "</div>" . PHP_EOL;
                     }
                     
                     $this->output.= "<dl>" . PHP_EOL;
@@ -95,18 +99,18 @@ CSS;
                             if($setValue == true){
                                 $this->output.=" checked='checked'";
                             }
-                            $this->output.=" value='true' />" . PHP_EOL. " Aan</label> <label><input name='".$key."_".$set."' type='radio'";
+                            $this->output.=" value='true' />" . PHP_EOL. " Enable</label> <label><input name='".$key."_".$set."' type='radio'";
                             if($setValue == false){
                                 $this->output.=" checked='checked'";
                             }
-                            $this->output.=" value='false' /> Uit</label>". PHP_EOL;;  
+                            $this->output.=" value='false' /> Disable</label>". PHP_EOL;;  
                         }
-                        $this->output.= "</dd>" . PHP_EOL;
+                        $this->output.= "<span class='help'></span></dd>" . PHP_EOL;
                     }
                     
                     $this->output.="</dl>" . PHP_EOL;
                     if($i == 1){
-                        $this->output.="<p id='advancedHolder' style='text-align: right; padding-right: 5px;'><input type='checkbox' id='goAdvanced'> AdvancedOptions</p>";
+                        $this->output.="<p id='advancedHolder' style='text-align: right; padding-right: 5px;'><input type='checkbox' id='goAdvanced'>Display developer options</p>";
                     }
                     $this->output.="</div></fieldset>" . PHP_EOL;
                 }
