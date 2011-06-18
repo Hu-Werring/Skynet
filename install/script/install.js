@@ -22,8 +22,10 @@ $(document).ready(function() {
 });
 
 function step1(){
+  var openInfo = null;
   var visibleField = 0;
   var fields = $(".settings").length;
+  var animate=false;
   $("#goAdvanced").attr("checked",false);
   $("#advancedHolder").css("display","block");
   $(".settings").css("margin-left","auto");
@@ -48,33 +50,68 @@ function step1(){
     }
   });
   $(".settings div.holder p span.next").click(function(){
-  $(".settings:nth("+visibleField+")").animate({
-      opacity: 0
-      },500,'linear',function(){
-        $(".settings:nth("+visibleField+")").css("display","none");
-        visibleField++;
-        $(".settings:nth("+visibleField+")").css("opacity","0");
-        $(".settings:nth("+visibleField+")").css("display","block");
-        $(".settings:nth("+visibleField+")").animate({
-          opacity: 1
-        },500,'linear');
-      }
-  );
+    if(!animate){
+      animate=true;
+      $(".settings:nth("+visibleField+")").animate({
+          opacity: 0
+          },250,'linear',function(){
+            $(".settings:nth("+visibleField+")").css("display","none");
+            visibleField++;
+            $(".settings:nth("+visibleField+")").css("opacity","0");
+            $(".settings:nth("+visibleField+")").css("display","block");
+            $(".settings:nth("+visibleField+")").animate({
+              opacity: 1
+            },250,'linear',function(){animate=false;});
+          }
+      );
+    }
   });
   $(".settings div.holder p span.prev").click(function(){
-  $(".settings:nth("+visibleField+")").animate({
-      opacity: 0
-      },500,'linear',function(){
-        $(".settings:nth("+visibleField+")").css("display","none");
-        visibleField--;
-        $(".settings:nth("+visibleField+")").css("opacity","0");
-        $(".settings:nth("+visibleField+")").css("display","block");
-        $(".settings:nth("+visibleField+")").animate({
-          opacity: 1
-        },500,'linear');
-      }
-  );
-  });  
+    if(!animate){
+      animate=true;
+      $(".settings:nth("+visibleField+")").animate({
+          opacity: 0
+          },250,'linear',function(){
+            $(".settings:nth("+visibleField+")").css("display","none");
+            visibleField--;
+            $(".settings:nth("+visibleField+")").css("opacity","0");
+            $(".settings:nth("+visibleField+")").css("display","block");
+            $(".settings:nth("+visibleField+")").animate({
+              opacity: 1
+            },250,'linear',function(){animate=false;});
+          }
+      );
+    }
+  });
+  
+  $("dd div").css("display","none");
+  $("dd div").css("border","red solid 1px");
+  $("dd div").css("min-height","50px");
+  $("dd div").css("width","250px");
+  $("dd div").css("margin","5px");
+  $("dd div").css("position","absolute");
+  $("dd div").css("background","#DCDCDC");
+  $("dd span.help").text("?");
+  $("dd span.help").css("cursor","pointer");
+  $("dd span.help").click(function(){
+    if(openInfo != null){
+      openInfo.children(".close").empty();
+      openInfo.css("display","none");
+      openInfo=null
+    }
+    infoField = $(this).parent().children("div");
+    infoField.prepend("<span class='close'>[X]</span>");
+    $(".close").click(function(){
+    if(openInfo!= null){
+      openInfo.children(".close").empty();
+      openInfo.css("display","none");
+      openInfo=null
+    }
+  });
+    infoField.css("display","block");
+    openInfo = infoField;
+  });
+
 }
 function step2(){
   $("#submitButton").css("width","30%");
@@ -92,3 +129,4 @@ function step4(){
   
 }
 function step5(){}
+
