@@ -41,7 +41,6 @@ class Controllers_Main {
             {
                 $this->indexAction();
             }
-            //print_r($_GET)
         }
         else
         {
