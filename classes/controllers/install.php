@@ -134,7 +134,12 @@ CSS;
             }
 CSS;
             $output.="</style>" . PHP_EOL;
-            $this->reg->installer->checkTables();
+            if(isset($_POST['force']) && $_POST['force']=='true'){
+                $force=true;
+            } else {
+                $force=false;
+            }
+            $this->reg->installer->checkTables($force);
             $this->reg->installer->nextStep(4);
             $this->view->assign("content",$output . "<fieldset class='step'><legend>Step 3</legend>" . $this->reg->installer->output . "</div>");
             $this->view->draw('main');
@@ -145,7 +150,23 @@ CSS;
     }
    
     private function step_4Action(){
-        $this->view->assign("content",$this->reg->installer->output);
+        $output="<style>".PHP_EOL;
+            $output.=<<<CSS
+            .step {
+                width: 30%;
+                margin-left: auto;
+                margin-right: auto;
+                height: 90%;
+            }
+            .clear{
+                clear:both;
+                text-align: right;
+            }
+CSS;
+            $output.="</style>" . PHP_EOL;
+        
+        
+        $this->view->assign("content",$output . "<fieldset class='step'><legend>Step 4</legend>" . $this->reg->installer->output . "</div>");
         
         $this->view->draw('main');
     }

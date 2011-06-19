@@ -124,9 +124,15 @@ function step3(){
   $("#submitButton").css("text-align","right");
   $("#submitButton").css("margin-left","auto");
   $("#submitButton").css("margin-right","auto");
+  $("#override").click(function(){
+    var checked = ($(this).attr("checked") === undefined ? false : true);
+    if(checked) {
+      alert("You are about to delete your old CMS!");
+    }
+  });
 }
 function step4(){
-  
+
 }
 function step5(){}
 
