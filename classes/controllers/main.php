@@ -28,16 +28,14 @@ class Controllers_Main {
         $this->reg = Core_Registery::singleton();
         $this->reg->controller = $this;
         $this->view = $this->reg->view;
-        
-        //Actie aanroepen. Dus: als www.skynet.nl/test/ dan TestAction();
+
+        //Actie aanroepen. Dus: als www.skynet.nl/test dan TestAction();
         if(isset($_GET['page']))
         {
-            //substr last char since that is always a /
-            $action = str_replace("/","_",$_GET['page']);
-            $action = strtolower(substr($action,0,-1)).'Action';
-            if(method_exists($this,$action))
+            $action = strtolower(str_replace("/", "",$_GET['page'])).'Action';
+            if(method_exists($this, $action))
             {
-                call_user_func(array($this,$action));
+                $this->{$action}();
             }
             else
             {
@@ -53,19 +51,19 @@ class Controllers_Main {
     
     private function indexAction()
     {
-        $this->view->assign('content', 'grapje');
         $this->view->assign('contentTpl', 'home');
+        $this->view->assign('content', 'grapje');
         $this->view->draw('main');
     }
     
     private function testAction()
     {
-        $this->view->assign('contentTpl', 'home');
-        $this->view->assign('content', 'grapjes');
+        $this->view->assign('contentTpl', 'test');
+        $this->view->assign('content', 'HAha test');
         $this->view->draw('main');
     }
     
-   
+    
 }
 
 ?>

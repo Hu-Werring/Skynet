@@ -4,8 +4,8 @@
     {$JS}
 </head>
 <body style="margin:0;padding:0;border:0;">
-    <div id="header" style="width: 100%;height:20%;background-color: #666666;"></div>
-    <div id="content" style="width:100%;height:70%;background-color: #00FF99;">{$content}</div>
-    <div id="footer" style="width:100%;height:10%;background-color:#333333;"></div>
+    <div id="header" style="width: 100%;height:20%;background-color: #666666;">{include=header}</div>
+    <div id="content" style="width:100%;height:70%;background-color: #00FF99;">{include=$contentTpl}</div>
+    <div id="footer" style="width:100%;height:10%;background-color:#333333;">{include=footer}</div>
 </body>
 </html>
