@@ -99,7 +99,7 @@ class Core_View
     
     public function __get($var)
     {
-        return $this->tpl->$var;
+        return (isset($this->tpl->$var) ? $this->tpl->$var : null);
     }
     
     public function __call($functionName, $args)
