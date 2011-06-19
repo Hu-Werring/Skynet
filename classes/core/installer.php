@@ -122,7 +122,7 @@ CSS;
             
     }
     
-    public function checkTables(){
+    public function checkTables($force=false){
         //Init Core_Database, it won't autostart in the installer due to step 1
         new Core_Database();
         $exists = false;
@@ -141,8 +141,8 @@ CSS;
                 break;
             }
         }
-        if($exists){
-            $this->output = "We have detected a possible earlier install of skynet,<br /> please go back to step 1 and change your prefix.";
+        if($exists && !$force){
+            $this->output = "We have detected a possible earlier install of skynet,<br /> please go back to step 1 and change your prefix.<br/>Or check the box to override your old Skynet install.<br/><strong>All data will be lost if you override the old system.</strong>";
             $this->disAllowNextStep=true;
         } else {
             $this->output = "Start creating tables...<br />";
@@ -189,8 +189,12 @@ CSS;
 </form>
 HTML;
         } else {
+            $currentStep = $step -1;
             $this->output .= <<<HTML
-            <form action="/install/step/1/" method="POST">
+            <form action="/install/step/$currentStep/" method='POST' style='display: inline;'>
+            <input type='checkbox' name="force" id='override' value='true' />Check to override old CMS
+            <input type="submit" value='Try Again' />
+            </form><form action="/install/step/1/" method="POST" style='display: inline;'>
 <input type="submit" value='Back to step 1' />
 </form>
 HTML;
