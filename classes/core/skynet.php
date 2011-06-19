@@ -65,6 +65,8 @@ class Core_Skynet {
      * initiate Admin Control Panel
     */
     public function acp(){
+        //add acp dir to templatepath
+        $this->view->setTemplatePath(basedir.'view/acp/');
         new Controllers_Acp();
     }
     
