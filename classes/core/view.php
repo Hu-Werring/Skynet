@@ -112,19 +112,20 @@ class Core_View
     
     public function add_css ( $filename )
     {
-            if( in_array( $filename, $this->css_files ) == true )
-            {
-                    return false;
-            }
+        if( in_array( $filename, $this->css_files ) == true )
+        {
+                return false;
+        }
 
-            $path = basedir . $this->layoutPath . DS . 'css' . DS . $filename;
+        $path = basedir . $this->layoutPath . DS . 'css' . DS . $filename;
 
-            if( file_exists($path) == false )
-            {	
-                    //log::write("Css file not found. File: `$path`", $this, 'add_css()');
-                    return false;
-            }
-            $this->css_files[] = $filename;
+        if( file_exists($path) == false )
+        {	
+                //log::write("Css file not found. File: `$path`", $this, 'add_css()');
+                return false;
+        }
+        $this->css_files[] = $filename;
+        $this->includeLibs();
     }
 
     /**
@@ -135,20 +136,21 @@ class Core_View
      */
     public function add_js ( $filename )
     {
-            if( in_array( $filename, $this->js_files ) == true )
-            {
-                    return false;
-            }
-            
-            $path = basedir . $this->layoutPath . DS . 'js' . DS . $filename;
-            
-            if( file_exists($path) == false )
-            {
-                    //log::write("Js file not found. File: `$path`", $this, 'add_js()');
-                    return false;
-            }
-            
-            $this->js_files[] = $filename;
+        if( in_array( $filename, $this->js_files ) == true )
+        {
+                return false;
+        }
+        
+        $path = basedir . $this->layoutPath . DS . 'js' . DS . $filename;
+        
+        if( file_exists($path) == false )
+        {
+                //log::write("Js file not found. File: `$path`", $this, 'add_js()');
+                return false;
+        }
+        
+        $this->js_files[] = $filename;
+        $this->includeLibs();
     }
     
     /**
@@ -175,8 +177,7 @@ class Core_View
                             $string .= PHP_EOL . '<script src="' . $this->templatePath . '/js/' . $js_file . '" type="text/javascript"></script>';
                     }
             }
-            
-            return $string . PHP_EOL;
+            $this->tpl->assign("libs", $string . PHP_EOL);
     }
 }
 
