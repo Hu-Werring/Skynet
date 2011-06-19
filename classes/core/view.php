@@ -76,17 +76,6 @@ class Core_View
     }
     
     /**
-     * setTemplate
-     * Set the template for the current view.
-     * @access public
-     * @param string templatename
-     */
-    public function setTemplate($string)
-    {
-        $template = $string;
-    }
-    
-    /**
      * setTemplatePath
      * Set the templatePath for the templates.
      * @access public
@@ -94,7 +83,7 @@ class Core_View
      */
     public function setTemplatePath($string)
     {
-        $templatePath = $string;
+        $this->tpl->configure('tpl_dir', $string);
     }
     
     public function __get($var)
