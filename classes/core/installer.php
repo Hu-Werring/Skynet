@@ -110,7 +110,7 @@ CSS;
                     
                     $this->output.="</dl>" . PHP_EOL;
                     if($i == 1){
-                        $this->output.="<p id='advancedHolder' style='text-align: right; padding-right: 5px;'><input type='checkbox' id='goAdvanced'>Display developer options</p>";
+                        $this->output.="<p id='advancedHolder' style='text-align: right; padding-right: 5px;'><label><input type='checkbox' id='goAdvanced'>Display developer options</label></p>";
                     }
                     $this->output.="</div></fieldset>" . PHP_EOL;
                 }
