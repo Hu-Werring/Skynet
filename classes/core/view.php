@@ -141,8 +141,8 @@ class Core_View
                 return false;
         }
         
-        $path = basedir . $this->layoutPath . DS . 'js' . DS . $filename;
-        
+        //$path = basedir . $this->layoutPath . DS . 'js' . DS . $filename;
+        $path = basedir . $filename;
         if( file_exists($path) == false )
         {
                 //log::write("Js file not found. File: `$path`", $this, 'add_js()');
@@ -166,7 +166,7 @@ class Core_View
             {
                     foreach( $this->css_files as &$css_file )
                     {
-                            $string .= PHP_EOL . '<link rel="stylesheet" href="' . $this->templatePath . '/css/' . $css_file . '" type="text/css" />';
+                            $string .= PHP_EOL . '<link rel="stylesheet" href="' . $css_file . '" type="text/css" />';
                     }
             }
             
@@ -174,7 +174,7 @@ class Core_View
             {
                     foreach( $this->js_files as &$js_file )
                     {
-                            $string .= PHP_EOL . '<script src="' . $this->templatePath . '/js/' . $js_file . '" type="text/javascript"></script>';
+                            $string .= PHP_EOL . '<script src="' . $js_file . '" type="text/javascript"></script>';
                     }
             }
             $this->tpl->assign("libs", $string . PHP_EOL);
