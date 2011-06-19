@@ -1,0 +1,10 @@
+<html lang="en">
+<head>
+    <!--{function="Core_View::includeLibs"} Not yet. raintpl lib has to be updated-->
+</head> 
+<body style="margin:0;padding:0;border:0;">
+    <div id="header" style="width: 100%;height:20%;background-color: #666666;">{include="header"}</div>
+    <div id="content" style="width:100%;height:70%;background-color: #00FF99;">{if="isset($contentTpl)"}{include="$contentTpl"}{else}{include="home"}{/if}</div>
+    <div id="footer" style="width:100%;height:10%;background-color:#333333;">{include="footer"}</div>
+</body>
+</html>
