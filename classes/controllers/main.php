@@ -28,6 +28,7 @@ class Controllers_Main {
         $this->reg = Core_Registery::singleton();
         $this->reg->controller = $this;
         $this->view = $this->reg->view;
+
         //Actie aanroepen. Dus: als www.skynet.nl/test dan TestAction();
         if(isset($_GET['page']))
         {

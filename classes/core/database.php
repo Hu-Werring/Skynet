@@ -67,7 +67,7 @@ class Core_Database {
      * Inserts row into table
      * @param String Table name
      * @param Array $data assoc array with data to be inserted
-     * @param Boolean succes
+     * @return Boolean succes
     */
     public function insert($table,$data){
         if(!is_array($data) || !is_string($table)){
@@ -167,11 +167,13 @@ class Core_Database {
             case true:
                 $return['affected'] = $this->sql->affected_rows;
                 $return['succes'] = true;
-                while($row = $result->fetch_assoc()){
-                    $return[] = $row;
+                if(method_exists($result,"fetch_assoc")){
+                    while($row = $result->fetch_assoc()){
+                        $return[] = $row;
+                    }
+                    $return['affected'] = $result->num_rows;
+                    $result->close();
                 }
-                $return['affected'] = $result->num_rows;
-                $result->close();
             break;
         }
         

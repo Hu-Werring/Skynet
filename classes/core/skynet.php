@@ -14,17 +14,26 @@ class Core_Skynet {
     private $reg = null;
     
     /**
-     *$view
-     *Direct link to view class. (From registry).
-     *@access private
+     * $view
+     * Direct link to view class. (From registry).
+     * @access private
      */
     private $view;
 
     /**
+     * $disableMysql
+     * Don't start Core_Database
+     * @access private
+     * 
+    */
+    private $disableMysql;
+    /**
      * __construct
      * creates base for CMS
+     * @param Bool $noMysql Don't start Core_Database
     */
-    function __construct() {
+    function __construct($mysql=true) {
+        $this->disableMysql = !$mysql;
         $this->initBaseClasses();
     }
     
@@ -37,7 +46,8 @@ class Core_Skynet {
         $this->reg = new Core_Registery();
         new Core_Settings();
         new Debug_Main();
-        new Core_Database();
+        if($this->disableMysql === false)
+            new Core_Database();
         $this->view = new Core_View();
     }
     
@@ -56,7 +66,6 @@ class Core_Skynet {
     */
     public function acp(){
         //new Controllers_Main();
-        $this->view->assign('content', "acp");
         $this->view->draw('main');
     }
     
@@ -66,8 +75,7 @@ class Core_Skynet {
     */
     public function install(){
         $installer = new Core_Installer();
-        $this->view->assign('content', $installer->output);
-        $this->view->draw('main');
+        new Controllers_install();
     }
 }
 

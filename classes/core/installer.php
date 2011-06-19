@@ -13,7 +13,14 @@ class Core_Installer {
     */
     private $reg = null;
     
+    
+    /**
+     * Stores Output to send to template
+    */
     public $output = "";
+    
+    private $disAllowNextStep=false;
+    
     /*
      * __construct()
      */
@@ -21,35 +28,57 @@ class Core_Installer {
     function __construct() {
         $this->reg = Core_Registery::singleton();
         
+        $this->reg->installer = $this;
+        
         //$this->checkTables();
         //$this->createTables();
-        $this->showSettings();
-        $this->output;
     }
     
-    private function showSettings(){
+    /**
+     * showSettings
+     * Sends settings in settings.json to $output in nice HTML format
+    */
+    public function showSettings(){
             $sets = $this->reg->settings->settings;
             $this->output.="<style>".PHP_EOL;
             $this->output.=<<<CSS
             .settings {
                 width: 30%;
                 float: left;
+                height: 90%;
+            }
+            .settings div.holder {
+                overflow-y: auto;
+                max-height: 100%;
             }
             .clear{
                 clear:both;
+                text-align: right;
             }
-
+            #advancedHolder {
+                display: none;
+            }
+            span.prev {
+                float:left;
+            }
+            span.next {
+                float: right;
+            }
+            .close {
+                float: right;
+                cursor: pointer;
+            }
 CSS;
             $this->output.="</style>" . PHP_EOL;
-            $this->output.="<form action='/install/' method='POST'>" . PHP_EOL;
+            $this->output.="<form action='/install/step/2/' method='POST'>" . PHP_EOL;
             $i=0;
             foreach($sets as $key => $value){
                 $i++;
                 if(strpos($key,"_info")!=false) continue;
                 if(is_array($value)){
-                    $this->output.= "<fieldset id='setting_".$key."' class='settings'><legend>" . $key . "</legend>" . PHP_EOL;;
+                    $this->output.= "<fieldset id='setting_".$key."' class='settings'><legend>" . $key . "</legend><div class='holder'>" . PHP_EOL;;
                     if(isset($sets[$key . "_info"])){
-                        $this->output.="<div id='setting_info_".$key."'>" . $sets[$key . "_info"] . "</div>" . PHP_EOL;
+                        $this->output.="<div class='setting_info' id='setting_info_".$key."'>" . $sets[$key . "_info"] . "</div>" . PHP_EOL;
                     }
                     
                     $this->output.= "<dl>" . PHP_EOL;
@@ -70,31 +99,32 @@ CSS;
                             if($setValue == true){
                                 $this->output.=" checked='checked'";
                             }
-                            $this->output.=" value='true' />" . PHP_EOL. " Aan</label> <label><input name='".$key."_".$set."' type='radio'";
+                            $this->output.=" value='true' />" . PHP_EOL. " Enable</label> <label><input name='".$key."_".$set."' type='radio'";
                             if($setValue == false){
                                 $this->output.=" checked='checked'";
                             }
-                            $this->output.=" value='false' /> Uit</label>". PHP_EOL;;  
+                            $this->output.=" value='false' /> Disable</label>". PHP_EOL;;  
                         }
-                        $this->output.= "</dd>" . PHP_EOL;
+                        $this->output.= "<span class='help'></span></dd>" . PHP_EOL;
                     }
                     
-                    $this->output.="</dl>" . PHP_EOL. "</fieldset>" . PHP_EOL;
+                    $this->output.="</dl>" . PHP_EOL;
+                    if($i == 1){
+                        $this->output.="<p id='advancedHolder' style='text-align: right; padding-right: 5px;'><input type='checkbox' id='goAdvanced'>Display developer options</p>";
+                    }
+                    $this->output.="</div></fieldset>" . PHP_EOL;
                 }
             }
             
-            $this->output.="<div class='clear'>" . PHP_EOL. "<input type='submit' value='Update' />" . PHP_EOL. "</div>" . PHP_EOL. "<form>";
+            $this->output.="<div class='clear' id='submitButton'>" . PHP_EOL. "<input type='submit' value='Update' />" . PHP_EOL. "</div>" . PHP_EOL. "<form>";
             
             
             
-            /*$sets['db']['prefix']=uniqid() . "_";
-            rename(basedir .'settings'. DS .'settings.json',basedir .'settings'. DS .'settings.json.old');
-            $this->reg->settings->write_json_file($sets,basedir .'settings'. DS .'settings.json');
-            */
     }
     
-    private function checkTables(){
-        
+    public function checkTables(){
+        //Init Core_Database, it won't autostart in the installer due to step 1
+        new Core_Database();
         $exists = false;
         $oldTables = $this->reg->database->query("show tables");
         $dbStruct = base64_decode(file_get_contents(basedir . "install" . DS . "databaseStructure"));
@@ -112,27 +142,58 @@ CSS;
             }
         }
         if($exists){
-            $this->output = "We have detected a possible earlier install of skynet, please change the settings.ini file";
+            $this->output = "We have detected a possible earlier install of skynet,<br /> please go back to step 1 and change your prefix.";
+            $this->disAllowNextStep=true;
         } else {
-            $this->output = "Checked your database, install is possible.";
+            $this->output = "Start creating tables...<br />";
+            $this->createTables();
         }
-        
+        $this->output.="</fieldset><div class='clear' id='submitButton'>";
         
     }
     private function createTables(){
         $dbStruct = base64_decode(file_get_contents(basedir . "install" . DS . "databaseStructure"));
-    
         $tables = json_decode($dbStruct,true);
-    
-        $this->output = "";
         foreach($tables as $table=>$fields){
             
             $this->output .= $this->reg->database->prefixTable($table) . ": ";
             $succes = $this->reg->database->createTable($table,$fields,true);
-            $this->output .= var_export($succes,true) . PHP_EOL;
+            $this->output .= ($succes ? "Succeeded" : "Failed") . "<br />" . PHP_EOL;
             if(!$succes){
                 $this->output .= $this->reg->database->lastError();
             }
+        }
+    }
+    
+    public function createAdminAccount($name,$email,$pass){
+        if(!isset($this->reg->database)){
+            $sql = new Core_Database();
+        } else {
+            $sql = $this->reg->database;
+        }
+        $sql->insert("groups",array("Name"=>"Admin","Description"=>"Highest level account, has full access."));
+        $sql->insert("users",array("Name"=>$name,"Email"=>$email,"Pass"=>sha1($pass)));
+        $select = $sql->select("users","ID","WHERE Name='" . $name . "' AND Email='".$email."' AND Pass='".sha1($pass)."'");
+        $uID = $select[0]['ID'];
+        unset($select);
+        $select = $sql->select("groups","ID","WHERE Name='Admin'");
+        $gID = $select[0]['ID'];
+        $sql->insert("groupmembers",array("uID"=>$uID,"gID"=>$gID));
+    }
+    
+    public function nextStep($step){
+        if(!$this->disAllowNextStep){
+        $this->output .= <<<HTML
+<form action="/install/step/$step/" method="POST">
+<input type="submit" value='Next step' />
+</form>
+HTML;
+        } else {
+            $this->output .= <<<HTML
+            <form action="/install/step/1/" method="POST">
+<input type="submit" value='Back to step 1' />
+</form>
+HTML;
         }
     }
 }
