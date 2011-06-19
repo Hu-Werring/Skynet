@@ -65,8 +65,7 @@ class Core_Skynet {
      * initiate Admin Control Panel
     */
     public function acp(){
-        //new Controllers_Main();
-        $this->view->draw('main');
+        new Controllers_Acp();
     }
     
     /**
