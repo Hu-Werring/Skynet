@@ -83,7 +83,8 @@ class Core_View
      */
     public function setTemplatePath($string)
     {
-        $this->tpl->configure('tpl_dir', $string);
+        $this->templatePath = $string;
+        $this->tpl->configure('tpl_dir', basedir.$string);
     }
     
     public function __get($var)
@@ -117,10 +118,13 @@ class Core_View
                 return null;
         }
 
+        $path =  basedir . $this->templatePath . 'css' . DS . $filename;
+
         /**
          * When apsolute path is used, add it directly without use of layout path or something else
          * relative paths will use layout path
         */
+        /*it works without absolute paths. absolute path wil be created in includeLibs().
         if(substr($filename,0,1) != "/"){
             $path = basedir . $this->layoutPath . DS . 'css' . DS . $filename;
             $fileLoc = $this->layoutPath . DS . 'css' . DS . $filename;
@@ -128,6 +132,8 @@ class Core_View
             $path = basedir . $filename;
             $fileLoc = $filename;
         }
+        */
+        
         if( file_exists($path) == false )
         {
                 /*------------ERROR------------*/
@@ -136,7 +142,7 @@ class Core_View
                 //log::write("Css file not found. File: `$path`", $this, 'add_css()');
                 return false;
         }
-        $this->css_files[] = $fileLoc;
+        $this->css_files[] = $filename;
         $this->includeLibs();
     }
 
@@ -153,20 +159,23 @@ class Core_View
                 return null;
         }
         
+        $path =  basedir . $this->templatePath . 'css' . DS . $filename;
+/*
         if(substr($filename,0,1) != "/"){
             $path = basedir . $this->layoutPath . DS . 'css' . DS . $filename;
             $fileLoc = $this->layoutPath . DS . 'css' . DS . $filename;
         } else {
             $path = basedir . $filename;
             $fileLoc = $filename;
-        }
+        }*/
+        
         if( file_exists($path) == false )
         {
                 //log::write("Js file not found. File: `$path`", $this, 'add_js()');
                 return false;
         }
         
-        $this->js_files[] = $fileLoc;
+        $this->js_files[] = $filename;
         $this->includeLibs();
     }
     
@@ -175,15 +184,15 @@ class Core_View
      * include the css and js scripts / libraries in the template.
      * @access public
      */
-    public function includeLibs ()
+    public function includeLibs()
     {
             $string = '';
-            
+
             if($this->css_files)
             {
                     foreach( $this->css_files as &$css_file )
                     {
-                            $string .= PHP_EOL . '<link rel="stylesheet" href="' . $css_file . '" type="text/css" />';
+                        $string .=  '<link rel="stylesheet" href="http://'. baseurl . DS .$this->templatePath .'css'. DS . $css_file . '" type="text/css" />';
                     }
             }
             
@@ -191,7 +200,7 @@ class Core_View
             {
                     foreach( $this->js_files as &$js_file )
                     {
-                            $string .= PHP_EOL . '<script src="' . $js_file . '" type="text/javascript"></script>';
+                            $string .= PHP_EOL . '<script src="http://'. baseurl . DS .$this->templatePath .'js'. DS . $js_file . '" type="text/javascript"></script>';
                     }
             }
             $this->tpl->assign("libs", $string . PHP_EOL);

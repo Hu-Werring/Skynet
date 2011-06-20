@@ -1,6 +1,7 @@
 <?php
     define("DS",DIRECTORY_SEPARATOR);
     define("basedir",$_SERVER['DOCUMENT_ROOT'] . DS);
+    define("baseurl", $_SERVER['HTTP_HOST']);
 
     /**
      * Autoloader for functions, easy include
