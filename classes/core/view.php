@@ -114,11 +114,18 @@ class Core_View
     {
         if( in_array( $filename, $this->css_files ) == true )
         {
-                return false;
+                return null;
         }
 
-        $path = basedir . $this->layoutPath . DS . 'css' . DS . $filename;
-
+        /**
+         * When apsolute path is used, add it directly without use of layout path or something else
+         * relative paths will use layout path
+        */
+        if(substr($filename,0,1) != "/"){
+            $path = basedir . $this->layoutPath . DS . 'css' . DS . $filename;
+        } else {
+            $path = basedir . $filename;
+        }
         if( file_exists($path) == false )
         {
                 /*------------ERROR------------*/
@@ -141,11 +148,14 @@ class Core_View
     {
         if( in_array( $filename, $this->js_files ) == true )
         {
-                return false;
+                return null;
         }
         
-        //$path = basedir . $this->layoutPath . DS . 'js' . DS . $filename;
-        $path = basedir . $filename;
+        if(substr($filename,0,1) != "/"){
+            $path = basedir . $this->layoutPath . DS . 'css' . DS . $filename;
+        } else {
+            $path = basedir . $filename;
+        }
         if( file_exists($path) == false )
         {
                 //log::write("Js file not found. File: `$path`", $this, 'add_js()');
