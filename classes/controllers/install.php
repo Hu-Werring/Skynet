@@ -127,10 +127,55 @@ class Controllers_Install {
     }
    
     private function step_4Action(){
-        
+        if($_SERVER['REQUEST_METHOD'] !== "POST"){
+            header("Location: /install/step/1/");
+            exit();
+        }
         $this->reg->installer->createAdminAccountForm();
         $this->view->assign("content", $this->reg->installer->output);
         
+        $this->view->draw('main');
+    }
+    
+    private function step_5Action(){
+       if($_SERVER['REQUEST_METHOD'] !== "POST"){
+            header("Location: /install/step/1/");
+            exit();
+        }
+        //var_dump($_POST);
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $email2 = $_POST['emailCheck'];
+        $pass = $_POST['pass'];
+        $pass2 = $_POST['passCheck'];
+        $errors = array();
+        if(strlen($name) < 4){
+            $errors[] = "Your name is to short, it should be at least 4 characters";
+        }
+        //lazy email check:
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            $errors[] = "Your email is not valid";
+        }
+        if($email != $email2){
+            $errors[] = "Your email doesn't match the second field";
+        }
+        if(strlen($pass)<8){
+            $errors[] = "Your password is to short";
+        }
+        if($email != $pass2){
+            $errors[] = "Your password doesn't match the second field";
+        }
+        if(count($errors) == 0){
+            $this->reg->installer->createAdminAccount($name,$email,$pass);
+            $output = "<fieldset class='step'><legend>Step 5 - Creating Account</legend>Your account has been created<br/> you can now log in to the <a href='/acp/'>ACP</a>.";
+        } else {
+            $output = "<fieldset class='step'><legend>Step 5 - Creating Account</legend>Creating your account has failed the following error(s) took place:<ul>";
+            foreach($errors as $error){
+                $output .= "<li>" . $error;
+            }
+            $output .= "</ul></fieldset><div class='clear' id='submitButton'><form action='/install/step/4/' method='POST'><input type='submit' value='One step back' /></form></div>";
+        }
+        $this->view->assign("content", $output);
         $this->view->draw('main');
     }
    

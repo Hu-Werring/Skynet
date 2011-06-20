@@ -147,6 +147,7 @@ class Core_Installer {
             $sql = $this->reg->database;
         }
 
+        $sql->insert("groups",array("Name"=>"Admin","Description"=>"Highest level account, has full access."));
         $sql->insert("users",array("Name"=>$name,"Email"=>$email,"Pass"=>sha1($pass)));
         $select = $sql->select("users","ID","WHERE Name='" . $name . "' AND Email='".$email."' AND Pass='".sha1($pass)."'");
         $uID = $select[0]['ID'];
@@ -162,11 +163,9 @@ class Core_Installer {
         } else {
             $sql = $this->reg->database;
         }
-        //before creating admin account, create the admin group
-        $sql->insert("groups",array("Name"=>"Admin","Description"=>"Highest level account, has full access."));
         
         $output = <<<HTML
-        <form action='/install/step/5/'>
+        <form action='/install/step/5/' method='POST'>
             <fieldset class='step'>
                 <legend>Step 4 - Create Account</legend>
                     <dl>
