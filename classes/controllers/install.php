@@ -29,8 +29,11 @@ class Controllers_Install {
         $this->reg->controller = $this;
         $this->view = $this->reg->view;
         $this->view->assign('contentTpl', 'install');
+        $this->view->assign('logo', '<img src="/images/logo.png" alt="Skynet" />');
         $this->view->add_js('/script/jquery.js');
         $this->view->add_js('/install/script/install.js');
+        $this->view->add_css('/install/style/install.css');
+        $this->view->add_css('/view/css/style.css');
         //Actie aanroepen. Dus: als www.skynet.nl/test/ dan testAction();
         if(isset($_GET['page']))
         {
@@ -69,20 +72,6 @@ class Controllers_Install {
     }
     private function step_2Action(){
         if($_SERVER['REQUEST_METHOD'] === "POST"){
-        $output="<style>".PHP_EOL;
-            $output.=<<<CSS
-            .step {
-                width: 30%;
-                margin-left: auto;
-                margin-right: auto;
-                height: 90%;
-            }
-            .clear{
-                clear:both;
-                text-align: right;
-            }
-CSS;
-            $output.="</style>" . PHP_EOL;
             foreach($_POST as $key => $value){
                 $eKey = explode("_",$key);
                 $type = $eKey[0];
@@ -113,7 +102,7 @@ CSS;
         rename(basedir .'settings'. DS .'settings.json',basedir .'settings'. DS .'settings.json.old');
         $this->reg->settings->write_json_file($sets,basedir .'settings'. DS .'settings.json');
         $this->reg->installer->nextStep(3);
-        $this->view->assign("content",$output . "<fieldset class='step'><legend>Step 2</legend>Created the new settings.json file</fieldset><div class='clear' id='submitButton'>" . $this->reg->installer->output . "</div>");
+        $this->view->assign("content","<fieldset class='step'><legend>Step 2 - Update settings</legend>Created the new settings.json file</fieldset><div class='clear' id='submitButton'>" . $this->reg->installer->output . "</div>");
         $this->view->draw('main');
         } else {
             header("Location: /install/step/1/");
@@ -122,20 +111,6 @@ CSS;
     }
     private function step_3Action(){
         if($_SERVER['REQUEST_METHOD'] === "POST"){
-            $output="<style>".PHP_EOL;
-            $output.=<<<CSS
-            .step {
-                width: 30%;
-                margin-left: auto;
-                margin-right: auto;
-                height: 90%;
-            }
-            .clear{
-                clear:both;
-                text-align: right;
-            }
-CSS;
-            $output.="</style>" . PHP_EOL;
             if(isset($_POST['force']) && $_POST['force']=='true'){
                 $force=true;
             } else {
@@ -143,7 +118,7 @@ CSS;
             }
             $this->reg->installer->checkTables($force);
             $this->reg->installer->nextStep(4);
-            $this->view->assign("content",$output . "<fieldset class='step'><legend>Step 3</legend>" . $this->reg->installer->output . "</div>");
+            $this->view->assign("content","<fieldset class='step'><legend>Step 3</legend>" . $this->reg->installer->output . "</div>");
             $this->view->draw('main');
         } else {
             header("Location: /install/step/1/");
@@ -152,23 +127,8 @@ CSS;
     }
    
     private function step_4Action(){
-        $output="<style>".PHP_EOL;
-            $output.=<<<CSS
-            .step {
-                width: 30%;
-                margin-left: auto;
-                margin-right: auto;
-                height: 90%;
-            }
-            .clear{
-                clear:both;
-                text-align: right;
-            }
-CSS;
-            $output.="</style>" . PHP_EOL;
         
-        
-        $this->view->assign("content",$output . "<fieldset class='step'><legend>Step 4</legend>" . $this->reg->installer->output . "</div>");
+        $this->view->assign("content", $this->reg->installer->output);
         
         $this->view->draw('main');
     }
