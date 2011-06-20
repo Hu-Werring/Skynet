@@ -51,6 +51,7 @@ class Controllers_Acp {
     private function indexAction()
     {
         $this->view->assign('contentTpl', 'overview');
+        echo 'aloha';
         //$this->view->assign('content', 'grapje');
         $this->view->draw('main');
     }
