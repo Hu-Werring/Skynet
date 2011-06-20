@@ -115,11 +115,25 @@ class Core_View
     {
         if( in_array( $filename, $this->css_files ) == true )
         {
-                return false;
+                return null;
         }
 
         $path =  basedir . $this->templatePath . 'css' . DS . $filename;
 
+        /**
+         * When apsolute path is used, add it directly without use of layout path or something else
+         * relative paths will use layout path
+        */
+        /*it works without absolute paths. absolute path wil be created in includeLibs().
+        if(substr($filename,0,1) != "/"){
+            $path = basedir . $this->layoutPath . DS . 'css' . DS . $filename;
+            $fileLoc = $this->layoutPath . DS . 'css' . DS . $filename;
+        } else {
+            $path = basedir . $filename;
+            $fileLoc = $filename;
+        }
+        */
+        
         if( file_exists($path) == false )
         {
                 /*------------ERROR------------*/
@@ -128,7 +142,7 @@ class Core_View
                 //log::write("Css file not found. File: `$path`", $this, 'add_css()');
                 return false;
         }
-        $this->css_files[] = $filename;
+        $this->css_files[] = $fileLoc;
         $this->includeLibs();
     }
 
@@ -142,18 +156,26 @@ class Core_View
     {
         if( in_array( $filename, $this->js_files ) == true )
         {
-                return false;
+                return null;
         }
         
-        //$path = basedir . $this->layoutPath . DS . 'js' . DS . $filename;
-        $path = basedir . $filename;
+        $path =  basedir . $this->templatePath . 'css' . DS . $filename;
+/*
+        if(substr($filename,0,1) != "/"){
+            $path = basedir . $this->layoutPath . DS . 'css' . DS . $filename;
+            $fileLoc = $this->layoutPath . DS . 'css' . DS . $filename;
+        } else {
+            $path = basedir . $filename;
+            $fileLoc = $filename;
+        }*/
+        
         if( file_exists($path) == false )
         {
                 //log::write("Js file not found. File: `$path`", $this, 'add_js()');
                 return false;
         }
         
-        $this->js_files[] = $filename;
+        $this->js_files[] = $fileLoc;
         $this->includeLibs();
     }
     
