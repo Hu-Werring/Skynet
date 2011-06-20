@@ -57,6 +57,7 @@ class Core_Skynet {
      * initiate main website
     */
     public function main(){
+        $this->view->setTemplatePath('view/');
         new Controllers_Main();
     }
     
@@ -66,7 +67,7 @@ class Core_Skynet {
     */
     public function acp(){
         //add acp dir to templatepath
-        $this->view->setTemplatePath(basedir.'view/acp/');
+        $this->view->setTemplatePath('view/acp/');
         new Controllers_Acp();
     }
     
