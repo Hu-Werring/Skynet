@@ -162,7 +162,7 @@ class Controllers_Install {
         if(strlen($pass)<8){
             $errors[] = "Your password is to short";
         }
-        if($email != $pass2){
+        if($pass != $pass2){
             $errors[] = "Your password doesn't match the second field";
         }
         if(count($errors) == 0){
