@@ -38,7 +38,7 @@ class Controllers_Acp {
             $action = strtolower(substr($action,0,-1)).'Action';
             if(method_exists($this, $action))
             {
-                $this->{$action}();
+                call_user_func(array($this,$action));
             }
             else
             {
