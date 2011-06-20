@@ -192,7 +192,7 @@ HTML;
             $currentStep = $step -1;
             $this->output .= <<<HTML
             <form action="/install/step/$currentStep/" method='POST' style='display: inline;'>
-            <input type='checkbox' name="force" id='override' value='true' />Check to override old CMS
+            <input type='checkbox' name="force" id='override' value='true' />Check to override old values
             <input type="submit" value='Try Again' />
             </form><form action="/install/step/1/" method="POST" style='display: inline;'>
 <input type="submit" value='Back to step 1' />
