@@ -106,7 +106,11 @@ class Core_Installer {
         }
         foreach($oldTables as $key=>$table){
             if(!is_numeric($key)) continue;
-            if(isset($tlist[$table['Tables_in_project4']])){
+            $name = $this->reg->settings->settings['db']['name'];
+            
+
+            
+            if(isset($tlist[$table['Tables_in_' . $name ]])){
                 $exists = true;
                 break;
             }
@@ -119,6 +123,7 @@ class Core_Installer {
             $this->createTables();
         }
         $this->output.="</fieldset><div class='clear' id='submitButton'>";
+            
         
     }
     private function createTables(){
