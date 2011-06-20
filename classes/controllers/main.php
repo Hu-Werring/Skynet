@@ -32,10 +32,13 @@ class Controllers_Main {
         //Actie aanroepen. Dus: als www.skynet.nl/test dan TestAction();
         if(isset($_GET['page']))
         {
-            $action = strtolower(str_replace("/", "",$_GET['page'])).'Action';
+            //remove install/ from begin of string and change / to "_"
+            $action = str_replace("/","_",str_replace("install/","",$_GET['page']));
+            //substr last char since that is always a /
+            $action = strtolower(substr($action,0,-1)).'Action';
             if(method_exists($this, $action))
             {
-                $this->{$action}();
+                call_user_func(array($this,$action));
             }
             else
             {

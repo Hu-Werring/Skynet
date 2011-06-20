@@ -110,7 +110,7 @@ CSS;
                     
                     $this->output.="</dl>" . PHP_EOL;
                     if($i == 1){
-                        $this->output.="<p id='advancedHolder' style='text-align: right; padding-right: 5px;'><input type='checkbox' id='goAdvanced'>Display developer options</p>";
+                        $this->output.="<p id='advancedHolder' style='text-align: right; padding-right: 5px;'><label><input type='checkbox' id='goAdvanced'>Display developer options</label></p>";
                     }
                     $this->output.="</div></fieldset>" . PHP_EOL;
                 }
@@ -192,7 +192,7 @@ HTML;
             $currentStep = $step -1;
             $this->output .= <<<HTML
             <form action="/install/step/$currentStep/" method='POST' style='display: inline;'>
-            <input type='checkbox' name="force" id='override' value='true' />Check to override old CMS
+            <input type='checkbox' name="force" id='override' value='true' />Check to override old values
             <input type="submit" value='Try Again' />
             </form><form action="/install/step/1/" method="POST" style='display: inline;'>
 <input type="submit" value='Back to step 1' />
