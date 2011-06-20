@@ -40,43 +40,13 @@ class Core_Installer {
     */
     public function showSettings(){
             $sets = $this->reg->settings->settings;
-            $this->output.="<style>".PHP_EOL;
-            $this->output.=<<<CSS
-            .settings {
-                width: 30%;
-                float: left;
-                height: 90%;
-            }
-            .settings div.holder {
-                overflow-y: auto;
-                max-height: 100%;
-            }
-            .clear{
-                clear:both;
-                text-align: right;
-            }
-            #advancedHolder {
-                display: none;
-            }
-            span.prev {
-                float:left;
-            }
-            span.next {
-                float: right;
-            }
-            .close {
-                float: right;
-                cursor: pointer;
-            }
-CSS;
-            $this->output.="</style>" . PHP_EOL;
             $this->output.="<form action='/install/step/2/' method='POST'>" . PHP_EOL;
             $i=0;
             foreach($sets as $key => $value){
                 $i++;
                 if(strpos($key,"_info")!=false) continue;
                 if(is_array($value)){
-                    $this->output.= "<fieldset id='setting_".$key."' class='settings'><legend>" . $key . "</legend><div class='holder'>" . PHP_EOL;;
+                    $this->output.= "<fieldset id='setting_".$key."' class='settings'><legend>Step 1 - " . $key . "</legend><div class='holder'>" . PHP_EOL;;
                     if(isset($sets[$key . "_info"])){
                         $this->output.="<div class='setting_info' id='setting_info_".$key."'>" . $sets[$key . "_info"] . "</div>" . PHP_EOL;
                     }
@@ -171,7 +141,7 @@ CSS;
         } else {
             $sql = $this->reg->database;
         }
-        $sql->insert("groups",array("Name"=>"Admin","Description"=>"Highest level account, has full access."));
+
         $sql->insert("users",array("Name"=>$name,"Email"=>$email,"Pass"=>sha1($pass)));
         $select = $sql->select("users","ID","WHERE Name='" . $name . "' AND Email='".$email."' AND Pass='".sha1($pass)."'");
         $uID = $select[0]['ID'];
@@ -181,11 +151,41 @@ CSS;
         $sql->insert("groupmembers",array("uID"=>$uID,"gID"=>$gID));
     }
     
+    public function createAdminAccountForm(){
+        if(!isset($this->reg->database)){
+            $sql = new Core_Database();
+        } else {
+            $sql = $this->reg->database;
+        }
+        //before creating admin account, create the admin group
+        $sql->insert("groups",array("Name"=>"Admin","Description"=>"Highest level account, has full access."));
+        
+        $output = <<<HTML
+        <form action='/install/step/5/'>
+            <fieldset class='step'>
+                <legend>Step 4 - Create Account</legend>
+                    <dl>
+                        <dt>Name</dt>
+                        <dd><input type='text' name='name' /></dd>
+                        <dt>Email</dt>
+                        <dd><input type='text' name='email' /></dd>
+                        <dt>Email - repeat</dt>
+                        <dd><input type='text' name='emailCheck' /></dd>
+                        <dt>Password</dt>
+                        <dd><input type='password' name='Password' /></dd>
+                    </dl>
+                    <input type="submit" value='Next step' />   
+            </fieldset>
+            
+        </form>
+HTML;
+    }
+    
     public function nextStep($step){
         if(!$this->disAllowNextStep){
         $this->output .= <<<HTML
 <form action="/install/step/$step/" method="POST">
-<input type="submit" value='Next step' />
+<input type="submit" value='Next step' /> 
 </form>
 HTML;
         } else {
