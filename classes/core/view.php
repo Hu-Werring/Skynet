@@ -123,8 +123,10 @@ class Core_View
         */
         if(substr($filename,0,1) != "/"){
             $path = basedir . $this->layoutPath . DS . 'css' . DS . $filename;
+            $fileLoc = $this->layoutPath . DS . 'css' . DS . $filename;
         } else {
             $path = basedir . $filename;
+            $fileLoc = $filename;
         }
         if( file_exists($path) == false )
         {
@@ -134,7 +136,7 @@ class Core_View
                 //log::write("Css file not found. File: `$path`", $this, 'add_css()');
                 return false;
         }
-        $this->css_files[] = $filename;
+        $this->css_files[] = $fileLoc;
         $this->includeLibs();
     }
 
@@ -153,8 +155,10 @@ class Core_View
         
         if(substr($filename,0,1) != "/"){
             $path = basedir . $this->layoutPath . DS . 'css' . DS . $filename;
+            $fileLoc = $this->layoutPath . DS . 'css' . DS . $filename;
         } else {
             $path = basedir . $filename;
+            $fileLoc = $filename;
         }
         if( file_exists($path) == false )
         {
@@ -162,7 +166,7 @@ class Core_View
                 return false;
         }
         
-        $this->js_files[] = $filename;
+        $this->js_files[] = $fileLoc;
         $this->includeLibs();
     }
     
