@@ -4,7 +4,10 @@
 $(document).ready(function() {
   var path = $(location).attr('pathname');
   var step = path.substr(1).split("/")[2];
-  
+  $("#submitButton").css("width","30%");
+  $("#submitButton").css("text-align","right");
+  $("#submitButton").css("margin-left","auto");
+  $("#submitButton").css("margin-right","auto"); 
   switch(step){
     case '1':
       step1();
@@ -15,8 +18,11 @@ $(document).ready(function() {
     case '3':
       step3();
       break;
-    case '3':
+    case '4':
       step4();
+      break;
+    case '5':
+      step5();
       break;
   }
 });
@@ -37,10 +43,6 @@ function step1(){
   $(".settings div.holder p span").css("cursor","pointer");
   $(".settings:first div.holder p span.prev").css("visibility","hidden");
   $(".settings:last div.holder p span.next").css("visibility","hidden");
-  $("#submitButton").css("width","30%");
-  $("#submitButton").css("text-align","right");
-  $("#submitButton").css("margin-left","auto");
-  $("#submitButton").css("margin-right","auto");
   $("#goAdvanced").click(function(){
     var advancedMode = ($(this).attr("checked") === undefined ? false : true);
     if(advancedMode){
@@ -114,16 +116,9 @@ function step1(){
 
 }
 function step2(){
-  $("#submitButton").css("width","30%");
-  $("#submitButton").css("text-align","right");
-  $("#submitButton").css("margin-left","auto");
-  $("#submitButton").css("margin-right","auto");
 }
 function step3(){
-  $("#submitButton").css("width","30%");
-  $("#submitButton").css("text-align","right");
-  $("#submitButton").css("margin-left","auto");
-  $("#submitButton").css("margin-right","auto");
+
   $("#override").click(function(){
     var checked = ($(this).attr("checked") === undefined ? false : true);
     if(checked) {
@@ -132,7 +127,86 @@ function step3(){
   });
 }
 function step4(){
-
+  $(".createInfo").css("display","none");
+  $("#adminName").blur(function(){
+    name = jQuery.trim($(this).attr("value"));
+    $(this).attr("value",name);
+    if(name.length>=4 || name.length==0){
+      $(this).css('color',"green");
+      $("#" + $(this).attr("id") + "Info").fadeOut();
+    } else {
+      $(this).css('color',"red");
+      $("#" + $(this).attr("id") + "Info").fadeIn();
+    }
+  });
+  $("#adminEmail").blur(function(){
+    mail = jQuery.trim($(this).attr("value"));
+    $(this).attr("value",mail);
+    if(checkMail(mail) || mail.length==0){
+      $(this).css('color',"green");
+      $("#" + $(this).attr("id") + "Info").fadeOut();
+    } else {
+      $(this).css('color',"red");
+      $("#" + $(this).attr("id") + "Info").fadeIn();
+    }
+  });
+  $("#adminEmailCheck").blur(function(){
+    mail2 = jQuery.trim($(this).attr("value"));
+    mail1 = jQuery.trim($("#adminEmail").attr("value"));
+       $(this).attr("value",mail2);
+    if(mail1 == mail2 || mail2.length==0){
+      $(this).css('color',"green");
+      $("#" + $(this).attr("id") + "Info").fadeOut();
+    } else {
+      $(this).css('color',"red");
+      $("#" + $(this).attr("id") + "Info").fadeIn();
+    }
+  });
+  $("#adminPass").blur(function(){
+    pass = jQuery.trim($(this).attr("value"));
+    if(pass.length>=8 || pass.length==0){
+      $(this).css('color',"green");
+      $("#" + $(this).attr("id") + "Info").fadeOut();
+    } else {
+      $(this).css('color',"red");
+      $("#" + $(this).attr("id") + "Info").fadeIn();
+    }
+  });
+    $("#adminPassCheck").blur(function(){
+      pass2 = jQuery.trim($(this).attr("value"));
+      pass1 = jQuery.trim($("#adminPass").attr("value"));
+       $(this).attr("value",pass2);
+    if(pass1 == pass2 || pass2.length==0){
+      $(this).css('color',"green");
+      $("#" + $(this).attr("id") + "Info").fadeOut();
+    } else {
+      $(this).css('color',"red");
+      $("#" + $(this).attr("id") + "Info").fadeIn();
+    }
+  });
+  $("#adminName").focus(function(){
+    $(this).css('color',"black");
+  });
+  $("#adminEmail").focus(function(){
+    $(this).css('color',"black");
+  });
+  $("#adminEmailCheck").focus(function(){
+    $(this).css('color',"black");
+  });
+  $("#adminPass").focus(function(){
+    $(this).css('color',"black");
+  });
+  $("#adminPassCheck").focus(function(){
+    $(this).css('color',"black");
+  });
 }
-function step5(){}
+function step5(){
+  
+}
+
+
+function checkMail(email){
+  var pattern = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
+  return pattern.test(email);
+}
 

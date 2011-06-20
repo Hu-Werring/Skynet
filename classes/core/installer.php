@@ -171,19 +171,22 @@ class Core_Installer {
                 <legend>Step 4 - Create Account</legend>
                     <dl>
                         <dt>Name</dt>
-                        <dd><input type='text' name='name' /></dd>
+                        <dd><input id='adminName' type='text' name='name' /><br/><span id='adminNameInfo' class='createInfo'>A name should be at least 4 characters.</span></dd>
                         <dt>Email</dt>
-                        <dd><input type='text' name='email' /></dd>
+                        <dd><input id='adminEmail' type='text' name='email' /><br/><span id='adminEmailInfo' class='createInfo'>The email has to be valid.</span></dd>
                         <dt>Email - repeat</dt>
-                        <dd><input type='text' name='emailCheck' /></dd>
+                        <dd><input id='adminEmailCheck' type='text' name='emailCheck' /><br/><span id='adminEmailCheckInfo' class='createInfo'>The email should match the previous field.</span></dd>
                         <dt>Password</dt>
-                        <dd><input type='password' name='Password' /></dd>
+                        <dd><input id='adminPass' type='password' name='pass' /><br/><span id='adminPassInfo' class='createInfo'>A password should be at least 8 characters long</span></dd>
+                        <dt>Password - repeat</dt>
+                        <dd><input id='adminPassCheck' type='password' name='passCheck' /><br/><span id='adminPassCheckInfo' class='createInfo'>The password should match the previous field.</span></dd>
                     </dl>
-                    <input type="submit" value='Next step' />   
+                      
             </fieldset>
-            
+            <div class='clear' id='submitButton'><input type="submit" value='Next step' /></div>
         </form>
 HTML;
+    $this->output = $output;
     }
     
     public function nextStep($step){
