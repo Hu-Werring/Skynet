@@ -86,7 +86,6 @@ class Core_View
     {
         $this->templatePath = $string;
         $this->tpl->configure('tpl_dir', basedir.$string);
-
     }
     
     public function __get($var)
