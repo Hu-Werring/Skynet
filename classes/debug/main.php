@@ -66,6 +66,40 @@ class Debug_Main  {
     {
         return $this->$name;
     }
+    
+    /**
+     * msg
+     * Takes care off all notices, messages, errors, warnings, fatals, querys etc
+     * @access public
+     * @param $type
+     * @param $Name the name of the msg
+     * @param $comment info or comment on a msg
+     * @param $ref the reference to te script that called this function
+     */
+    
+    //Types: core, query, error, notice. More?thom?
+    public function msg($type, $Name, $comment, $ref)
+    {
+       /* switch($type)
+        {
+            case core:
+                //
+                break;
+            
+            case query:
+                //
+                break;
+            
+            case error:
+                //
+                break;
+            
+            case notice:
+            default:
+                //
+                break;
+        }*/
+    }
 }
 
 ?>
