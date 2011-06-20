@@ -192,7 +192,7 @@ HTML;
     public function nextStep($step){
         if(!$this->disAllowNextStep){
         $this->output .= <<<HTML
-<form action="/install/step/$step/" method="POST">
+<form id='nextStep' action="/install/step/$step/" method="POST">
 <input type="submit" value='Next step' /> 
 </form>
 HTML;

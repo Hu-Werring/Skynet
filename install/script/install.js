@@ -116,9 +116,12 @@ function step1(){
 
 }
 function step2(){
+  setTimeout(function(){$("#nextStep").submit()},2000);
 }
 function step3(){
-
+  if($("#override").length==0){
+    setTimeout(function(){$("#nextStep").submit()},2000);
+  }
   $("#override").click(function(){
     var checked = ($(this).attr("checked") === undefined ? false : true);
     if(checked) {
