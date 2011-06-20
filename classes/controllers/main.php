@@ -53,7 +53,7 @@ class Controllers_Main {
     
     private function indexAction()
     {
-        //$this->view->add_css('style.css');
+        $this->view->add_css('style.css');
         $this->view->assign('contentTpl', 'home');
         $this->view->assign('content', 'grapje');
         $this->view->draw('main');
