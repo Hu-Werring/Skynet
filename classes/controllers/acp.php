@@ -32,7 +32,10 @@ class Controllers_Acp {
         //Actie aanroepen. Dus: als www.skynet.nl/acp/test dan TestAction();
         if(isset($_GET['page']))
         {
-            $action = strtolower(str_replace("/", "",$_GET['page'])).'Action';
+            //remove install/ from begin of string and change / to "_"
+            $action = str_replace("/","_",str_replace("acp/","",$_GET['page']));
+            //substr last char since that is always a /
+            $action = strtolower(substr($action,0,-1)).'Action';
             if(method_exists($this, $action))
             {
                 $this->{$action}();
