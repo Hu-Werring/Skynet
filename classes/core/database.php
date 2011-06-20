@@ -276,5 +276,10 @@ class Core_Database {
     public function lastError(){
         return $this->sql->errno . " " . $this->sql->error . PHP_EOL . "The complete query was \"" . $this->lastQuery . "\"" . PHP_EOL . PHP_EOL;
     }
+    
+    private function debug()
+    {
+        //$this->reg->debug->msg('query', $lastQuery, mysql_info(), $this);
+    }
 }
 

@@ -120,7 +120,10 @@ class Core_View
         $path = basedir . $this->layoutPath . DS . 'css' . DS . $filename;
 
         if( file_exists($path) == false )
-        {	
+        {
+                /*------------ERROR------------*/
+              //  $this->reg->debug->error('Error','Function add_css()', 'Css file not found. File: '.$path, DateTime, $this);
+                
                 //log::write("Css file not found. File: `$path`", $this, 'add_css()');
                 return false;
         }
