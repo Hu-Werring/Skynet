@@ -61,6 +61,7 @@ class Controllers_Main {
     
     private function testAction()
     {
+        $this->view->add_css('style.css');
         $this->view->assign('contentTpl', 'test');
         $this->view->assign('content', 'HAha test');
         $this->view->draw('main');
