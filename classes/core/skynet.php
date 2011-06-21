@@ -68,7 +68,10 @@ class Core_Skynet {
     */
     public function main(){
         $this->view->setTemplatePath('view/');
+        $pages = new Manager_Page();
         new Controllers_Main();
+        
+
     }
     
     /**
