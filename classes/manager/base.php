@@ -1,7 +1,7 @@
 <?php
 
 /**
- * page.php
+ * base.php
  * @package manager_page
 */
 /**
