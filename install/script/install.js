@@ -46,9 +46,9 @@ function step1(){
   $("#goAdvanced").click(function(){
     var advancedMode = ($(this).attr("checked") === undefined ? false : true);
     if(advancedMode){
-      $(".settings div.holder p span").css("display","block");
+      $(".settings div.holder p span").fadeIn();
     } else {
-      $(".settings div.holder p span").css("display","none");
+      $(".settings div.holder p span").fadeOut();
     }
   });
   $(".settings div.holder p span.next").click(function(){
@@ -93,25 +93,28 @@ function step1(){
   $("dd div").css("margin","5px");
   $("dd div").css("position","absolute");
   $("dd div").css("background","#DCDCDC");
-  $("dd span.help").text("?");
+  $("dd span.help").html("<img src='/install/img/help.png' alt='?' style='vertical-align: middle;' />");
   $("dd span.help").css("cursor","pointer");
   $("dd span.help").click(function(){
     if(openInfo != null){
-      openInfo.children(".close").empty();
-      openInfo.css("display","none");
-      openInfo=null
+      openInfo.fadeOut('',function(){
+        openInfo.children(".close").empty();
+        openInfo=null
+      });
     }
     infoField = $(this).parent().children("div");
     infoField.prepend("<span class='close'>[X]</span>");
     $(".close").click(function(){
-    if(openInfo!= null){
-      openInfo.children(".close").empty();
-      openInfo.css("display","none");
-      openInfo=null
+    if(openInfo != null){
+      openInfo.fadeOut('',function(){
+        openInfo.children(".close").empty();
+        openInfo=null
+      });
     }
   });
-    infoField.css("display","block");
-    openInfo = infoField;
+    infoField.fadeIn('',function(){
+      openInfo = infoField;
+    });
   });
 
 }
