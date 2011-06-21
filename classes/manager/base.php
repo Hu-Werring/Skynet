@@ -24,6 +24,9 @@ class Manager_Base {
      * Init page Manager
      */
     function __construct() {
+        
+    }
+    protected function init(){
         $this->reg = Core_Registery::singleton();
     }
 }
