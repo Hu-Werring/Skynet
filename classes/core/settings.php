@@ -1,7 +1,7 @@
 <?php
 /**
  * settings.php
- * @package Skynet
+ * @package Skynet_core
 */
 /**
  * Class Core_Settings
@@ -10,7 +10,7 @@
  * @author Thom Werring <info@werringweb.nl>
  * @author Lucas Weijers <meel_to_lucas@hotmail.com>
  * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
- * @package Skynet
+ * @package Skynet_core
 */
 
 class Core_Settings

@@ -1,7 +1,7 @@
 <?php
 /**
  * database.php
- * @package Skynet
+ * @package Skynet_core
 */
 /**
  * class Core_Database
@@ -9,7 +9,7 @@
  * @version 1.0
  * @author Thom Werring <info@werringweb.nl>
  * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
- * @package Skynet
+ * @package Skynet_core
 */
 
 class Core_Database {

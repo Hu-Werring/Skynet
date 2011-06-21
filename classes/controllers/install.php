@@ -2,7 +2,7 @@
 
 /**
  * install.php
- * @package Skynet
+ * @package Skynet_controllers
 */
 
 /**
@@ -11,7 +11,7 @@
  * @version 0.5
  * @author Thom Werring <info@werringweb.nl>
  * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
- * @package Skynet
+ * @package Skynet_controllers
  */
 
 class Controllers_Install {

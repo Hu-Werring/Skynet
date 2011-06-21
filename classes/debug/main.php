@@ -1,14 +1,14 @@
 <?php
 /**
  * main.php
- * @package Skynet
+ * @package Skynet_debug
 */
 /**
  * class Debug_Main
  * @version 0.1
  * @author Lucas Weijers <meel_to_lucas@hotmail.com>
  * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
- * @package Skynet
+ * @package Skynet_debug
 */
 
 class Debug_Main  {
