@@ -26,8 +26,15 @@ class Manager_Base {
     function __construct() {
         
     }
-    protected function init(){
+    
+    protected function init($className){
         $this->reg = Core_Registery::singleton();
+        $this->reg->$className = $this;
+    }
+    
+    protected function cmsActions($actions)
+    {
+        $this->reg->view->assign("cmsActions", $actions);
     }
 }
 ?>
