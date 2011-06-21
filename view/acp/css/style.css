@@ -8,7 +8,6 @@ body, img, ul, li
 #header
 {
     width: 100%;
-    min-height: 83px;
     height: 15%;
     background-color: #666666;
     position: relative;
