@@ -1,6 +1,7 @@
 
-.komodotools/
 *.orig
+.komodotools/
+README
 settings/settings.json.old
 test.php
 tmp/
