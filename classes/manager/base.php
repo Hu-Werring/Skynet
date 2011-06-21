@@ -2,7 +2,7 @@
 
 /**
  * base.php
- * @package manager_page
+ * @package Skynet_managers
 */
 /**
  * class Manager_Base
