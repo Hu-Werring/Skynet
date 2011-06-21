@@ -1,8 +1,12 @@
 <?php
 /*
  * Class Core_Settings
- * @todo: Use JSON instead of INI
- */
+ * Handles settings
+ * @version 0.5
+ * @author Thom Werring <info@werringweb.nl>
+ * @author Lucas Weijers <meel_to_lucas@hotmail.com>
+ * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
+*/
 
 class Core_Settings
 {
@@ -36,6 +40,14 @@ class Core_Settings
         $this->setJson(basedir .'settings'. DS .'settings.json');
     }
     
+    /**
+     * setJson
+     * check if our json settings file exists
+     * if not, be doomed.
+     * else loadn and decode it to $this->settings
+     * @access Public
+     * @param String $file Path to json file
+    */
     public function setJson($file) 
     {	
         #check if file exists
@@ -48,6 +60,13 @@ class Core_Settings
         $this->settings = json_decode(file_get_contents($file), true);
     }
     
+    /**
+     * write_json_file
+     * pretty write new json
+     * @access public
+     * @param Array $array Array containing new settings file
+     * @param String $file path to file to be written
+    */
     public function write_json_file($array, $file)
     {
         $json = str_replace('{','{' . PHP_EOL,json_encode($array));
@@ -73,6 +92,13 @@ class Core_Settings
         $this->safefilerewrite($file, $json);
     }
 
+    /**
+     * safefilerewrite
+     * checks if file is writeable and writes data to it.
+     * @access private
+     * @param String $fileName Name of file to be written to
+     * @param String $dataToSave Data to be written
+    */
     private function safefilerewrite($fileName, $dataToSave)
     {    if ($fp = fopen($fileName, 'w'))
         {

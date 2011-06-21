@@ -1,7 +1,11 @@
 <?php
 
-/*
+/**
  * class Controllers_Install
+ * handles smart URL's for the installer
+ * @version 0.5
+ * @author Thom Werring <info@werringweb.nl>
+ * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
  */
 
 class Controllers_Install {
@@ -14,9 +18,9 @@ class Controllers_Install {
     private $reg = null;
     
     /**
-     *$view
-     *Direct link to view class. (From registry).
-     *@access private
+     * $view
+     * Direct link to view class. (From registry).
+     * @access private
      */
     private $view;
 
@@ -56,7 +60,13 @@ class Controllers_Install {
         }
         
     }
-    
+    /**
+     * indexAction
+     * action triggered on all pages in the ACP,
+     * unless a own method is to be found for it.
+     * Auto redirects to /install/step/1/
+     * @access private
+    */
     private function indexAction()
     {
         header("Location: /install/step/1/");
@@ -64,12 +74,25 @@ class Controllers_Install {
         $this->view->draw('main');
     }
     
-    
+    /**
+     * step_1Action
+     * First installer step
+     * @see Core_Installer::showSettings()
+     * @access private
+    */
     private function step_1Action(){
         $this->reg->installer->showSettings();
         $this->view->assign("content",$this->reg->installer->output);
         $this->view->draw('main');
     }
+    
+    /**
+     * step_2Action
+     * Second installer step
+     * handels POST data from step 1 and write it to a new settings.json
+     * old settings are stored as settings.json.old
+     * @access private
+    */
     private function step_2Action(){
         if($_SERVER['REQUEST_METHOD'] === "POST"){
             foreach($_POST as $key => $value){
@@ -102,13 +125,22 @@ class Controllers_Install {
         rename(basedir .'settings'. DS .'settings.json',basedir .'settings'. DS .'settings.json.old');
         $this->reg->settings->write_json_file($sets,basedir .'settings'. DS .'settings.json');
         $this->reg->installer->nextStep(3);
-        $this->view->assign("content","<fieldset class='step'><legend>Step 2 - Update settings</legend>Created the new settings.json file</fieldset><div class='clear' id='submitButton'>" . $this->reg->installer->output . "</div>");
+        $this->view->assign("content","<fieldset class='step'><legend>Step 2 - Update settings</legend>Your new settings have been stored. Automatic continue in 3 seconds.</fieldset><div class='clear' id='submitButton'>" . $this->reg->installer->output . "</div>");
         $this->view->draw('main');
         } else {
             header("Location: /install/step/1/");
             exit();
         }
     }
+    
+    /**
+     * step_3Action
+     * Third step for the installer
+     * Checks for database
+     * @see Core_Installer::checkTables()
+     * @see Core_Installer::createTables()
+     * @access private
+    */
     private function step_3Action(){
         if($_SERVER['REQUEST_METHOD'] === "POST"){
             if(isset($_POST['force']) && $_POST['force']=='true'){
@@ -126,6 +158,13 @@ class Controllers_Install {
         }
     }
    
+    /**
+     * step_4Action
+     * fourth step for the installer
+     * admin creating form
+     * @see Core_Installer::createAdminAccountForm()
+     * @access private
+    */
     private function step_4Action(){
         if($_SERVER['REQUEST_METHOD'] !== "POST"){
             header("Location: /install/step/1/");
@@ -137,6 +176,14 @@ class Controllers_Install {
         $this->view->draw('main');
     }
     
+    /**
+     * step_5Action
+     * fifth step for the installer
+     * Creates actual admin account
+     * and populates other tables
+     * @see Core_Installer::createAdminAccount()
+     * @access private
+    */
     private function step_5Action(){
        if($_SERVER['REQUEST_METHOD'] !== "POST"){
             header("Location: /install/step/1/");

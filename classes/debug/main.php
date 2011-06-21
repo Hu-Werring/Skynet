@@ -2,7 +2,10 @@
 
 /*
  * class Debug_Main
- */
+ * @version 0.1
+ * @author Lucas Weijers <meel_to_lucas@hotmail.com>
+ * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
+*/
 
 class Debug_Main  {
     
@@ -50,10 +53,25 @@ class Debug_Main  {
         print_r($data);
         echo '</pre>';
     }
-    
+    /**
+     * dump
+     * vardumps data if we are allowed to.
+     * @access private
+     * @param Mixed $data Data to be vardumped
+    */
     private function dump($data){
         var_dump($data);
     }
+    
+    /**
+     * __call
+     * magic caller to functions in this class if its allowed
+     * else write to log
+     * @todo fix log writing
+     * @param String $name name of function
+     * @param Array $args Arguments of function
+     * @return Mixed result of function or false
+    */
     public function __call($name,$args){
         if($this->allowDebug)
             return @call_user_func_array(array($this, $name),$args);
@@ -62,6 +80,10 @@ class Debug_Main  {
         return false;
     }
     
+    /**
+     * __get
+     * @access public
+    */
     public function __get($name)
     {
         return $this->$name;

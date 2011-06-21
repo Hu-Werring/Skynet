@@ -1,7 +1,12 @@
 <?php
 
-/*
- * class Controllers_Main
+/**
+ * class Controllers_Install
+ * handles smart URL's for the installer
+ * @version 0.1
+ * @author Thom Werring <info@werringweb.nl>
+ * @author Lucas Weijers <meel_to_lucas@hotmail.com>
+ * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
  */
 
 class Controllers_Main {
@@ -51,6 +56,12 @@ class Controllers_Main {
         }
     }
     
+    /**
+     * indexAction
+     * action triggered on all pages on the main website,
+     * unless a own method is to be found for it.
+     * @access private
+    */
     private function indexAction()
     {
         $this->view->add_css('style.css');
@@ -59,6 +70,10 @@ class Controllers_Main {
         $this->view->draw('main');
     }
     
+    /**
+     * testAction
+     * @ignore
+    */
     private function testAction()
     {
         $this->view->add_css('style.css');

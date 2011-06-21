@@ -2,7 +2,12 @@
 
 /*
  * class Core_Skynet
- */
+ * The Skynet core
+ * @version 0.2
+ * @author Thom Werring <info@werringweb.nl>
+ * @author Lucas Weijers <meel_to_lucas@hotmail.com>
+ * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
+*/
 
 class Core_Skynet {
     
@@ -55,6 +60,7 @@ class Core_Skynet {
     /**
      * main
      * initiate main website
+     * @acces public
     */
     public function main(){
         $this->view->setTemplatePath('view/');
@@ -64,6 +70,7 @@ class Core_Skynet {
     /**
      * main
      * initiate Admin Control Panel
+     * @access public
     */
     public function acp(){
         //add acp dir to templatepath
@@ -74,6 +81,7 @@ class Core_Skynet {
     /**
      * Install
      * runs the installer
+     * @access public
     */
     public function install(){
         $installer = new Core_Installer();

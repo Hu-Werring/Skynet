@@ -2,7 +2,11 @@
 
 /*
  * class Core_Installer
- */
+ * Installer core class
+ * @version 0.5
+ * @author Thom Werring <info@werringweb.nl>
+ * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
+*/
 
 class Core_Installer {
     
@@ -16,27 +20,32 @@ class Core_Installer {
     
     /**
      * Stores Output to send to template
+     * @access public
     */
     public $output = "";
     
+    /**
+     * $disAllowNextStep
+     * @access private
+     * @see Core_Installer::nextStep()
+    */
     private $disAllowNextStep=false;
     
     /*
      * __construct()
+     * adds Core_Installer to registery
      */
     
     function __construct() {
         $this->reg = Core_Registery::singleton();
         
         $this->reg->installer = $this;
-        
-        //$this->checkTables();
-        //$this->createTables();
     }
     
     /**
      * showSettings
-     * Sends settings in settings.json to $output in nice HTML format
+     * Sends settings in settings.json to $output in nice HTML form
+     * @access public
     */
     public function showSettings(){
             $sets = $this->reg->settings->settings;
@@ -92,6 +101,13 @@ class Core_Installer {
             
     }
     
+    /**
+     * checkTables
+     * see if there is already a table that we are about to install, if not, install the tables
+     * @param boolean $force force install even if we have to override existing tables
+     * @see Core_Installer::createTables()
+     * @access private
+    */
     public function checkTables($force=false){
         //Init Core_Database, it won't autostart in the installer due to step 1
         new Core_Database();
@@ -126,6 +142,12 @@ class Core_Installer {
             
         
     }
+    
+    /**
+     * createTables
+     * create all tables needed for base install of CMS
+     * @access private
+    */
     private function createTables(){
         $dbStruct = base64_decode(file_get_contents(basedir . "install" . DS . "databaseStructure"));
         $tables = json_decode($dbStruct,true);
@@ -140,6 +162,16 @@ class Core_Installer {
         }
     }
     
+    
+    /**
+     * createAdminAccount
+     * create first admin account and runs first install insterts
+     * password will be sha1 encoded before its send to the database
+     * @access public
+     * @param String $name name of admin account
+     * @param String $email email of admin account
+     * @param String $pass unencoded password for admin account
+    */
     public function createAdminAccount($name,$email,$pass){
         if(!isset($this->reg->database)){
             $sql = new Core_Database();
@@ -157,12 +189,18 @@ class Core_Installer {
         $sql->insert("groupmembers",array("uID"=>$uID,"gID"=>$gID));
     }
     
+    /**
+     * createAdminAccountForm
+     * sends a form for the creation of first admin account to $output
+     * @access public
+    */
     public function createAdminAccountForm(){
         if(!isset($this->reg->database)){
             $sql = new Core_Database();
         } else {
             $sql = $this->reg->database;
         }
+        
         
         $output = <<<HTML
         <form action='/install/step/5/' method='POST'>
@@ -188,6 +226,13 @@ HTML;
     $this->output = $output;
     }
     
+    /**
+     * nextStep
+     * creates a "next step" button for non-interactive pages
+     * Or a form to "try again" + "back to step 1" based on Core_Installer::$disallowNextStep
+     * @access public
+     * @param String $step Nummeric string for next step
+    */
     public function nextStep($step){
         if(!$this->disAllowNextStep){
         $this->output .= <<<HTML

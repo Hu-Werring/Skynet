@@ -1,7 +1,10 @@
 <?php
 /*
  * Class Core_View
- */
+ * @version 0.1
+ * @author Lucas Weijers <meel_to_lucas@hotmail.com>
+ * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
+*/
 
 class Core_View
 {
@@ -88,11 +91,26 @@ class Core_View
         $this->tpl->configure('tpl_dir', basedir.$string);
     }
     
+    /**
+     * __get
+     * Get variables out raintpl
+     * @access public
+     * @param String $var Variable to get out of rainTPL
+     * @return Mixed data from rainTPL
+    */
     public function __get($var)
     {
         return (isset($this->tpl->$var) ? $this->tpl->$var : null);
     }
     
+    /**
+     * __call
+     * Call functions from rainTPL
+     * @access public
+     * @param String $functionName name of rainTPL function
+     * @param Array Arguments passed to function
+     * @return Mixed Data from rainTPL function or false
+    */
     public function __call($functionName, $args)
     {
         if(method_exists($this->tpl, $functionName))  

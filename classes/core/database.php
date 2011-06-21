@@ -2,7 +2,11 @@
 
 /*
  * class Core_Database
- */
+ * Database Class
+ * @version 1.0
+ * @author Thom Werring <info@werringweb.nl>
+ * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
+*/
 
 class Core_Database {
     
@@ -273,10 +277,19 @@ class Core_Database {
         return strtolower($this->reg->settings->settings['db']['prefix'] . $table);
     }
     
+    /**
+     * lastError
+     * returns error number, message the query that triggerd the error
+     * @return String Error number, message and query
+    */
     public function lastError(){
-        return $this->sql->errno . " " . $this->sql->error . PHP_EOL . "The complete query was \"" . $this->lastQuery . "\"" . PHP_EOL . PHP_EOL;
+        return $this->sql->error . " (" . $this->sql->errno  . ")"  . PHP_EOL . "The complete query was \"" . $this->lastQuery . "\"" . PHP_EOL . PHP_EOL;
     }
     
+    /**
+     * debug
+     * @ignore
+    */
     private function debug()
     {
         //$this->reg->debug->msg('query', $lastQuery, mysql_info(), $this);

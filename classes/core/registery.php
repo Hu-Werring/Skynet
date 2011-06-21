@@ -3,7 +3,12 @@
 /*
  * class Core_Registery
  * singleton
- */
+ * Core registery class
+ * @version 1.0
+ * @author Thom Werring <info@werringweb.nl>
+ * @author Lucas Weijers <meel_to_lucas@hotmail.com>
+ * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
+*/
 
 class Core_Registery {
     

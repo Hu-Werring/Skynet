@@ -1,6 +1,6 @@
 
 .komodotools/
-classes/core/skynet.php.orig
+*.orig
 settings/settings.json.old
 test.php
 tmp/

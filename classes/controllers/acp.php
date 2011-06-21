@@ -2,6 +2,10 @@
 
 /*
  * class Controllers_Acp
+ * Handles the smart URL's for the Admin Panel
+ * @version 0.1
+ * @author Lucas Weijers <meel_to_lucas@hotmail.com>
+ * @copyright Copyright (c) 2011, Lucas Weijers & Thom Werring
  */
 
 class Controllers_Acp {
@@ -51,6 +55,12 @@ class Controllers_Acp {
         }
     }
     
+    /**
+     * indexAction
+     * action triggered on all pages in the ACP,
+     * unless a own method is to be found for it.
+     * @access private
+    */
     private function indexAction()
     {
         $this->view->add_css('style.css');
@@ -58,7 +68,11 @@ class Controllers_Acp {
         //$this->view->assign('content', 'grapje');
         $this->view->draw('main');
     }
-    
+    /**
+     * userAction
+     * action triggerd when someone looks at the /user/ page
+     * @access private
+    */
     private function userAction()
     {
         $this->view->assign('contentTpl', 'overview');
