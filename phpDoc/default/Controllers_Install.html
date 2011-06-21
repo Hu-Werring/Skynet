@@ -22,8 +22,15 @@
 					</div>
 	<div class="info-box-body">
         		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">class Controllers_Install</p>
+<p class="description"><p>handles smart URL's for the installer</p></p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Thom Werring &lt;<a href="mailto:info@werringweb.nl">info@werringweb.nl</a>&gt;</li>
+				<li><span class="field">version:</span> 0.5</li>
+				<li><span class="field">copyright:</span> Copyright (c) 2011, Thom Werring &amp; Lucas Weijers</li>
+			</ul>
 		<p class="notes">
-			Located in <a class="field" href="_classes---controllers---install.php.html">/classes/controllers/install.php</a> (line <span class="field">7</span>)
+			Located in <a class="field" href="_classes---controllers---install.php.html">/classes/controllers/install.php</a> (line <span class="field">11</span>)
 		</p>
 		
 				
@@ -130,7 +137,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$reg</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">14</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">18</span>)
 		</span>
 	</div>
 
@@ -153,12 +160,12 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$view</span>
-						(line <span class="line-number">21</span>)
+						(line <span class="line-number">25</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">$view Direct link to view class. (From registry).</p>
+<p class="short-description">$view  Direct link to view class. (From registry).</p>
 	<ul class="tags">
 				<li><span class="field">access:</span> private</li>
 			</ul>
@@ -188,7 +195,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">27</span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">31</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -210,10 +217,12 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">indexAction</span> (line <span class="line-number">60</span>)
+		<span class="method-title">indexAction</span> (line <span class="line-number">70</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">indexAction  action triggered on all pages in the ACP,  unless a own method is to be found for it.</p>
+<p class="description"><p>Auto redirects to /install/step/1/</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> private</li>
 			</ul>
@@ -233,11 +242,14 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">step_1Action</span> (line <span class="line-number">68</span>)
+		<span class="method-title">step_1Action</span> (line <span class="line-number">83</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">step_1Action</p>
+<p class="description"><p>First installer step</p></p>
 	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../default/Core_Installer.html#methodshowSettings">Core_Installer::showSettings()</a></li>
 				<li><span class="field">access:</span> private</li>
 			</ul>
 	
@@ -256,10 +268,12 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">step_2Action</span> (line <span class="line-number">73</span>)
+		<span class="method-title">step_2Action</span> (line <span class="line-number">96</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">step_2Action</p>
+<p class="description"><p>Second installer step  handels POST data from step 1 and write it to a new settings.json  old settings are stored as settings.json.old</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> private</li>
 			</ul>
@@ -279,11 +293,15 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">step_3Action</span> (line <span class="line-number">112</span>)
+		<span class="method-title">step_3Action</span> (line <span class="line-number">144</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">step_3Action</p>
+<p class="description"><p>Third step for the installer  Checks for database</p></p>
 	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../default/Core_Installer.html#methodcheckTables">Core_Installer::checkTables()</a></li>
+				<li><span class="field">see:</span> <a href="../default/Core_Installer.html#methodcreateTables">Core_Installer::createTables()</a></li>
 				<li><span class="field">access:</span> private</li>
 			</ul>
 	
@@ -302,11 +320,14 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">step_4Action</span> (line <span class="line-number">129</span>)
+		<span class="method-title">step_4Action</span> (line <span class="line-number">168</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">step_4Action</p>
+<p class="description"><p>fourth step for the installer  admin creating form</p></p>
 	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../default/Core_Installer.html#methodcreateAdminAccountForm">Core_Installer::createAdminAccountForm()</a></li>
 				<li><span class="field">access:</span> private</li>
 			</ul>
 	
@@ -325,11 +346,14 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">step_5Action</span> (line <span class="line-number">140</span>)
+		<span class="method-title">step_5Action</span> (line <span class="line-number">187</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">step_5Action</p>
+<p class="description"><p>fifth step for the installer  Creates actual admin account  and populates other tables</p></p>
 	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../default/Core_Installer.html#methodcreateAdminAccount">Core_Installer::createAdminAccount()</a></li>
 				<li><span class="field">access:</span> private</li>
 			</ul>
 	
@@ -350,7 +374,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Tue, 21 Jun 2011 08:53:56 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Tue, 21 Jun 2011 12:30:23 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

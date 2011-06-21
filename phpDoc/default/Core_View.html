@@ -23,7 +23,7 @@
 	<div class="info-box-body">
         		<!-- ========== Info from phpDoc block ========= -->
 		<p class="notes">
-			Located in <a class="field" href="_classes---core---view.php.html">/classes/core/view.php</a> (line <span class="field">6</span>)
+			Located in <a class="field" href="_classes---core---view.php.html">/classes/core/view.php</a> (line <span class="field">10</span>)
 		</p>
 		
 				
@@ -46,25 +46,13 @@
 								</div>
 		<div class="info-box-body">
 			<div class="var-summary">
-																																																																<div class="var-title">
+																																								<div class="var-title">
 					<span class="var-type">array</span>
 					<a href="#$css_files" title="details" class="var-name">$css_files</a>
 				</div>
 																<div class="var-title">
 					<span class="var-type">mixed</span>
 					<a href="#$js_files" title="details" class="var-name">$js_files</a>
-				</div>
-																<div class="var-title">
-					<span class="var-type">mixed</span>
-					<a href="#$reg" title="details" class="var-name">$reg</a>
-				</div>
-																<div class="var-title">
-					<span class="var-type">string</span>
-					<a href="#$template" title="details" class="var-name">$template</a>
-				</div>
-																<div class="var-title">
-					<span class="var-type">mixed</span>
-					<a href="#$templatePath" title="details" class="var-name">$templatePath</a>
 				</div>
 																<div class="var-title">
 					<span class="var-type">mixed</span>
@@ -86,7 +74,7 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																																																				
+																																																												
 												<div class="method-definition">
 											<span class="method-result">Core_View</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
@@ -109,23 +97,18 @@
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
-										<a href="#initTemplateEngine" title="details" class="method-name">initTemplateEngine</a>
-										()
-									</div>
-																<div class="method-definition">
-											<span class="method-result">void</span>
 										<a href="#setTemplatePath" title="details" class="method-name">setTemplatePath</a>
 											(<span class="var-type">string</span>&nbsp;<span class="var-name">$string</span>)
 									</div>
 																<div class="method-definition">
-											<span class="method-result">void</span>
+											<span class="method-result">Mixed</span>
 										<a href="#__call" title="details" class="method-name">__call</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$functionName</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$args</span>)
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$functionName</span>, <span class="var-type">Array</span>&nbsp;<span class="var-name">$args</span>)
 									</div>
 																<div class="method-definition">
-											<span class="method-result">void</span>
+											<span class="method-result">Mixed</span>
 										<a href="#__get" title="details" class="method-name">__get</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$var</span>)
+											(<span class="var-type">String</span>&nbsp;<span class="var-name">$var</span>)
 									</div>
 								</div>
 		</div>
@@ -151,14 +134,15 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$css_files</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">47</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">54</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">$css_files array that contains the css files.</p>
+<p class="short-description">$js_files</p>
+<p class="description"><p>array that contains the js files</p></p>
 	<ul class="tags">
-				<li><span class="field">var:</span> <p>contains css filenames.</p><p>$js_files array that contains the js files</p></li>
+				<li><span class="field">var:</span> contains js filenames</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
@@ -174,7 +158,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$js_files</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">48</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">55</span>)
 		</span>
 	</div>
 
@@ -188,82 +172,14 @@
 		
 
 </div>
-<a name="var$reg" id="$reg"><!-- --></A>
-<div class="evenrow">
-
-	<div class="var-header">
-		<span class="var-title">
-			<span class="var-type">mixed</span>
-			<span class="var-name">$reg</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number">13</span>)
-		</span>
-	</div>
-
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">$reg</p>
-<p class="description"><p>Link to registery</p></p>
-	<ul class="tags">
-				<li><span class="field">access:</span> private</li>
-			</ul>
-	
-	
-		
-		
-
-</div>
-<a name="var$template" id="$template"><!-- --></A>
-<div class="oddrow">
-
-	<div class="var-header">
-		<span class="var-title">
-			<span class="var-type">string</span>
-			<span class="var-name">$template</span>
-						(line <span class="line-number">26</span>)
-		</span>
-	</div>
-
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">$template</p>
-<p class="description"><p>contains the templates filename</p></p>
-	<ul class="tags">
-				<li><span class="field">var:</span> <p>filename</p><p>$templatePath  contains the path to te directory that contains the templates</p></li>
-				<li><span class="field">access:</span> private</li>
-			</ul>
-	
-	
-		
-		
-
-</div>
-<a name="var$templatePath" id="$templatePath"><!-- --></A>
-<div class="evenrow">
-
-	<div class="var-header">
-		<span class="var-title">
-			<span class="var-type">mixed</span>
-			<span class="var-name">$templatePath</span>
-						(line <span class="line-number">27</span>)
-		</span>
-	</div>
-
-	<!-- ========== Info from phpDoc block ========= -->
-	<ul class="tags">
-				<li><span class="field">access:</span> private</li>
-			</ul>
-	
-	
-		
-		
-
-</div>
 <a name="var$tpl" id="$tpl"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$tpl</span>
-						(line <span class="line-number">34</span>)
+						(line <span class="line-number">40</span>)
 		</span>
 	</div>
 
@@ -296,10 +212,10 @@
 			<A NAME='method_detail'></A>
 
 <a name="method__construct" id="__construct"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">56</span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">63</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -318,10 +234,10 @@
 			
 	</div>
 <a name="methodadd_css" id="add_css"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">add_css</span> (line <span class="line-number">115</span>)
+		<span class="method-title">add_css</span> (line <span class="line-number">137</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -348,10 +264,10 @@
 			
 	</div>
 <a name="methodadd_js" id="add_js"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">add_js</span> (line <span class="line-number">149</span>)
+		<span class="method-title">add_js</span> (line <span class="line-number">171</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -378,10 +294,10 @@
 			
 	</div>
 <a name="methodincludeLibs" id="includeLibs"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">includeLibs</span> (line <span class="line-number">181</span>)
+		<span class="method-title">includeLibs</span> (line <span class="line-number">203</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -401,36 +317,11 @@
 		
 			
 	</div>
-<a name="methodinitTemplateEngine" id="initTemplateEngine"><!-- --></a>
-<div class="evenrow">
-	
-	<div class="method-header">
-		<span class="method-title">initTemplateEngine</span> (line <span class="line-number">69</span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">initTemplateEngine</p>
-<p class="description"><p>Initializes the template engine rainTPL</p></p>
-	<ul class="tags">
-				<li><span class="field">access:</span> private</li>
-			</ul>
-	
-	<div class="method-signature">
-		<span class="method-result">void</span>
-		<span class="method-name">
-			initTemplateEngine
-		</span>
-				()
-			</div>
-	
-		
-			
-	</div>
 <a name="methodsetTemplatePath" id="setTemplatePath"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">setTemplatePath</span> (line <span class="line-number">85</span>)
+		<span class="method-title">setTemplatePath</span> (line <span class="line-number">92</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -459,29 +350,32 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">__call</span> (line <span class="line-number">96</span>)
+		<span class="method-title">__call</span> (line <span class="line-number">118</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">__call</p>
+<p class="description"><p>Call functions from rainTPL</p></p>
 	<ul class="tags">
+				<li><span class="field">return:</span> Data from rainTPL function or false</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">void</span>
+		<span class="method-result">Mixed</span>
 		<span class="method-name">
 			__call
 		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$functionName</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$args</span>)
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$functionName</span>, <span class="var-type">Array</span>&nbsp;<span class="var-name">$args</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type"></span>
-				<span class="var-name">$functionName</span>			</li>
+				<span class="var-type">String</span>
+				<span class="var-name">$functionName</span><span class="var-description">: name of rainTPL function</span>			</li>
 					<li>
-				<span class="var-type"></span>
-				<span class="var-name">$args</span>			</li>
+				<span class="var-type">Array</span>
+				<span class="var-name">$args</span><span class="var-description">: Arguments passed to function</span>			</li>
 				</ul>
 		
 			
@@ -490,26 +384,29 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">__get</span> (line <span class="line-number">91</span>)
+		<span class="method-title">__get</span> (line <span class="line-number">105</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">__get</p>
+<p class="description"><p>Get variables out raintpl</p></p>
 	<ul class="tags">
+				<li><span class="field">return:</span> data from rainTPL</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">void</span>
+		<span class="method-result">Mixed</span>
 		<span class="method-name">
 			__get
 		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$var</span>)
+					(<span class="var-type">String</span>&nbsp;<span class="var-name">$var</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type"></span>
-				<span class="var-name">$var</span>			</li>
+				<span class="var-type">String</span>
+				<span class="var-name">$var</span><span class="var-description">: Variable to get out of rainTPL</span>			</li>
 				</ul>
 		
 			
@@ -520,7 +417,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Tue, 21 Jun 2011 08:53:56 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Tue, 21 Jun 2011 13:14:11 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>
