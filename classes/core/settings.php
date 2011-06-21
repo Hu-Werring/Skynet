@@ -1,11 +1,16 @@
 <?php
-/*
+/**
+ * settings.php
+ * @package Skynet
+*/
+/**
  * Class Core_Settings
  * Handles settings
  * @version 0.5
  * @author Thom Werring <info@werringweb.nl>
  * @author Lucas Weijers <meel_to_lucas@hotmail.com>
  * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
+ * @package Skynet
 */
 
 class Core_Settings

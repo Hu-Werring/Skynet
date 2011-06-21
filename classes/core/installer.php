@@ -1,11 +1,16 @@
 <?php
+/**
+ * installer.php
+ * @package Skynet
+*/
 
-/*
+/**
  * class Core_Installer
  * Installer core class
  * @version 0.5
  * @author Thom Werring <info@werringweb.nl>
  * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
+ * @package Skynet
 */
 
 class Core_Installer {

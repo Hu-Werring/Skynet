@@ -1,11 +1,17 @@
 <?php
 
 /**
+ * install.php
+ * @package Skynet
+*/
+
+/**
  * class Controllers_Install
  * handles smart URL's for the installer
  * @version 0.5
  * @author Thom Werring <info@werringweb.nl>
  * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
+ * @package Skynet
  */
 
 class Controllers_Install {

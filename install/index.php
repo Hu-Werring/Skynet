@@ -5,6 +5,7 @@
  * @version 0.1
  * @author Thom Werring <info@werringweb.nl> & Lucas Weijers <meel_to_lucas@hotmail.com>
  * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
+ * @package Skynet
 */
 
 

@@ -1,11 +1,15 @@
 <?php
-
-/*
+/**
+ * database.php
+ * @package Skynet
+*/
+/**
  * class Core_Database
  * Database Class
  * @version 1.0
  * @author Thom Werring <info@werringweb.nl>
  * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
+ * @package Skynet
 */
 
 class Core_Database {
@@ -150,7 +154,8 @@ class Core_Database {
     /**
      * query
      * executes complete SQL query and tries to return data as good as possible
-     * REMEMBER TO PREFIX YOUR TABLE NAME! (Core_Database()->prefixTable($table))
+     * REMEMBER TO PREFIX YOUR TABLE NAME!
+     * @see Core_Database::prefixTable()
      * @param String $qry a mysqlQry
      * @param Boolean $returnResult should the $result variable be returned in the return array (Default: false)
      * @return Array array with return data
@@ -186,7 +191,8 @@ class Core_Database {
     /**
      * qry (Alias for Query)
      * executes complete SQL query and tries to return data as good as possible
-     * REMEMBER TO PREFIX YOUR TABLE NAME! (Core_Database()->prefixTable($table))
+     * REMEMBER TO PREFIX YOUR TABLE NAME!
+     * @see Core_Database::prefixTable()
      * @param String $qry a mysqlQry
      * @param Boolean $returnResult should the $result variable be returned in the return array (Default: false)
      * @return Array array with return data

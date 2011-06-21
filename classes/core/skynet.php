@@ -1,12 +1,16 @@
 <?php
-
-/*
+/**
+ * skynet.php
+ * @package Skynet
+*/
+/**
  * class Core_Skynet
  * The Skynet core
  * @version 0.2
  * @author Thom Werring <info@werringweb.nl>
  * @author Lucas Weijers <meel_to_lucas@hotmail.com>
  * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
+ * @package Skynet
 */
 
 class Core_Skynet {
@@ -60,7 +64,7 @@ class Core_Skynet {
     /**
      * main
      * initiate main website
-     * @acces public
+     * @access public
     */
     public function main(){
         $this->view->setTemplatePath('view/');

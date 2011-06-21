@@ -1,13 +1,18 @@
 <?php
+/**
+ * acp.php
+ * @package Skynet
+*/
 
-/*
+/**
  * class Controllers_Acp
  * Handles the smart URL's for the Admin Panel
+ * @package Skynet_Controllers
  * @version 0.1
  * @author Lucas Weijers <meel_to_lucas@hotmail.com>
  * @copyright Copyright (c) 2011, Lucas Weijers & Thom Werring
  */
-
+    
 class Controllers_Acp {
     
     /**

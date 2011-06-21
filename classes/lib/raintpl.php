@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * raintpl.php
+ * @package RainTPL
+*/
 /**
  *  RainTPL
  *  -------
@@ -7,6 +10,7 @@
  *	Distributed under GNU/LGPL 3 License
  *
  *  @version 2.6.4
+ * @package RainTPL
  */
 
 

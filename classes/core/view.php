@@ -1,9 +1,14 @@
 <?php
-/*
+/**
+ * view.php
+ * @package Skynet
+*/
+/**
  * Class Core_View
  * @version 0.1
  * @author Lucas Weijers <meel_to_lucas@hotmail.com>
  * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
+ * @package Skynet
 */
 
 class Core_View
@@ -21,7 +26,9 @@ class Core_View
      * @access private
      * @var string filename
      *
-     * $templatePath
+     */
+    
+    /** $templatePath
      * contains the path to te directory that contains the templates
      * @access private
      * @var string templatepath
@@ -41,7 +48,8 @@ class Core_View
      *array that contains the css files.
      *@access public
      *@var array contains css filenames.
-     *
+     */
+    /**
      *$js_files
      *array that contains the js files
      *@access public

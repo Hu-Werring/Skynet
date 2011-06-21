@@ -1,6 +1,9 @@
 <?php
-
-/*
+/**
+ * registery.php
+ * @package Skynet
+*/
+/**
  * class Core_Registery
  * singleton
  * Core registery class
@@ -8,6 +11,7 @@
  * @author Thom Werring <info@werringweb.nl>
  * @author Lucas Weijers <meel_to_lucas@hotmail.com>
  * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
+ * @package Skynet
 */
 
 class Core_Registery {
