@@ -69,24 +69,10 @@ class Controllers_Main {
     */
     private function indexAction()
     {
-        $this->view->add_css('style.css');
-        $this->view->assign('contentTpl', 'home');
-        $this->view->assign('content', 'grapje');
-        $this->view->draw('main');
+        $page = isset($_GET['page']) ? substr($_GET['page'],0,-1) : "home" ;
+        $this->reg->pages->getPageContent($page);
     }
-    
-    /**
-     * testAction
-     * @ignore
-    */
-    private function testAction()
-    {
-        $this->view->add_css('style.css');
-        $this->view->assign('contentTpl', 'test');
-        $this->view->assign('content', 'HAha test');
-        $this->view->draw('main');
-    }
-    
+
     
 }
 
