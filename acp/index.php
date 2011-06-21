@@ -27,6 +27,7 @@
      * __autoload
      * Autoloader for functions, easy include
      * Using lazyman namespaces
+     * @ignore
     */    
     function __autoload($className) {
         require_once basedir . "classes/" . strtolower(str_replace("_","/",$className)) . ".php";

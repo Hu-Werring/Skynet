@@ -11,11 +11,13 @@
     /**
      * DS
      * Shortcut for DIRECTORY_SEPARATOR
+     * @ignore
     */
     define("DS",DIRECTORY_SEPARATOR);
     /**
      * basedir
      * Absolute path to ducument root
+     * @ignore
     */
     define("basedir",$_SERVER['DOCUMENT_ROOT'] . DS);
 
@@ -24,6 +26,7 @@
      * __autoload
      * Autoloader for functions, easy include
      * Using lazyman namespaces
+     * @ignore
     */    
     function __autoload($className) {
         require_once basedir . "classes/" . strtolower(str_replace("_","/",$className)) . ".php";
