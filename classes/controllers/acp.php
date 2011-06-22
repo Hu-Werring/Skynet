@@ -91,7 +91,7 @@ class Controllers_Acp {
     {
         $uMngr = new Manager_User();
         $this->view->add_css('style.css');
-        $actions = array("User list"=> "mngr/user", "New user" => "mngr/user/new", "blacklist" => "mngr/user/blacklist");
+        $actions = array("User list"=> "mngr/user/", "New user" => "mngr/user/new/", "blacklist" => "mngr/user/blacklist/");
         
         switch($args)
         {
@@ -103,6 +103,29 @@ class Controllers_Acp {
                 break;
             
             case 'new':
+                $frm = $uMngr->checkForm(array("name" => "Name", "pass" => "Password", "email" => "Email"), "submit");
+
+                if($frm === true)
+                {
+                    $msg = $uMngr->createUser(array("Name" => $_POST['name'], "Pass" => sha1($_POST['pass']), "Email" => $_POST['email']));
+                    var_dump($msg);
+                    if($msg === true)
+                    {
+                        $this->view->assign('msg', array("header" => 'Added user succesfully!!!'));
+                    }
+                    else
+                    {
+                        $this->view->assign('msg', array("header" => 'Query Failed!!!'));
+                    }
+                }
+                
+                if(isset($frm['header']))
+                {
+                    $this->view->assign('msg', $frm);
+                }
+                
+                
+                
                 $cmsContent = 'userNew';
         }
         $this->view->assign('cmsActions', $actions);
