@@ -1,11 +1,14 @@
-<fieldset>
-    <legend>Create new page</legend>
-    <dl>
-        <dt>Page name</dt>
-        <dd><input type='text' name='naam' /></dd>
-        <dt>Page content</dt>
-        <dd>{$contentSelectMenu}</dd>
-        <dt>Page template</dt>
-        <dd>{$templateSelectMenu}</dd>
-    </dl>
-</fieldset>
+<form action="../new" method="POST">
+    <fieldset>
+        <legend>Create new page</legend>
+        <dl>
+            <dt>Page name</dt>
+            <dd><input type='text' name='name' value="{if="isset($_POST['name'])"}{$_POST['name']}{/if}" /></dd>
+            <dt>Page content</dt>
+            <dd>{$contentSelectMenu}</dd>
+            <dt>Page template</dt>
+            <dd>{$templateSelectMenu}</dd>
+        </dl>
+        <input type='submit' value='add' />
+    </fieldset>
+</form>
