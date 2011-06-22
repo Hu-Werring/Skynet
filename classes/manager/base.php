@@ -11,8 +11,9 @@
  * @author Thom Werring <info@werringweb.nl>
  * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
  * @package Skynet_managers
+ * @abstract
  */
-class Manager_Base {
+abstract class Manager_Base {
     
     /**
      * $reg
