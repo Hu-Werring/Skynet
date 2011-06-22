@@ -277,4 +277,30 @@ class Manager_Page extends Manager_Base {
         $result = $this->reg->database->select($table,$select,$advanced);
         return $result;
     }
+    public function getCats(){
+        $result = $this->reg->database->select("categorieen","ID,Naam");
+        foreach($result as $key=>$value){
+            if(!is_numeric($key)) continue;
+            $cats[] = $value['Naam'] . " (Category) |" . $value["ID"] . "_2";
+        }
+        return $cats;
+    }
+    
+    public function getArtikelen(){
+        $result = $this->reg->database->select("artikelen","ID,Titel");
+        foreach($result as $key=>$value){
+            if(!is_numeric($key)) continue;
+            $arts[] = $value['Titel'] . " (Article) |" . $value["ID"] . "_1";
+        }
+        return $arts;
+    }
+    
+    public function getTemplates(){
+        $result = $this->reg->database->select("templates","ID,Naam");
+        foreach($result as $key=>$value){
+            if(!is_numeric($key)) continue;
+            $arts[] = $value['Naam'] . "|" . $value["ID"];
+        }
+        return $arts;
+    }
 }
