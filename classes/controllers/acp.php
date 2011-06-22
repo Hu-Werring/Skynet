@@ -223,13 +223,32 @@ class Controllers_Acp {
                 $cmsContent = "pageOverview";
                 break;
             case 'new':
+                $error=false;
                 if($_SERVER['REQUEST_METHOD'] === "POST"){
                     $frm = $pMngr->checkForm(array("name"=>"Name"),'submit');
                     if($frm === true){
-                        $name = $this->reg->database->rs($_POST['name']);
-                        
-                        //$pMngr->newPage($name,$pos,$visible,$template);
+                        $name = $this->reg->database->res($_POST['name']);
+                        $pos = $_POST['position'];
+                        $template = $_POST['template'];
+                        $visible = (isset($_POST['visible']) && $_POST['visible'] === "true") ? 1 : 0;
+                        if($pMngr->newPage($name,$pos,$visible,$template)){
+                            $res = $this->reg->database->select("pages","ID","WHERE Naam='$name'");
+                            if($res["succes"]===true){
+                                $pID = $res[0]['ID'];
+                                $eContent = explode("_",$_POST['content']);
+                                if(!$pMngr->linkContent($pID,$eContent[0],$eContent[1])){
+                                    $error = true;
+                                }
+                            } else {
+                                $error = true;
+                            }
+                        } else {
+                            $error = true;
+                        }
                     }
+                }
+                if($error){
+                    echo $this->reg->database->lastError();
                 }
                 $cmsContent = 'pageNew';
                 $artikelList = $pMngr->getArtikelen();

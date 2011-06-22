@@ -171,7 +171,7 @@ class Manager_Page extends Manager_Base {
     */
     public function newPage($name,$positie,$zichtbaar,$template){
         $table = 'pages';
-        $data['Naam'] = $naam;
+        $data['Naam'] = $name;
         $data['Positie'] = $positie;
         $data['Zichtbaar'] = ($zichtbaar) ? 1 : 0;
         $data['tID'] = $template;
