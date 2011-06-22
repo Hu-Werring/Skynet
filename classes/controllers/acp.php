@@ -89,18 +89,19 @@ class Controllers_Acp {
     */
     private function mngr_userAction($args=null)
     {
+        $uMngr = new Manager_User();
         $this->view->add_css('style.css');
         $actions = array("User list", "New user", "blacklist");
-        /*
+        
         switch($args)
         {
-            case 1:
-                break;
-            
+            case null:
             default:
-            //
+                $users = $uMngr->getUsers();
+               // print_r(($users));
+                $this->view->assign('users', $users);
+                break;
         }
-        */
         $this->view->assign('cmsActions', $actions);
         $this->view->assign('contentTpl', 'user');
         $this->view->draw('main');
