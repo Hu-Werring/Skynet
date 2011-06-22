@@ -1,14 +1,30 @@
-<form action="../new" method="POST">
+<form action="" method="POST">
     <fieldset>
         <legend>Create new page</legend>
+        {if="isset($msg)"}
+            {$msg['header']}<br>
+            {if="isset($msg['items'])"}
+                {loop="$msg['items']"}
+                {$value}<br>
+                
+                {/loop}
+            {/if}
+        {/if}
         <dl>
             <dt>Page name</dt>
             <dd><input type='text' name='name' value="{if="isset($_POST['name'])"}{$_POST['name']}{/if}" /></dd>
+            <dt>Visible in menu</dt>
+            <dd><label><input name='visible' type='radio' checked='checked' value='true' />
+ Yes</label> <label><input name='visible' type='radio' value='false' /> No</label></dd>
+            <dt>Position</dt>
+            <dd></dd>
             <dt>Page content</dt>
-            <dd>{$contentSelectMenu}</dd>
+            <dd><select name="content">
+            {$contentSelectMenu}</select></dd>
             <dt>Page template</dt>
-            <dd>{$templateSelectMenu}</dd>
+            <dd><select name='template'>
+            {$templateSelectMenu}</select></dd>
         </dl>
-        <input type='submit' value='add' />
+        <input name='submit' type='submit' value='add' />
     </fieldset>
 </form>
