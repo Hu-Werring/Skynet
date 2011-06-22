@@ -1,0 +1,166 @@
+@charset "UTF-8";
+/*------------------------------------------------------------------------*/
+/*Main page layout*/
+body {
+	font-family: 'Arial';
+	font-size: 9pt;
+	text-decoration: none;
+	color: #000;
+	background:url("../images/bg.jpg") repeat;
+	padding:0px;
+	margin:0px;
+}
+#wrapper {
+	margin: 0px auto 0px auto;
+	width:950px;
+}
+#wrapper #logo {
+	float:left;
+	width:35px;
+	padding-top:30px;
+}
+#wrapper #wrapper2 {
+	float:left;
+	width:915px;
+	background:url("../images/bg-con-right.png") repeat-y;
+	background-position: right;
+}
+/*content boxen*/
+#left-content {
+	background:url("../images/bg-con-left.png") repeat-y;
+	width:551px;
+	float:left;
+}
+#right-content {
+	width:364px;
+	background-color:#686868;
+	float:left;
+}
+/*------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------*/
+/*Menu style*/
+#menu {
+	width:95%;
+	height:35px;
+	padding:10px;
+}
+#menu ul {
+	margin:0px;
+	padding:0px;
+}
+#menu ul li {
+	float:left;
+	padding-right:20px;
+	margin-right:5px;
+	list-style-type:none;
+	background:url("../images/menu-split.jpg") no-repeat right;
+}
+#menu ul li a {
+	text-decoration:none;
+	color:#000;
+	font-size:10pt;
+	text-transform:capitalize;
+}
+/*------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------*/
+/*Content items layout*/
+#head {
+	background:url("../images/content-seperator-bar.png") bottom no-repeat;
+	margin-left:2px;
+}
+.cont-item {
+	width:95%;
+}
+.cont-item .title {
+	float:left;
+	padding-left:15px;
+}
+.cont-item .date {
+	float:right;
+	padding-top:20px;
+}
+.cont-item .date h6 {
+	padding:0px;
+	margin:0px;
+}
+
+.cont-item .title h2 {
+	text-align:left;
+	font-size:22pt;
+	color:#fb842e;
+	padding:0px;
+	margin:0px;
+}
+.cont-item .text {
+	padding:5px 10px 25px 15px;
+}
+.cont-item .text .more {
+	font-style: italic;
+	color:#fb842e;
+}
+/*------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------*/
+/*login*/
+#log-title {
+	float:left;
+	color:#fff;
+	font-size:18pt;
+	text-transform:capitalize;
+}
+/*------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------*/
+/*inputbox*/
+#search-box {
+	float:right;
+	margin: 8px 10px 0px 0px;
+}
+#search-box #search-glass {
+	background:url("../images/input-field-spyglass.png") no-repeat left;
+	border: 0px;
+	padding:0px 6px 0px 0px;
+	margin:0px;
+	height:15px;
+}
+#search-field {
+	width:135px;
+}
+.field-bg-left {
+	background:url("../images/input-field-left.png") no-repeat left;
+	padding-left:5px;
+	height:15px;
+}
+.field-bg {
+	background:url("../images/input-field-midden.png") repeat-x;
+	float:left;
+	height:15px;
+}
+.field {
+	background:none !important;
+	height:10px;
+	border:0px;
+	text-align:right;
+	color:#ababab;
+}
+.field-right {
+	background:url("../images/input-field-right.png");
+	display:block;
+	width:5px;
+	height:16px;
+	float:left;
+}
+/*------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------*/
+/*classes*/
+/*------------------------------------------------------------------------*/
+/*logo*/
+.logo-img {
+	background:url("../images/side-logo-arttech.png");
+	display:block;
+	height:261px;
+	width:35px;	
+}
+/*clear float*/
+.cf {
+	clear:both;
+}
+/*------------------------------------------------------------------------*/

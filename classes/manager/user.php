@@ -1,7 +1,7 @@
 <?php
 
 /**
- * page.php
+ * user.php
  * @package Skynet_managers
 */
 /**
