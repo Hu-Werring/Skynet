@@ -1,4 +1,4 @@
-<?php
+<?php session_start();
 /**
  * index.php
  * Admin Control Pannel index file
