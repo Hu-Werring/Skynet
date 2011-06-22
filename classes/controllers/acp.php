@@ -161,31 +161,43 @@ class Controllers_Acp {
                 $cmsContent = "pageOverview";
                 break;
             case 'new':
+                if($_SERVER['REQUEST_METHOD'] === "POST"){
+                    $frm = $pMngr->checkForm(array("name"=>"Name"),'submit');
+                    if($frm === true){
+                        $name = $this->reg->database->rs($_POST['name']);
+                        
+                        //$pMngr->newPage($name,$pos,$visible,$template);
+                    }
+                }
                 $cmsContent = 'pageNew';
                 $artikelList = $pMngr->getArtikelen();
                 $catList = $pMngr->getCats();
                 $itemList = array_merge($artikelList,$catList);
                 $tempList = $pMngr->getTemplates();
-                $csMenu = "<select name='content'>";
+                
+                $csMenu="";
                 foreach($itemList as $value){
                     $eVal = explode("|",$value);
                     $sValue = array_pop($eVal);
                     $sName  = implode("|",$eVal); 
                     $csMenu .= "<option value='$sValue'>$sName</option>" . PHP_EOL;
                 }
-                $csMenu .= "</select>";
                 
-                $tsMenu = "<select name='template'>";
+                
+                $tsMenu = "";
                 foreach($tempList as $value){
                     $eVal = explode("|",$value);
                     $sValue = array_pop($eVal);
                     $sName  = implode("|",$eVal); 
                     $tsMenu .= "<option value='$sValue'>$sName</option>" . PHP_EOL;
                 }
-                $tsMenu.= "</select>";
+                
                 $this->view->assign("contentSelectMenu",$csMenu);
                 $this->view->assign("templateSelectMenu",$tsMenu);
-                
+                if(isset($frm['header']))
+                {
+                    $this->view->assign('msg', $frm);
+                } 
                 break;
         }
         
