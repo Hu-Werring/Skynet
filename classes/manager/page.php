@@ -29,6 +29,7 @@ class Manager_Page extends Manager_Base {
      * sends pageContent of given page to rainTPL
      * @access public
      * @param String $page page name
+     * @todo make 404 page redirect in this function
     */
     public function getPageContent($page){
         
@@ -73,6 +74,9 @@ class Manager_Page extends Manager_Base {
                     inner join `".$templates."` on ".$templates.".ID=".$pages.".tID
                     WHERE `".$pages."`.`Naam`='".$page."'";
         $result = $this->reg->database->query($query);
+        if($result['affected']==0){
+            return $this->getPageContent('home');
+        }
         foreach($result as $key=>$content){
             if(!is_numeric($key)) continue;
                 $templateLoc = $content['Locatie'];
@@ -125,6 +129,7 @@ class Manager_Page extends Manager_Base {
                     break;
                 }
         }
+        
         unset($query,$result);
         $result = $this->reg->database->select("pages","Naam","WHERE $pages.Zichtbaar=1 ORDER BY `$pages`.`Positie` ASC");
         
@@ -143,6 +148,8 @@ class Manager_Page extends Manager_Base {
         $this->reg->view->assign('content',$contents);
         $this->reg->view->assign('menu',$menu);
         $this->reg->view->draw('main');
+        
+        return true;
     }
     
     /**
