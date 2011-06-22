@@ -15,21 +15,18 @@
  */
 
 class Controllers_Main {
-    
     /**
      * $reg
      * Link to registery
      * @access private
     */
     private $reg = null;
-    
     /**
      *$view
      *Direct link to view class. (From registry).
      *@access private
      */
     private $view;
-
     /**
      * __construct
      * creates base for CMS
@@ -75,5 +72,3 @@ class Controllers_Main {
 
     
 }
-
-?>
