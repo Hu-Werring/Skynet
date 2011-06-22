@@ -61,6 +61,7 @@ class Core_Database {
      * @param String $select what fields needs to be selected
      * @param String $advance (Optional) advance mysql select query
      * @return Array all rows within the query, and an assoc entry with affected rows or array with errors
+     * @todo allow array for select, join with ,
     */
     public function select($table,$select,$advance = ""){
         $table = $this->prefixTable($table);

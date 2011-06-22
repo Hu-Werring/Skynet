@@ -41,6 +41,7 @@ class Controllers_Acp {
         //Actie aanroepen. Dus: als www.skynet.nl/acp/test dan TestAction();
         if(isset($_GET['page']))
         {
+            $this->view->add_css('style.css');
             $action = str_replace("/","_",str_replace("acp/","",$_GET['page']));
             $action2 = explode("_", $action);            
             $actionArgs = $action2[(count($action2)-2)]; #-2 cause last char is also a /
@@ -77,7 +78,6 @@ class Controllers_Acp {
     */
     private function indexAction()
     {
-        $this->view->add_css('style.css');
         $this->view->assign('contentTpl', 'overview');
         //$this->view->assign('content', 'grapje');
         $this->view->draw('main');
@@ -90,8 +90,7 @@ class Controllers_Acp {
     private function mngr_userAction($args=null)
     {
         $uMngr = new Manager_User();
-        $this->view->add_css('style.css');
-        $actions = array("User list"=> "mngr/user/", "New user" => "mngr/user/new/", "blacklist" => "mngr/user/blacklist/");
+        $actions = array("User list"=> "mngr/user", "New user" => "mngr/user/new", "blacklist" => "mngr/user/blacklist");
         
         switch($args)
         {
@@ -134,6 +133,19 @@ class Controllers_Acp {
         
         
     }
-    
-    
+    private function mngr_pageAction($argument=null){
+        $pMngr = new Manager_Page();
+        $actions = array("Page overview"=> "mngr/page/", "New page" => "mngr/page/new/", /*"Delete Page" => "mngr/page/delete/",*/ "Link Content" => "mngr/page/link/", "Unlink Content" => "mngr/page/unlink/");
+        
+        switch($argument){
+            case '':
+                
+                break;
+        }
+        
+        $this->view->assign('cmsActions', $actions);
+        //$this->view->assign('contentTpl', $cmsContent);
+        $this->view->draw('main');
+    }
+
 }
