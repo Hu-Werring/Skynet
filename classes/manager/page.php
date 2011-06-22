@@ -90,7 +90,7 @@ class Manager_Page extends Manager_Base {
                                     $artikel["Titel"] = $value;
                                 break;
                                 case 'aContent':
-                                    $artikel["Content"] = $value;
+                                    $artikel["Content"] = nl2br($value);
                                 break;
                                 case 'aCreated':
                                     $artikel["Created"] = date("d-m-y H:i:s",$value);
@@ -113,7 +113,7 @@ class Manager_Page extends Manager_Base {
                                     $catagory["Titel"] = $value;
                                     break;
                                 case 'caContent':
-                                    $catagory["Content"] = $value;
+                                    $catagory["Content"] = nl2br($value);
                                     break;
                                 case 'caCreated':
                                     $catagory["Created"] = date("d-m-y H:i:s",$value);
