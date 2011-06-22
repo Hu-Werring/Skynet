@@ -108,14 +108,13 @@ class Controllers_Acp {
                 if($frm === true)
                 {
                     $msg = $uMngr->createUser(array("Name" => $_POST['name'], "Pass" => sha1($_POST['pass']), "Email" => $_POST['email']));
-                    var_dump($msg);
                     if($msg === true)
                     {
                         $this->view->assign('msg', array("header" => 'Added user succesfully!!!'));
                     }
                     else
                     {
-                        $this->view->assign('msg', array("header" => 'Query Failed!!!'));
+                        $this->view->assign('msg', array("header" => 'Adding user Failed!!!'));
                     }
                 }
                 
@@ -136,6 +135,47 @@ class Controllers_Acp {
                 $cmsContent = 'userList';
                 $users = $uMngr->getUsers();
                 $this->view->assign('users', $users);
+                break;
+            
+            case 'edit':
+                $user = $uMngr->getUser($_GET['id']);
+                $user = $user[0];
+                
+                $frm = $uMngr->checkForm(array("name" => "Name", "pass" => "Password", "email" => "Email"), "submit");
+                
+                if($frm === true)
+                {
+                    $updateArgs = array();
+                    $updateArgs['Name'] = $_POST['name'];
+                    if($_POST['pass'] != 'dummypass'){ $updateArgs['Pass'] = sha1($_POST["pass"]); }
+                    $updateArgs['Email'] = $_POST['email'];
+                    
+                    $msg = $uMngr->updateUser($_GET['id'], $updateArgs);
+
+                    if($msg['succes'] === true)
+                    {
+                        $this->view->assign('msg', array("header" => 'Updated user succesfully!!!'));
+                    }
+                    else
+                    {
+                        $this->view->assign('msg', array("header" => 'Update Failed!!!'));
+                    }
+                }
+                
+                if(isset($user['ID']))
+                {
+                    $this->view->assign('user', $user);
+                }
+                else
+                {
+                    header("Location: /acp/mngr/user/");
+                }
+                
+                if(isset($frm['header']))
+                {
+                    $this->view->assign('msg', $frm);
+                }
+                $cmsContent = 'userEdit';
                 break;
         }
         $this->view->assign('cmsActions', $actions);
