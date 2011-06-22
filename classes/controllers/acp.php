@@ -38,7 +38,8 @@ class Controllers_Acp {
         $this->reg->controller = $this;
         $this->view = $this->reg->view;
         $this->view->add_css('style.css');
-        
+        if((isset($_SESSION['loggedIn']) && $_SESSION['loggedIn']==true)  || (isset($_GET['page']) && $_GET['page'] == 'acp/login/')){
+
         //Actie aanroepen. Dus: als www.skynet.nl/acp/test dan TestAction();
         if(isset($_GET['page']))
         {
@@ -69,6 +70,10 @@ class Controllers_Acp {
         {
             $this->indexAction();
         }
+        } else {
+            header("Location: /acp/login/");
+            exit();
+        }
     }
     
     /**
@@ -81,6 +86,22 @@ class Controllers_Acp {
     {
         $this->view->assign('contentTpl', 'overview');
         //$this->view->assign('content', 'grapje');
+        $this->view->draw('main');
+    }
+    
+    private function loginAction(){
+        if($_SERVER['REQUEST_METHOD']=="POST"){
+            $name = $_POST['account'];
+            $pass = sha1($_POST['pass']);
+            $result = $this->reg->database->select("users","COUNT(*)","WHERE Name='$name' AND Pass='$pass'");
+            if($result['affected']>=1){
+                $_SESSION['loggedIn']=true;
+                header("Location: /acp/");
+                exit();
+            }
+            
+        }
+        $this->view->assign('contentTpl', 'login');
         $this->view->draw('main');
     }
     /**
@@ -169,6 +190,7 @@ class Controllers_Acp {
                 else
                 {
                     header("Location: /acp/mngr/user/");
+                    exit();
                 }
                 
                 if(isset($frm['header']))
