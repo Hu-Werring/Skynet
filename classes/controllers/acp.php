@@ -194,15 +194,43 @@ class Controllers_Acp {
             case null:
                 $pages = $pMngr->listPages();
                 for($i=0;$i<count($pages)-2;$i++){
-                    $pageList[$pages[$i]['pNaam']][] = array("tID"=>$pages[$i]['tID'],"Template"=>$pages[$i]['tNaam'],"pID"=>$pages[$i]['pID']);
+                    $pageList[$pages[$i]['pNaam']] = array("tID"=>$pages[$i]['tID'],"Template"=>$pages[$i]['tNaam'],"pID"=>$pages[$i]['pID'],"pNaam"=>$pages[$i]["pNaam"]);
                     
                 }
-                print_r($pageList);
+                $this->view->assign('pageList', $pageList);
+                $cmsContent = "pageOverview";
+                break;
+            case 'new':
+                $cmsContent = 'pageNew';
+                $artikelList = $pMngr->getArtikelen();
+                $catList = $pMngr->getCats();
+                $itemList = array_merge($artikelList,$catList);
+                $tempList = $pMngr->getTemplates();
+                $csMenu = "<select name='content'>";
+                foreach($itemList as $value){
+                    $eVal = explode("|",$value);
+                    $sValue = array_pop($eVal);
+                    $sName  = implode("|",$eVal); 
+                    $csMenu .= "<option value='$sValue'>$sName</option>" . PHP_EOL;
+                }
+                $csMenu .= "</select>";
+                
+                $tsMenu = "<select name='template'>";
+                foreach($tempList as $value){
+                    $eVal = explode("|",$value);
+                    $sValue = array_pop($eVal);
+                    $sName  = implode("|",$eVal); 
+                    $tsMenu .= "<option value='$sValue'>$sName</option>" . PHP_EOL;
+                }
+                $tsMenu.= "</select>";
+                $this->view->assign("contentSelectMenu",$csMenu);
+                $this->view->assign("templateSelectMenu",$tsMenu);
+                
                 break;
         }
         
         $this->view->assign('cmsActions', $actions);
-        //$this->view->assign('contentTpl', $cmsContent);
+        $this->view->assign('contentTpl', $cmsContent);
         $this->view->draw('main');
     }
 
