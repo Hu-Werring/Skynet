@@ -225,7 +225,7 @@ class Controllers_Acp {
             case 'new':
                 $error=false;
                 if($_SERVER['REQUEST_METHOD'] === "POST"){
-                    $frm = $pMngr->checkForm(array("name"=>"Name"),'submit');
+                    $frm = $pMngr->checkForm(array("name"=>"Name","position"=>"Position"),'submit');
                     if($frm === true){
                         $name = $this->reg->database->res($_POST['name']);
                         $pos = $_POST['position'];
@@ -237,18 +237,18 @@ class Controllers_Acp {
                                 $pID = $res[0]['ID'];
                                 $eContent = explode("_",$_POST['content']);
                                 if(!$pMngr->linkContent($pID,$eContent[0],$eContent[1])){
-                                    $error = true;
+                                    $frm['header'] = 'TThe following errors took place: ';
+                                    $frm[] = $this->reg->database->lastError();
                                 }
                             } else {
-                                $error = true;
+                                $frm['header'] = 'TThe following errors took place: ';
+                                $frm[] = $this->reg->database->lastError();
                             }
                         } else {
-                            $error = true;
+                            $frm['header'] = 'TThe following errors took place: ';
+                            $frm[] = $this->reg->database->lastError();
                         }
                     }
-                }
-                if($error){
-                    echo $this->reg->database->lastError();
                 }
                 $cmsContent = 'pageNew';
                 $artikelList = $pMngr->getArtikelen();
@@ -291,6 +291,47 @@ class Controllers_Acp {
                 }
                 $this->view->assign('pageList', $pageList);
                 $cmsContent = "pageOverview";
+                break;
+            case 'link':
+                if($_SERVER['REQUEST_METHOD'] === "POST"){
+                    $pID = $_POST['pid'];
+                    $eContent = explode("_",$_POST['content']);
+                    if(!$pMngr->linkContent($pID,$eContent[0],$eContent[1])){
+                        $frm['header'] = 'TThe following errors took place: ';
+                        $frm[] = $this->reg->database->lastError();
+                    }
+                }
+                
+                $arts = $pMngr->getArtikelen();
+                $cats = $pMngr->getCats();
+                $itemList = array_merge($arts,$cats);
+                $plist = $pMngr->getPages();
+
+                $csMenu="";
+                foreach($itemList as $value){
+                    $eVal = explode("|",$value);
+                    $sValue = array_pop($eVal);
+                    $sName  = implode("|",$eVal); 
+                    $csMenu .= "<option value='$sValue'>$sName</option>" . PHP_EOL;
+                }
+                
+                
+                $psMenu = "";
+                foreach($plist as $value){
+                    
+                    $eVal = explode("|",$value);
+                    $sValue = array_pop($eVal);
+                    $sName  = implode("|",$eVal); 
+                    $psMenu .= "<option value='$sValue'>$sName</option>" . PHP_EOL;
+                }
+                $this->view->assign("pagesSelectMenu",$psMenu);
+                $this->view->assign("contentSelectMenu",$csMenu);
+                
+                if(isset($frm['header']))
+                {
+                    $this->view->assign('msg', $frm);
+                } 
+                $cmsContent = "pageLink";
                 break;
         }
         

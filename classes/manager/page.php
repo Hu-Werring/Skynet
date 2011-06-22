@@ -294,6 +294,15 @@ class Manager_Page extends Manager_Base {
         }
         return $arts;
     }
+    public function getPages(){
+        $result = $this->reg->database->select("pages","ID,Naam");
+        foreach($result as $key=>$value){
+            if(!is_numeric($key)) continue;
+            
+            $plist[] = $value['Naam'] . "|" . $value["ID"];
+        }
+        return $plist;
+    }
     
     public function getTemplates(){
         $result = $this->reg->database->select("templates","ID,Naam");
