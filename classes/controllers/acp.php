@@ -41,22 +41,22 @@ class Controllers_Acp {
         //Actie aanroepen. Dus: als www.skynet.nl/acp/test dan TestAction();
         if(isset($_GET['page']))
         {
-            //remove install/ from begin of string and change / to "_"
             $action = str_replace("/","_",str_replace("acp/","",$_GET['page']));
             $action2 = explode("_", $action);            
             $actionArgs = $action2[(count($action2)-2)]; #-2 cause last char is also a /
-            $action2 = explode("_", $action, "-1");
-
+            $action2 = explode("_", $action, "-2"); 
+            $action2 = implode("_", $action2);
             //substr last char since that is always a /
             $action = strtolower(substr($action,0,-1)).'Action';
-            $action2 = strtolower(substr($action,0,-1)).'Action';
+            $action2 = strtolower($action2).'Action';
+
             if(method_exists($this, $action))
             {
                 call_user_func(array($this,$action));
             }
             elseif(method_exists($this, $action2))
             {
-                call_user_func_array(array($this,$action2), $actionArgs);
+                call_user_func(array($this,$action2), $actionArgs);
             }
             else
             {
@@ -91,19 +91,22 @@ class Controllers_Acp {
     {
         $uMngr = new Manager_User();
         $this->view->add_css('style.css');
-        $actions = array("User list", "New user", "blacklist");
+        $actions = array("User list"=> "mngr/user", "New user" => "mngr/user/new", "blacklist" => "mngr/user/blacklist");
         
         switch($args)
         {
             case null:
             default:
+                $cmsContent = 'userList';
                 $users = $uMngr->getUsers();
-               // print_r(($users));
                 $this->view->assign('users', $users);
                 break;
+            
+            case 'new':
+                $cmsContent = 'userNew';
         }
         $this->view->assign('cmsActions', $actions);
-        $this->view->assign('contentTpl', 'user');
+        $this->view->assign('contentTpl', $cmsContent);
         $this->view->draw('main');
         
         
