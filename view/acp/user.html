@@ -1,6 +1,0 @@
-<table>
-    <tr><td>ID</td><td>Naam</td><td>Email</td><td>Groepen</td></tr>
-{loop="$users"}
-    <tr><td>{$value.ID}</td><td>{$value.Name}</td><td>{$value.Email}</td><td>{loop="$value.groups"}{if="$counter > 1"}, {/if}{$value}{/loop}</td></tr>
-{/loop}
-</table>

@@ -4,7 +4,16 @@
 </head> 
 <body style="margin:0;padding:0;border:0;">
     <div id="header">{include="header"}</div>
-    <div id="content">{if="isset($contentTpl)"}{include="$contentTpl"}{else}{include="overview"}{/if}</div>
+    <div id="content">
+        <div id="contentLeft">
+            <ul>
+            {loop="$cmsActions"}
+                <li><a href="/acp/{$value}">{$key}</a></li>
+            {/loop}
+            </ul>
+        </div>
+        <div id="contentRight">{if="isset($contentTpl)"}{include="$contentTpl"}{else}{include="overview"}{/if}</div>
+    </div>
     <div id="footer">{include="footer"}</div>
 </body>
 </html>

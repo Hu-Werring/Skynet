@@ -20,6 +20,21 @@ body, img, ul, li
     background-color: #FFFFCC;
 }
 
+#contentLeft
+{
+    float: left;
+    max-width: 200px;
+    width: 10%;
+    height: 100%;
+    border-right: solid 1px #000000;
+}
+
+#contentRight
+{
+    float: left;
+    height: 100%;
+}
+
 #footer
 {
     width:100%;
