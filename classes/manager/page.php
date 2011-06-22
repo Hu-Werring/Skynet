@@ -77,6 +77,7 @@ class Manager_Page extends Manager_Base {
         if($result['affected']==0){
             return $this->getPageContent('home');
         }
+        $contents = array();
         foreach($result as $key=>$content){
             if(!is_numeric($key)) continue;
                 $templateLoc = $content['Locatie'];
@@ -96,7 +97,14 @@ class Manager_Page extends Manager_Base {
                                 break;
                             }
                         }
-                        $contents[] = $artikel;
+                        $ok = true;
+                        for($i=0;$i<count($contents);$i++){
+                            if($contents[$i]['Created'] == $artikel['Created']){
+                                $ok = false;
+                            }
+                        }
+                        if($ok) $contents[] = $artikel;
+                        
                     break;
                     case '2':
                         foreach($content as $field=>$value){
@@ -143,7 +151,6 @@ class Manager_Page extends Manager_Base {
             }
             $menu[] = $menuItem;
         }
-        
         $this->reg->view->assign('contentTpl', $templateLoc);
         $this->reg->view->assign('content',$contents);
         $this->reg->view->assign('menu',$menu);
