@@ -69,32 +69,5 @@ class Manager_User extends Manager_Base {
     {
         return $this->reg->database->insert("users", $args);
     }
-    
-    public function checkForm($verplicht, $trigger)
-    {
-        if(isset($_POST[$trigger]))
-        {
-            $errorItem = array();
-            foreach($verplicht as $key => $value)
-            {
-                if(empty($_POST[$key]))
-                {
-                    $errorItem[] = $value;
-                }
-            }
-            
-            $msg['items'] = $errorItem;
-            
-            if(count($errorItem) > 0)
-            {
-                $msg['header'] = 'The following fields where left blank or where not entered correctly: ';
-                return $msg;
-            }
-            else
-            {
-                return true;
-            }
-        }
-    }
 }
 ?>
