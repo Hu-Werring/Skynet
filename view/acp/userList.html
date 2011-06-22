@@ -1,6 +1,18 @@
 <table id="userlist">
-    <tr><td>ID</td><td>Naam</td><td>Email</td><td>Groepen</td></tr>
+    <tr>
+        <td>ID</td>
+        <td>Naam</td>
+        <td>Email</td>
+        <td>Groepen</td>
+        <td></td>
+    </tr>
 {loop="$users"}
-    <tr><td>{$value.ID}</td><td>{$value.Name}</td><td>{$value.Email}</td><td>{loop="$value.groups"}{if="$counter > 1"}, {/if}{$value}{/loop}</td><<td><a href="/acp/mngr/user/delete?id={$value.ID}">X</a></td>/tr>
+    <tr>
+        <td>{$value.ID}</td>
+        <td>{$value.Name}</td>
+        <td>{$value.Email}</td>
+        <td>{loop="$value.groups"}{if="$counter > 1"}, {/if}{$value}{/loop}</td>
+        <td><a href="/acp/mngr/user/delete?id={$value.ID}">X</a></td>
+    </tr>
 {/loop}
 </table>
