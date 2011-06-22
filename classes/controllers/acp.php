@@ -37,11 +37,11 @@ class Controllers_Acp {
         $this->reg = Core_Registery::singleton();
         $this->reg->controller = $this;
         $this->view = $this->reg->view;
-
+$this->view->add_css('style.css');
         //Actie aanroepen. Dus: als www.skynet.nl/acp/test dan TestAction();
         if(isset($_GET['page']))
         {
-            $this->view->add_css('style.css');
+            
             $action = str_replace("/","_",str_replace("acp/","",$_GET['page']));
             $action2 = explode("_", $action);            
             $actionArgs = $action2[(count($action2)-2)]; #-2 cause last char is also a /
@@ -112,11 +112,18 @@ class Controllers_Acp {
     }
     private function mngr_pageAction($argument=null){
         $pMngr = new Manager_Page();
-        $actions = array("Page overview"=> "mngr/page/", "New page" => "mngr/page/new/", /*"Delete Page" => "mngr/page/delete/",*/ "Link Content" => "mngr/page/link/", "Unlink Content" => "mngr/page/unlink/");
+        $actions = array("Page overview"=> "mngr/page/", "New page" => "mngr/page/new/", "Link Content" => "mngr/page/link/", "Unlink Content" => "mngr/page/unlink/");
+        
+        
         
         switch($argument){
-            case '':
-                
+            case null:
+                $pages = $pMngr->listPages();
+                for($i=0;$i<count($pages)-2;$i++){
+                    $pageList[$pages[$i]['pNaam']][] = array("tID"=>$pages[$i]['tID'],"Template"=>$pages[$i]['tNaam'],"pID"=>$pages[$i]['pID']);
+                    
+                }
+                print_r($pageList);
                 break;
         }
         

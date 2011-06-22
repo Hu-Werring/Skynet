@@ -232,6 +232,8 @@ class Manager_Page extends Manager_Base {
      * @param Integer $pageID ID of the page
      * @param Integer $contentID ID of content resource
      * @param Integer $contentType Type of content
+     * @access public
+     * @return Boolean succes
     */
     public function unlinkContent($pageID,$contentID,$contentType){
         $table = 'pagecontent';
@@ -242,4 +244,37 @@ class Manager_Page extends Manager_Base {
         return $result['succes'];
     }
     
+    
+    /**
+     * listPages
+     * gets all pages from the database
+     * @access public
+     * @return Array list of pages with info
+    */
+    public function listPages(){
+        $table = 'pages';
+        
+        $pcontent = $this->reg->database->prefixTable("pagecontent");
+        $pages = $this->reg->database->prefixTable("pages");
+        $templates = $this->reg->database->prefixTable("templates");
+        //select from pages
+        $select[] = "$pages.ID as pID";
+        $select[] = "$pages.Naam as pNaam";
+        $select[] = "$pages.Zichtbaar as pZichtbaar";
+        //select from pagecontent
+        #nothing
+        //select from templates
+        $select[] = "$templates.ID as tID";
+        $select[] = "$templates.Naam as tNaam";
+        $select[] = "$templates.Description as tDesc";
+        
+        $select = implode(",",$select);
+        
+        
+        
+        $advanced = "left join `$pcontent` on $pages.ID=$pcontent.pID" . PHP_EOL;
+        $advanced.= "inner join `$templates` on $pages.tID=$templates.ID" . PHP_EOL;
+        $result = $this->reg->database->select($table,$select,$advanced);
+        return $result;
+    }
 }
