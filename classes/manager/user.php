@@ -47,9 +47,12 @@ class Manager_User extends Manager_Base {
                 $contents[] = $content;
             }
         }
-
         return $contents;
-        
+    }
+    
+    public function getUser($uid)
+    {
+        return $this->reg->database->select("users", "*", "WHERE ID = ".$uid);
     }
 
     public function deleteUser($uid)
@@ -59,7 +62,7 @@ class Manager_User extends Manager_Base {
     
     public function updateUser($uid, $args)
     {
-        $this->reg->database->update("users", $args, array("ID" => $uid));
+        return $this->reg->database->update("users", $args, array("ID" => $uid));
     }
     
     public function createUser($args)
