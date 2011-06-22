@@ -299,8 +299,8 @@ class Manager_Page extends Manager_Base {
         $result = $this->reg->database->select("templates","ID,Naam");
         foreach($result as $key=>$value){
             if(!is_numeric($key)) continue;
-            $arts[] = $value['Naam'] . "|" . $value["ID"];
+            $tpls[] = $value['Naam'] . "|" . $value["ID"];
         }
-        return $arts;
+        return $tpls;
     }
 }
