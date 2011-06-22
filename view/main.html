@@ -1,10 +1,12 @@
+{if="isset($contentTpl)"}{include="$contentTpl"}{else}
 <html lang="en">
 <head>
    {if="isset($libs)"}{$libs}{/if}
 </head> 
 <body style="margin:0;padding:0;border:0;">
     <div id="header">{include="header"}</div>
-    <div id="content">{if="isset($contentTpl)"}{include="$contentTpl"}{else}{include="home"}{/if}</div>
+    <div id="content">{include="home"}</div>
     <div id="footer">{include="footer"}</div>
 </body>
 </html>
+{/if}
