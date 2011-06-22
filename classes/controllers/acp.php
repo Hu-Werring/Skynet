@@ -37,7 +37,8 @@ class Controllers_Acp {
         $this->reg = Core_Registery::singleton();
         $this->reg->controller = $this;
         $this->view = $this->reg->view;
-$this->view->add_css('style.css');
+        $this->view->add_css('style.css');
+        
         //Actie aanroepen. Dus: als www.skynet.nl/acp/test dan TestAction();
         if(isset($_GET['page']))
         {
@@ -87,14 +88,14 @@ $this->view->add_css('style.css');
      * action triggerd when someone looks at the /user/ page
      * @access private
     */
-    private function mngr_userAction($args=null)
+    private function mngr_userAction($arg=null)
     {
         $uMngr = new Manager_User();
         $actions = array("User list"=> "mngr/user", "New user" => "mngr/user/new", "blacklist" => "mngr/user/blacklist");
         
-        switch($args)
+        switch($arg)
         {
-            case null:
+            case 'userlist':
             default:
                 $cmsContent = 'userList';
                 $users = $uMngr->getUsers();
@@ -123,9 +124,19 @@ $this->view->add_css('style.css');
                     $this->view->assign('msg', $frm);
                 }
                 
-                
-                
                 $cmsContent = 'userNew';
+                break;
+            
+            case 'delete':
+                if($_GET['id'] !== '1')
+                {
+                    $uMngr->deleteUser($_GET['id']);
+                }
+                
+                $cmsContent = 'userList';
+                $users = $uMngr->getUsers();
+                $this->view->assign('users', $users);
+                break;
         }
         $this->view->assign('cmsActions', $actions);
         $this->view->assign('contentTpl', $cmsContent);
