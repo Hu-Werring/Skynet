@@ -211,7 +211,7 @@ class Controllers_Acp {
         $actions = array("Page overview"=> "mngr/page/", "New page" => "mngr/page/new/", "Link Content" => "mngr/page/link/", "Unlink Content" => "mngr/page/unlink/");
         
         
-        
+        $cmsContent=null;
         switch($argument){
             case null:
                 $pages = $pMngr->listPages();
@@ -279,6 +279,18 @@ class Controllers_Acp {
                 {
                     $this->view->assign('msg', $frm);
                 } 
+                break;
+            case 'delete':
+                if(isset($_GET['id']) && is_numeric($_GET['id'])){
+                    $pMngr->deletePage($_GET['id']);
+                }
+                $pages = $pMngr->listPages();
+                for($i=0;$i<count($pages)-2;$i++){
+                    $pageList[$pages[$i]['pNaam']] = array("tID"=>$pages[$i]['tID'],"Template"=>$pages[$i]['tNaam'],"pID"=>$pages[$i]['pID'],"pNaam"=>$pages[$i]["pNaam"]);
+                    
+                }
+                $this->view->assign('pageList', $pageList);
+                $cmsContent = "pageOverview";
                 break;
         }
         

@@ -1,6 +1,6 @@
 <table>
-    <tr><th width='25px'>pID</th><th width='100px'>Pagina</th><th width='100px'>Template</th></tr>
+    <tr><th width='25px'>pID</th><th width='100px'>Pagina</th><th width='100px'>Template</th><th>Delete</th></tr>
 {loop="$pageList"}
-    <tr><td title="page ID">{$value.pID}</td><td>{$value.pNaam}</td><td>{$value.Template}</td></tr>
+    <tr><td title="page ID">{$value.pID}</td><td>{$value.pNaam}</td><td>{$value.Template}</td><td><td><a href="/acp/mngr/page/delete?id={$value.pID}">X</a></td></td></tr>
 {/loop}
 </table>
