@@ -19,7 +19,7 @@ class Manager_User extends Manager_Base {
         $this->init("user");
         
     }
-    
+
     public function getUsers()
     {
         $users = $this->reg->database->prefixTable("users");
@@ -55,6 +55,57 @@ class Manager_User extends Manager_Base {
     public function updateUser($uid, $args)
     {
         $this->reg->database->update("users", $args, array("ID" => $uid));
+    }
+    
+    public function createUser($args)
+    {
+        return $this->reg->database->insert("users", $args);
+    }
+    
+    public function checkForm($verplicht, $trigger)
+    {
+        if(isset($_POST[$trigger]))
+        {
+            $errorItem = array();
+            foreach($verplicht as $key => $value)
+            {
+                if(empty($_POST[$key]))
+                {
+                    $errorItem[] = $value;
+                }
+            }
+            
+            $msg['items'] = $errorItem;
+            
+            if(count($errorItem) > 0)
+            {
+                $msg['header'] = 'The following fields where left blank or where not entered correctly: ';
+                return $msg;
+            }
+            else
+            {
+                return true;
+            }
+        }
+    }
+    
+    public function checkPost($type)
+    {
+        switch($type)
+        {
+            case 'create':
+                
+                $this->createUser(array("name" => $_POST['name'], ));
+                break;
+            
+            case 'update':
+                //
+                break;
+            
+            case 'delete':
+                //
+                break;
+        }
     }
 }
 ?>
