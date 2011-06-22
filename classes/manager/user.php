@@ -52,6 +52,11 @@ class Manager_User extends Manager_Base {
         
     }
 
+    public function deleteUser($uid)
+    {
+        $this->reg->database->delete("users", array('ID' => $uid));
+    }
+    
     public function updateUser($uid, $args)
     {
         $this->reg->database->update("users", $args, array("ID" => $uid));
@@ -86,25 +91,6 @@ class Manager_User extends Manager_Base {
             {
                 return true;
             }
-        }
-    }
-    
-    public function checkPost($type)
-    {
-        switch($type)
-        {
-            case 'create':
-                
-                $this->createUser(array("name" => $_POST['name'], ));
-                break;
-            
-            case 'update':
-                //
-                break;
-            
-            case 'delete':
-                //
-                break;
         }
     }
 }
