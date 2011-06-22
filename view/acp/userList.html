@@ -12,6 +12,7 @@
         <td>{$value.Name}</td>
         <td>{$value.Email}</td>
         <td>{loop="$value.groups"}{if="$counter > 1"}, {/if}{$value}{/loop}</td>
+        <td><a href="/acp/mngr/user/edit?id={$value.ID}"><img src="/view/acp/img/edit.png#"></a></td>
         <td><a href="/acp/mngr/user/delete?id={$value.ID}">X</a></td>
     </tr>
 {/loop}
