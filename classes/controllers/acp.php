@@ -143,15 +143,16 @@ $this->view->add_css('style.css');
             case null:
                 $pages = $pMngr->listPages();
                 for($i=0;$i<count($pages)-2;$i++){
-                    $pageList[$pages[$i]['pNaam']][] = array("tID"=>$pages[$i]['tID'],"Template"=>$pages[$i]['tNaam'],"pID"=>$pages[$i]['pID']);
+                    $pageList[$pages[$i]['pNaam']] = array("tID"=>$pages[$i]['tID'],"Template"=>$pages[$i]['tNaam'],"pID"=>$pages[$i]['pID'],"pNaam"=>$pages[$i]["pNaam"]);
                     
                 }
-                print_r($pageList);
+                $cmsContent = "pageOverview";
                 break;
         }
         
         $this->view->assign('cmsActions', $actions);
-        //$this->view->assign('contentTpl', $cmsContent);
+        $this->view->assign('pageList', $pageList);
+        $this->view->assign('contentTpl', $cmsContent);
         $this->view->draw('main');
     }
 
