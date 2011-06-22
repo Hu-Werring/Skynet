@@ -20,11 +20,11 @@ class Manager_User extends Manager_Base {
         
     }
     
-    function getUsers()
+    public function getUsers()
     {
         $users = $this->reg->database->prefixTable("users");
         $groupmembers = $this->reg->database->prefixTable("groupmembers");
-        $group = $this->reg->database->prefixTable("groups");
+        $groups = $this->reg->database->prefixTable("groups");
         
         $query = "SELECT * FROM ".$users;
         $result = $this->reg->database->query($query);
@@ -32,13 +32,29 @@ class Manager_User extends Manager_Base {
         foreach($result as $key=>$content){
             if(is_numeric($key))
             {
+                //groepen van de user verkrijgen.
+                $query2 = "SELECT Name FROM ".$groups." WHERE ID IN(SELECT gID FROM ".$groupmembers." WHERE uID = ".$content['ID'].") ";
+                $result2 = $this->reg->database->query($query2);
+
+                foreach($result2 as $key2 => $content2)
+                {
+                    if(is_numeric($key2))
+                    {
+                        $content['groups'][] = $content2['Name'];
+                    }
+                }
+
                 $contents[] = $content;
             }
         }
-        print_r($contents);
+
         return $contents;
         
     }
 
+    public function updateUser($uid, $args)
+    {
+        $this->reg->database->update("users", $args, array("ID" => $uid));
+    }
 }
 ?>
