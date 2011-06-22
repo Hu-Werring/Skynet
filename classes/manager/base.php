@@ -37,5 +37,32 @@ abstract class Manager_Base {
     {
         $this->reg->view->assign("cmsActions", $actions);
     }
+    
+    public function checkForm($verplicht, $trigger)
+    {
+        if(isset($_POST[$trigger]))
+        {
+            $errorItem = array();
+            foreach($verplicht as $key => $value)
+            {
+                if(empty($_POST[$key]))
+                {
+                    $errorItem[] = $value;
+                }
+            }
+            
+            $msg['items'] = $errorItem;
+            
+            if(count($errorItem) > 0)
+            {
+                $msg['header'] = 'The following fields where left blank or where not entered correctly: ';
+                return $msg;
+            }
+            else
+            {
+                return true;
+            }
+        }
+    }
 }
 ?>
