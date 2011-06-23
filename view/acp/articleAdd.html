@@ -1,0 +1,23 @@
+<form action="" method="POST">
+    <fieldset>
+        <legend>Create new article</legend>
+        {if="isset($msg)"}
+            {$msg['header']}<br>
+            {if="isset($msg['items'])"}
+                {loop="$msg['items']"}
+                {$value}<br>
+                
+                {/loop}
+            {/if}
+        {/if}
+        <dl>
+            <dt>Title</dt>
+            <dd><input type='Text' name='Title' value='{if="isset($title)"}{$title}{/if}' /></dd>
+            <dt>Category</dt>
+            <dd><select name='cat'>{$cList}</select></dd>
+            <dt>Content</dt>
+            <dd><textarea name='content' cols="50" rows="10">{if="isset($content)"}{$content}{/if}</textarea></dd>
+        </dl>
+        <p style='text-align:right;'><input type='submit' name='add' value='add article' /></p>
+    </fieldset>
+</form>
