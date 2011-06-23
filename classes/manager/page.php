@@ -188,8 +188,8 @@ class Manager_Page extends Manager_Base {
     */
     public function modPage($id,$data){
         $table = 'pages';
-        $data['ID'] = $id;
-        $result = $this->reg->database->delete($table,$data);
+        $where['ID'] = $id;
+        $result = $this->reg->database->update($table,$data,$where);
         return $result['succes'];
     }
     
@@ -235,14 +235,14 @@ class Manager_Page extends Manager_Base {
      * @access public
      * @return Boolean succes
     */
-    public function unlinkContent($pageID,$contentID,$contentType){
+    public function unlinkContent($contentpageID){
         $table = 'pagecontent';
-        $data['pID'] = $pageID;
-        $data['aID'] = $contentID;
-        $data['type'] = $contentType;
+        $data['ID'] = $contentpageID;
         $result = $this->reg->database->delete($table,$data);
         return $result['succes'];
     }
+    
+    
     
     
     /**
@@ -311,5 +311,50 @@ class Manager_Page extends Manager_Base {
             $tpls[] = $value['Naam'] . "|" . $value["ID"];
         }
         return $tpls;
+    }
+
+    public function getPageContentByID($pID){
+        
+        $pages = $this->reg->database->prefixTable("pages");
+        $templates = $this->reg->database->prefixTable("templates");
+        $pcontent = $this->reg->database->prefixTable("pagecontent");
+        $artikelen = $this->reg->database->prefixTable("artikelen");
+        $forms = $this->reg->database->prefixTable("forms");
+        $links = $this->reg->database->prefixTable("links");
+        $cat = $this->reg->database->prefixTable("categorieen");
+        
+        $query = "SELECT
+        $pages.Naam as pNaam,
+        $pages.Zichtbaar as pVis,
+        $pages.Positie as pPos,
+        
+        $templates.ID as tID,
+        
+        $artikelen.Titel as aNaam,
+        
+        $forms.Naam as fNaam,
+        
+        $links.Naam as lNaam,
+        
+        $cat.Naam as cNaam,
+        
+        $pcontent.type,
+        $pcontent.ID as pcID
+        
+        FROM `$pages`
+                    inner join `$pcontent` on $pages.ID=$pcontent.pID
+                    
+                    left join `$artikelen` on $pcontent.aID=$artikelen.ID
+                    
+                    left join `$forms` on $pcontent.aID=$forms.ID
+                    
+                    left join `$cat` on $pcontent.aID=$cat.ID
+                    left join `$links` on $cat.ID=$links.cID
+                    
+                    inner join `".$templates."` on ".$templates.".ID=".$pages.".tID
+                    WHERE `".$pages."`.`ID`='".$pID."'";
+        $result = $this->reg->database->query($query);
+        
+        return $result;
     }
 }
