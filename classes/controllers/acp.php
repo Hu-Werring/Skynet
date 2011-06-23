@@ -38,7 +38,8 @@ class Controllers_Acp {
         $this->reg->controller = $this;
         $this->view = $this->reg->view;
         $this->view->add_css('style.css');
-        
+        if((isset($_SESSION['loggedIn']) && $_SESSION['loggedIn']==true)  || (isset($_GET['page']) && $_GET['page'] == 'acp/login/')){
+
         //Actie aanroepen. Dus: als www.skynet.nl/acp/test dan TestAction();
         if(isset($_GET['page']))
         {
@@ -69,6 +70,10 @@ class Controllers_Acp {
         {
             $this->indexAction();
         }
+        } else {
+            header("Location: /acp/login/");
+            exit();
+        }
     }
     
     /**
@@ -84,6 +89,21 @@ class Controllers_Acp {
         $this->view->draw('main');
     }
     
+    private function loginAction(){
+        if($_SERVER['REQUEST_METHOD']=="POST"){
+            $name = $_POST['account'];
+            $pass = sha1($_POST['pass']);
+            $result = $this->reg->database->select("users","COUNT(*)","WHERE Name='$name' AND Pass='$pass'");
+            if($result['affected']>=1){
+                $_SESSION['loggedIn']=true;
+                header("Location: /acp/");
+                exit();
+            }
+            
+        }
+        $this->view->assign('contentTpl', 'login');
+        $this->view->draw('main');
+    }
     /**
      * userAction
      * action triggerd when someone looks at the /user/ page
@@ -170,6 +190,7 @@ class Controllers_Acp {
                 else
                 {
                     header("Location: /acp/mngr/user/");
+                    exit();
                 }
                 
                 if(isset($frm['header']))
@@ -191,7 +212,7 @@ class Controllers_Acp {
         $actions = array("Page overview"=> "mngr/page/", "New page" => "mngr/page/new/", "Link Content" => "mngr/page/link/", "Unlink Content" => "mngr/page/unlink/");
         
         
-        
+        $cmsContent=null;
         switch($argument){
             case null:
                 $pages = $pMngr->listPages();
@@ -203,12 +224,31 @@ class Controllers_Acp {
                 $cmsContent = "pageOverview";
                 break;
             case 'new':
+                $error=false;
                 if($_SERVER['REQUEST_METHOD'] === "POST"){
-                    $frm = $pMngr->checkForm(array("name"=>"Name"),'submit');
+                    $frm = $pMngr->checkForm(array("name"=>"Name","position"=>"Position"),'submit');
                     if($frm === true){
-                        $name = $this->reg->database->rs($_POST['name']);
-                        
-                        //$pMngr->newPage($name,$pos,$visible,$template);
+                        $name = $this->reg->database->res($_POST['name']);
+                        $pos = $_POST['position'];
+                        $template = $_POST['template'];
+                        $visible = (isset($_POST['visible']) && $_POST['visible'] === "true") ? 1 : 0;
+                        if($pMngr->newPage($name,$pos,$visible,$template)){
+                            $res = $this->reg->database->select("pages","ID","WHERE Naam='$name'");
+                            if($res["succes"]===true){
+                                $pID = $res[0]['ID'];
+                                $eContent = explode("_",$_POST['content']);
+                                if(!$pMngr->linkContent($pID,$eContent[0],$eContent[1])){
+                                    $frm['header'] = 'TThe following errors took place: ';
+                                    $frm[] = $this->reg->database->lastError();
+                                }
+                            } else {
+                                $frm['header'] = 'TThe following errors took place: ';
+                                $frm[] = $this->reg->database->lastError();
+                            }
+                        } else {
+                            $frm['header'] = 'TThe following errors took place: ';
+                            $frm[] = $this->reg->database->lastError();
+                        }
                     }
                 }
                 $cmsContent = 'pageNew';
@@ -240,6 +280,59 @@ class Controllers_Acp {
                 {
                     $this->view->assign('msg', $frm);
                 } 
+                break;
+            case 'delete':
+                if(isset($_GET['id']) && is_numeric($_GET['id'])){
+                    $pMngr->deletePage($_GET['id']);
+                }
+                $pages = $pMngr->listPages();
+                for($i=0;$i<count($pages)-2;$i++){
+                    $pageList[$pages[$i]['pNaam']] = array("tID"=>$pages[$i]['tID'],"Template"=>$pages[$i]['tNaam'],"pID"=>$pages[$i]['pID'],"pNaam"=>$pages[$i]["pNaam"]);
+                    
+                }
+                $this->view->assign('pageList', $pageList);
+                $cmsContent = "pageOverview";
+                break;
+            case 'link':
+                if($_SERVER['REQUEST_METHOD'] === "POST"){
+                    $pID = $_POST['pid'];
+                    $eContent = explode("_",$_POST['content']);
+                    if(!$pMngr->linkContent($pID,$eContent[0],$eContent[1])){
+                        $frm['header'] = 'TThe following errors took place: ';
+                        $frm[] = $this->reg->database->lastError();
+                    }
+                }
+                
+                $arts = $pMngr->getArtikelen();
+                $cats = $pMngr->getCats();
+                $itemList = array_merge($arts,$cats);
+                $plist = $pMngr->getPages();
+
+                $csMenu="";
+                foreach($itemList as $value){
+                    $eVal = explode("|",$value);
+                    $sValue = array_pop($eVal);
+                    $sName  = implode("|",$eVal); 
+                    $csMenu .= "<option value='$sValue'>$sName</option>" . PHP_EOL;
+                }
+                
+                
+                $psMenu = "";
+                foreach($plist as $value){
+                    
+                    $eVal = explode("|",$value);
+                    $sValue = array_pop($eVal);
+                    $sName  = implode("|",$eVal); 
+                    $psMenu .= "<option value='$sValue'>$sName</option>" . PHP_EOL;
+                }
+                $this->view->assign("pagesSelectMenu",$psMenu);
+                $this->view->assign("contentSelectMenu",$csMenu);
+                
+                if(isset($frm['header']))
+                {
+                    $this->view->assign('msg', $frm);
+                } 
+                $cmsContent = "pageLink";
                 break;
         }
         

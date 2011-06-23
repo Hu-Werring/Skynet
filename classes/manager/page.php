@@ -171,7 +171,7 @@ class Manager_Page extends Manager_Base {
     */
     public function newPage($name,$positie,$zichtbaar,$template){
         $table = 'pages';
-        $data['Naam'] = $naam;
+        $data['Naam'] = $name;
         $data['Positie'] = $positie;
         $data['Zichtbaar'] = ($zichtbaar) ? 1 : 0;
         $data['tID'] = $template;
@@ -293,6 +293,15 @@ class Manager_Page extends Manager_Base {
             $arts[] = $value['Titel'] . " (Article) |" . $value["ID"] . "_1";
         }
         return $arts;
+    }
+    public function getPages(){
+        $result = $this->reg->database->select("pages","ID,Naam");
+        foreach($result as $key=>$value){
+            if(!is_numeric($key)) continue;
+            
+            $plist[] = $value['Naam'] . "|" . $value["ID"];
+        }
+        return $plist;
     }
     
     public function getTemplates(){
