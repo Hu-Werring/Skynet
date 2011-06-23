@@ -83,6 +83,7 @@ class Controllers_Acp {
         //$this->view->assign('content', 'grapje');
         $this->view->draw('main');
     }
+    
     /**
      * userAction
      * action triggerd when someone looks at the /user/ page
@@ -184,6 +185,7 @@ class Controllers_Acp {
         
         
     }
+    
     private function mngr_pageAction($argument=null){
         $pMngr = new Manager_Page();
         $actions = array("Page overview"=> "mngr/page/", "New page" => "mngr/page/new/", "Link Content" => "mngr/page/link/", "Unlink Content" => "mngr/page/unlink/");
@@ -244,6 +246,114 @@ class Controllers_Acp {
         $this->view->assign('cmsActions', $actions);
         $this->view->assign('contentTpl', $cmsContent);
         $this->view->draw('main');
+    }
+    
+    /**
+     * mngr_moduleAction
+     * action triggerd when someone looks at the /user/module
+     * @access private
+    */
+    private function mngr_moduleAction($arg=null)
+    {
+        $mMngr = new Manager_Module();
+        $actions = array("Module list"=> "mngr/module", "Add module" => "mngr/module/add", "General Module settings" => "mngr/module/settings");
+        
+        switch($arg)
+        {
+            case 'moduleList':
+            default:
+                $cmsContent = 'moduleList';
+                $this->view->assign("msg", "Er zijn geen modules beschikbaar");
+                                
+                $activeModules = $mMngr->getModules('active');
+                $nonactiveModules = $mMngr->getModules('non-active');
+                if($activeModules !== false)
+                {
+                    $this->view->assign("ActiveModules", $activeModules);
+                }
+                
+                if($nonactiveModules !== false)
+                {
+                    $this->view->assign("nonActiveModules", $nonactiveModules);
+                }
+                
+                break;
+            
+            case 'add';
+                $cmsContent = 'moduleAdd';
+                $this->view->assign("msg", "Er zijn geen modules beschikbaar om te installeren");                
+                if(!empty($_GET['dirname']))
+                {
+                    $mMngr->installModule($_GET['dirname']);
+                }
+                
+                $modules = $mMngr->checkInstall(); #check for nieuwe module installaties
+                if($modules !== false)
+                {
+                    $this->view->assign("modules", $modules);
+                }
+                break;
+            
+            case 'activate':
+                $mMngr->activateModule($_GET['dirname']);
+                $cmsContent = 'moduleList';
+                $this->view->assign("msg", "Er zijn geen modules beschikbaar");
+                                
+                $activeModules = $mMngr->getModules('active');
+                $nonactiveModules = $mMngr->getModules('non-active');
+                if($activeModules !== false)
+                {
+                    $this->view->assign("ActiveModules", $activeModules);
+                }
+                
+                if($nonactiveModules !== false)
+                {
+                    $this->view->assign("nonActiveModules", $nonactiveModules);
+                }
+                break;
+            
+            case 'deactivate':
+                $mMngr->deactivateModule($_GET['dirname']);
+                $cmsContent = 'moduleList';
+                $this->view->assign("msg", "Er zijn geen modules beschikbaar");
+                                
+                $activeModules = $mMngr->getModules('active');
+                $nonactiveModules = $mMngr->getModules('non-active');
+                if($activeModules !== false)
+                {
+                    $this->view->assign("ActiveModules", $activeModules);
+                }
+                
+                if($nonactiveModules !== false)
+                {
+                    $this->view->assign("nonActiveModules", $nonactiveModules);
+                }
+                break;
+            
+            case 'uninstall':
+                $mMngr->uninstallModule($_GET['dirname']);
+                $cmsContent = 'moduleList';
+                $this->view->assign("msg", "Er zijn geen modules beschikbaar");
+                                
+                $activeModules = $mMngr->getModules('active');
+                $nonactiveModules = $mMngr->getModules('non-active');
+                if($activeModules !== false)
+                {
+                    $this->view->assign("ActiveModules", $activeModules);
+                }
+                
+                if($nonactiveModules !== false)
+                {
+                    $this->view->assign("nonActiveModules", $nonactiveModules);
+                }
+                break;
+            
+        }
+        $this->view->assign('cmsActions', $actions);
+        $this->view->assign('contentTpl', $cmsContent);
+        $this->view->draw('main');
+        
+        
     }
 
 }
