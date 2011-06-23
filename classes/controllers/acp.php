@@ -206,6 +206,57 @@ class Controllers_Acp {
         
         
     }
+    private function mngr_articleAction($subPage=null)
+    {
+        $aMngr = new Manager_Article();
+        $pMngr = new Manager_Page();
+        $actions = array( "New Article" => "mngr/article/new/","Article overview"=> "mngr/article/");
+        
+        switch($subPage){
+            case null:
+                foreach($pMngr->getArtikelen() as $artikel){
+                     $eArt = explode(" (Article) |",$artikel);
+                     $aList[] = array("Name"=>$eArt[0],"ID"=>substr($eArt[1],0,-2));
+                }
+                $cmsContent = 'articleOverview';
+                $this->view->assign("pageList",$aList);
+                break;
+            case 'new':
+                $frm = $aMngr->checkForm(array("Title"=>"Title","content"=>"Content"),"add");
+                
+                if($frm === true){
+                    $msg = $aMngr->add($_POST['Title'],$_POST['content'],$_POST['cat']);
+                    if($msg==true){
+                        $this->view->assign("msg",array("header"=>"Your page has been created."));
+                    } else {
+                        $this->view->assign("msg",array("header"=>"Something went wrong while creating your article"));
+                        $this->view->assign("title",$_POST['Title']);
+                        $this->view->assign("content",$_POST['content']);
+                    }
+                }
+                if(isset($frm['header']))
+                {
+                    $this->view->assign('msg', $frm);
+                    $this->view->assign("title",$_POST['Title']);
+                    $this->view->assign("content",$_POST['content']);
+                }
+                foreach($pMngr->getCats() as $cat){
+                    $eCat = explode(" (Category) |",$cat);
+                    $cList[] = array("Name"=>$eCat[0],"ID"=>substr($eCat[1],0,-2));
+                }
+                $csMenu="";
+                foreach($cList as $value){
+                    $csMenu .= "<option value='$value[ID]'>$value[Name]</option>" . PHP_EOL;
+                }
+                $this->view->assign("cList",$csMenu);
+                $cmsContent = 'articleAdd';
+                break;
+        }
+        
+        $this->view->assign('cmsActions', $actions);
+        $this->view->assign('contentTpl', $cmsContent);
+        $this->view->draw('main');
+    }
     
     private function mngr_pageAction($argument=null){
         $pMngr = new Manager_Page();
