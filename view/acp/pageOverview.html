@@ -1,6 +1,11 @@
 <table>
-    <tr><th width='25px'>pID</th><th width='100px'>Pagina</th><th width='100px'>Template</th><th>Delete</th></tr>
+    <tr style='text-align: left !important;'><th style="padding-right:5px;" width='25px'>pID</th><th style="padding-right:5px;" width='100px'>Pagina</th><th style="padding-right:5px;" width='100px'>Template</th><th style="padding-right:5px;">Edit</th><th style="padding-right:5px;">Delete</th></tr>
 {loop="$pageList"}
-    <tr><td title="page ID">{$value.pID}</td><td>{$value.pNaam}</td><td>{$value.Template}</td><td><td><a href="/acp/mngr/page/delete?id={$value.pID}">X</a></td></td></tr>
+    <tr><td title="page ID">{$value.pID}</td>
+        <td>{$value.pNaam}</td>
+        <td>{$value.Template}</td>
+        <td><a href="/acp/mngr/page/edit/?id={$value.pID}"><img src="/view/acp/img/edit.png#"></a></td>
+            <td><a href="/acp/mngr/page/delete/?id={$value.pID}">X</a></td>
+        </tr>
 {/loop}
 </table>
