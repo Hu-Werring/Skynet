@@ -213,7 +213,12 @@ class Controllers_Acp {
         $actions = array( "New Article" => "mngr/article/new/","Article overview"=> "mngr/article/");
         
         switch($subPage){
+            case 'delete':
+                if(isset($_GET['id'])){
+                    $aMngr->remove($_GET['id']);
+                }
             case null:
+            default:
                 foreach($pMngr->getArtikelen() as $artikel){
                      $eArt = explode(" (Article) |",$artikel);
                      $aList[] = array("Name"=>$eArt[0],"ID"=>substr($eArt[1],0,-2));
@@ -250,6 +255,9 @@ class Controllers_Acp {
                 }
                 $this->view->assign("cList",$csMenu);
                 $cmsContent = 'articleAdd';
+                break;
+            case 'edit':
+                
                 break;
         }
         

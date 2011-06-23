@@ -47,8 +47,9 @@ class Manager_Article extends Manager_Base {
     }
     
     public function remove($aID){
-        $result = $this->reg->database->delete('artikelen',array('ID'=>$aID));
-        return $result['succes'];
+        $result  = $this->reg->database->delete('artikelen',array('ID'=>$aID));
+        $result2 = $this->reg->database->delete('pagecontent',array('aID'=>$aID,"type"=>1));
+        return ($result['succes'] && $result2["succes"]);
     }
     
 }
