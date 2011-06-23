@@ -238,18 +238,29 @@ class Controllers_Acp {
                                 $pID = $res[0]['ID'];
                                 $eContent = explode("_",$_POST['content']);
                                 if(!$pMngr->linkContent($pID,$eContent[0],$eContent[1])){
-                                    $frm['header'] = 'TThe following errors took place: ';
-                                    $frm[] = $this->reg->database->lastError();
+                                    $frm = array();
+                                    $frm['header'] = 'The following errors took place: ';
+                                    $frm[0] = $this->reg->database->lastError();
+                                    echo $this->reg->database->lastError();
                                 }
                             } else {
-                                $frm['header'] = 'TThe following errors took place: ';
-                                $frm[] = $this->reg->database->lastError();
+                                $frm = array();
+                                $frm['header'] = 'The following errors took place: ';
+                                $frm[0] = $this->reg->database->lastError();
+                                echo $this->reg->database->lastError();
                             }
                         } else {
-                            $frm['header'] = 'TThe following errors took place: ';
-                            $frm[] = $this->reg->database->lastError();
+                            $frm = array();
+                            $frm['header'] = 'The following errors took place: ';
+                            $frm[0] = $this->reg->database->lastError();
+                            echo $this->reg->database->lastError();
                         }
                     }
+                }
+                if(isset($frm) && $frm===true){
+                    $frm=array();
+                    $frm['header'] = 'We succesfully added your page.';
+                    
                 }
                 $cmsContent = 'pageNew';
                 $artikelList = $pMngr->getArtikelen();
