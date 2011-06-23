@@ -209,7 +209,7 @@ class Controllers_Acp {
     
     private function mngr_pageAction($argument=null){
         $pMngr = new Manager_Page();
-        $actions = array("Page overview"=> "mngr/page/", "New page" => "mngr/page/new/", "Link Content" => "mngr/page/link/", "Unlink Content" => "mngr/page/unlink/");
+        $actions = array("Page overview"=> "mngr/page/", "New page" => "mngr/page/new/", "Link Content" => "mngr/page/link/");
         
         
         $cmsContent=null;
@@ -238,18 +238,29 @@ class Controllers_Acp {
                                 $pID = $res[0]['ID'];
                                 $eContent = explode("_",$_POST['content']);
                                 if(!$pMngr->linkContent($pID,$eContent[0],$eContent[1])){
-                                    $frm['header'] = 'TThe following errors took place: ';
-                                    $frm[] = $this->reg->database->lastError();
+                                    $frm = array();
+                                    $frm['header'] = 'The following errors took place: ';
+                                    $frm[0] = $this->reg->database->lastError();
+                                    echo $this->reg->database->lastError();
                                 }
                             } else {
-                                $frm['header'] = 'TThe following errors took place: ';
-                                $frm[] = $this->reg->database->lastError();
+                                $frm = array();
+                                $frm['header'] = 'The following errors took place: ';
+                                $frm[0] = $this->reg->database->lastError();
+                                echo $this->reg->database->lastError();
                             }
                         } else {
-                            $frm['header'] = 'TThe following errors took place: ';
-                            $frm[] = $this->reg->database->lastError();
+                            $frm = array();
+                            $frm['header'] = 'The following errors took place: ';
+                            $frm[0] = $this->reg->database->lastError();
+                            echo $this->reg->database->lastError();
                         }
                     }
+                }
+                if(isset($frm) && $frm===true){
+                    $frm=array();
+                    $frm['header'] = 'We succesfully added your page.';
+                    
                 }
                 $cmsContent = 'pageNew';
                 $artikelList = $pMngr->getArtikelen();
@@ -333,6 +344,75 @@ class Controllers_Acp {
                     $this->view->assign('msg', $frm);
                 } 
                 $cmsContent = "pageLink";
+                break;
+            case 'edit':
+                
+                $frm = $pMngr->checkForm(array("pID"=>"page ID"),"Delete");
+                if($frm===true){
+                    
+                    $cDeleteID = $_POST['cDelete'];
+                    $pMngr->unlinkContent($cDeleteID);
+                    unset($frm);
+                }
+                $frm = $pMngr->checkForm(array("pName"=>"Page Name"),"Update");
+                if($frm===true){
+                    $pID = $_POST['pID'];
+                    $data['Naam'] = $_POST['pName'];
+                    $data['Positie'] = $_POST['position'];
+                    $data['Zichtbaar'] = ($_POST['visible'] == 'true') ? 1 : 0;
+                    $data['tID'] = $_POST['template'];
+                    $pMngr->modPage($pID,$data);
+                }
+                
+                $cmsContent = 'pageEdit';
+                $page = $pMngr->getPageContentByID($_GET['id']);
+                $option="";
+                //var_dump($page);
+                foreach($page as $key=>$value){
+                    if(!is_numeric($key)) continue;
+                    
+                    //print_r($value);
+                    $type = $value['type'];
+                    $pcID = $value['pcID'];
+                    $pName = $value['pNaam'];
+                    $pZicht = $value['pVis'];
+                    $pPos = $value['pPos'];
+                    switch($type){
+                        case '1':
+                            $naam = $value['aNaam'];
+                            $option .= "<option value='$pcID'>$naam - Article</option>" . PHP_EOL;
+                            break;
+                        case '2':
+                            $naam = $value['cNaam'];
+                            $option .= "<option value='$pcID'>$naam - Catagory</option>" . PHP_EOL;
+                            break;
+                        case '3':
+                            $naam = $value['lNaam'];
+                            $option .= "<option value='$pcID'>$naam - Link</option>" . PHP_EOL;
+                            break;
+                        case '4':
+                            $naam = $value['fNaam'];
+                            $option .= "<option value='$pcID'>$naam - Form</option>" . PHP_EOL;
+                            break;
+                    }
+                    
+                }
+                
+                $tempList = $pMngr->getTemplates();
+                $tsMenu = "";
+                foreach($tempList as $value){
+                    $eVal = explode("|",$value);
+                    $sValue = array_pop($eVal);
+                    $sName  = implode("|",$eVal); 
+                    $tsMenu .= "<option value='$sValue'>$sName</option>" . PHP_EOL;
+                }
+                $this->view->assign("templateSelectMenu",$tsMenu);
+                $this->view->assign('contentList', $option);
+                $this->view->assign('pID',$_GET['id']);
+                $this->view->assign('pVis',$pZicht);
+                $this->view->assign('pagePos',$pPos);
+                $this->view->assign('pageName',$pName);
+                
                 break;
         }
         
