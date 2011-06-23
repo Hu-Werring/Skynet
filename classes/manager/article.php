@@ -20,26 +20,28 @@ class Manager_Article extends Manager_Base {
     }
     
     public function add($Titel,$Content,$cID=1){
+        $db = $this->reg->database;
         $tabel              = 'artikelen';
-        $data['cID']        = $cID;
-        $data['Titel']      = $Titel;
-        $data['Content']    = $Content;
+        $data['cID']        = $db->res($cID);
+        $data['Titel']      = $db->res($Titel);
+        $data['Content']    = $db->res($Content);
         $data['LastUpdate'] = time();
-        return $this->reg->database->insert($tabel,$data);
+        return $db->insert($tabel,$data);
     }
     
     public function update($aID,$Titel=null,$Content=null,$cID=null){
+        $db = $this->reg->database;
         $tabel              = 'artikelen';
-        $data['cID']        = $cID;
-        $data['Titel']      = $Titel;
-        $data['Content']    = $Content;
+        $data['cID']        = $db->res($cID);
+        $data['Titel']      = $db->res($Titel);
+        $data['Content']    = $db->res($Content);
         $data['LastUpdate'] = time();
         foreach($data as $key=>$update){
             if(is_null($update)) continue;
             $UP[$key] = $update;
         }
         if(count($UP)>1){
-            $result = $this->reg->database->update($tabel,$data,array("ID"=>$aID));
+            $result = $db->update($tabel,$data,array("ID"=>$aID));
             return $result['succes'];
         } else {
             return true;
@@ -50,6 +52,15 @@ class Manager_Article extends Manager_Base {
         $result  = $this->reg->database->delete('artikelen',array('ID'=>$aID));
         $result2 = $this->reg->database->delete('pagecontent',array('aID'=>$aID,"type"=>1));
         return ($result['succes'] && $result2["succes"]);
+    }
+    
+    public function getArticlebyAID($aID){
+        $result = $this->reg->database->select("artikelen","*", "WHERE ID='$aID'");
+        if($result["affected"]>0){
+            return $result[0];
+        } else {
+            return 0;
+        }
     }
     
 }

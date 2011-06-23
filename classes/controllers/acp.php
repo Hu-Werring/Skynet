@@ -210,6 +210,7 @@ class Controllers_Acp {
     {
         $aMngr = new Manager_Article();
         $pMngr = new Manager_Page();
+        
         $actions = array( "New Article" => "mngr/article/new/","Article overview"=> "mngr/article/");
         
         switch($subPage){
@@ -257,7 +258,42 @@ class Controllers_Acp {
                 $cmsContent = 'articleAdd';
                 break;
             case 'edit':
+                $cmsContent="articleEdit";
+                $frm = $aMngr->checkForm(array("aID"=>"An known error occured","Title"=>"Title","content"=>"Content"),"update");
+                if($frm === true){
+                    $msg = $aMngr->update($_POST['aID'],$_POST['Title'],$_POST['content'],$_POST['cat']);
+                    if($msg==true){
+                        $this->view->assign("msg",array("header"=>"Your page has been Updated."));
+                    } else {
+                        $this->view->assign("msg",array("header"=>"Something went wrong while updating your article"));
+                    }
+                }
+                if(isset($frm['header']))
+                {
+                    $this->view->assign('msg', $frm);
+                }
                 
+                foreach($pMngr->getCats() as $cat){
+                    $eCat = explode(" (Category) |",$cat);
+                    $cList[] = array("Name"=>$eCat[0],"ID"=>substr($eCat[1],0,-2));
+                }
+                
+                $article = $aMngr->getArticlebyAID($_GET['id']);
+                $currentCID = $article['cID'];
+                $csMenu="";
+                foreach($cList as $value){
+                    if($currentCID==$value["ID"]){
+                        $csMenu .= "<option selected='selected' value='$value[ID]'>$value[Name]</option>" . PHP_EOL;
+                    } else {
+                        $csMenu .= "<option value='$value[ID]'>$value[Name]</option>" . PHP_EOL;
+                    }
+                }
+                
+                
+                $this->view->assign('aID', $_GET['id']);
+                $this->view->assign("cList",$csMenu);
+                $this->view->assign("content",$article['Content']);
+                $this->view->assign("title",$article['Titel']);
                 break;
         }
         
