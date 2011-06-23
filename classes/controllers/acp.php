@@ -37,7 +37,7 @@ class Controllers_Acp {
         $this->reg = Core_Registery::singleton();
         $this->reg->controller = $this;
         $this->view = $this->reg->view;
-        $this->view->add_css('style.css');
+        $this->view->add_css('main.css');
         if((isset($_SESSION['loggedIn']) && $_SESSION['loggedIn']==true)  || (isset($_GET['page']) && $_GET['page'] == 'acp/login/')){
 
         //Actie aanroepen. Dus: als www.skynet.nl/acp/test dan TestAction();
