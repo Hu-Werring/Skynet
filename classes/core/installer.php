@@ -165,6 +165,14 @@ class Core_Installer {
                 $this->output .= $this->reg->database->lastError();
             }
         }
+        
+        $this->reg->database->insert("templates",array("Naam"=>"Default","Description"=>"The standard Skynet Template","Locatie"=>"home"));
+        $this->reg->database->insert("categorieen",array("Naam"=>"Default","Description"=>"The standard Skynet Category"));
+        $this->reg->database->insert("artikelen",array("cID"=>"1","Content"=>"Welcome to SkyNet","LastUpdate"=>"UNIX_TIMESTAMP()","Welcome"));
+        $this->reg->database->insert("pages",array("tID"=>"1","Zichtbaar"=>"1","Positie"=>"0","Naam"=>"home"));
+        $this->reg->database->insert("pagecontent",array("aID"=>"1","pID"=>"1","type"=>"1"));
+        
+
     }
     
     
