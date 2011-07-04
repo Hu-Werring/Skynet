@@ -1,9 +1,0 @@
-{
-    "module":{
-            "name_info":"If you want to change the Module name in the ACP and on other places. You can do it here.",
-            "name":"Todo list module",
-            "description_info":"Put the description of your module here",
-            "description":"With this module you can make todo lists"
-            
-    }
-}

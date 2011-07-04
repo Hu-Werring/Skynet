@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Komodo Project File - DO NOT EDIT -->
-<project id="5657142c-3127-f64e-8fff-e6cffb29b933" kpf_version="5" name="Skynet.komodoproject">
-<file id="cb62842d-5490-f542-b687-3618084ed76f" idref="5657142c-3127-f64e-8fff-e6cffb29b933" name="README.md" url="README.md">
-</file>
-<preference-set idref="5657142c-3127-f64e-8fff-e6cffb29b933">
-  <string relative="path" id="phpExtraPaths"></string>
-</preference-set>
-</project>
