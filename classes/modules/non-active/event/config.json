@@ -1,0 +1,9 @@
+{
+    "module":{
+            "name_info":"If you want to change the Module name in the ACP and on other places. You can do it here.",
+            "name":"Event module",
+            "description_info":"Put the description of your module here",
+            "description":"This module takes care of handeling Agenda Events"
+            
+    }
+}

@@ -1,0 +1,70 @@
+body, img, ul, li
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+#header
+{
+    width: 100%;
+    height: 15%;
+    background-color: #666666;
+    position: relative;
+}
+
+#content
+{
+    width:100%;
+    height:80%;
+    background-color: #FFFFCC;
+}
+
+#contentLeft
+{
+    float: left;
+    max-width: 200px;
+    width: 10%;
+    height: 100%;
+    border-right: solid 1px #000000;
+}
+
+#contentRight
+{
+    float: left;
+    height: 100%;
+}
+
+#footer
+{
+    width:100%;
+    height:5%;
+    background-color:#999999;
+}
+
+#menuHolder
+{
+    height: 30px;
+    width: 100%;
+    line-height: 30px;
+    font-family: tahoma;
+    font-size: 14px;
+    background-color: #ffb761;
+    color: #FFFFFF;
+    position: absolute;
+    bottom: 0;
+}
+
+#menu li
+{
+    float: left;
+    margin-right: 10px;
+    list-style: none; 
+}
+
+#userlist a
+{
+    text-decoration: none;
+    font-weight: bold;
+    color: #FF0000;
+}

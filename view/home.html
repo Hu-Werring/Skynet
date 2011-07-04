@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>{loop="$menu"}{if="$value.Current"}{function="ucwords($value.Naam)"}{/if}{/loop}</title>
+<link href="/view/css/main.css#" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div id="wrapper">
+	<div id="logo">
+		<a href="/" class="logo-img"></a>
+	</div>
+	<div id="wrapper2">
+		<div id="left-content">
+			<div id="menu">
+				<ul>
+					{loop="$menu"}
+						<li><a {if="$value.Current"}class="current"{/if} href="/{$value.Naam}/">{$value.Naam}</a>
+					{/loop}
+				</ul>
+			</div>
+			{loop="$content"}
+				<div class="cont-item">
+					<div class="head">
+						<div class="title"><h2>{$value.Titel}</h2></div><div class="date"><h6>{$value.Created}</h6></div>
+						<br class="cf"/>
+					</div>
+					<div class="text">
+						{$value.Content}
+					</div>
+				</div>
+			{/loop}			
+		</div>
+		<div id="right-content">
+			<div id="top">
+				<div id="log-title">login</div>
+				<div id="search-box" class="field-bg-left">
+					<form method="POST" action="/search/" class="field-bg">
+						<input type="submit" id="search-glass" value="">
+						<input class="field" id="search-field" name="Search" value="search website" type="text"/>
+					</form>
+					<div class="field-right"></div>
+				</div>
+			</div>
+		</div>
+		<br class="cf"/>
+	</div>
+</div>
+</body>
+</html>

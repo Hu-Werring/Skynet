@@ -1,0 +1,36 @@
+{
+	"db":{
+		"host":"localhost",
+		"host_info":"Hostname for MySQL server. if you dont know it assume its localhost.",
+		"user":"project4",
+		"user_info":"Username for MySQL. Ask your hosting provider for your mysql login.",
+		"pass":"project4",
+		"pass_info":"Password for MySQL.",
+		"name":"project4",
+		"name_info":"MySQL database name.",
+		"prefix":"skynet_",
+		"prefix_info":"If you want to install skynet multiple times in the same database you can use the prefix."
+	},
+	"system":{
+		"name_info":"If you want to change the CMS name in the ACP and on other places. You can do it here. We do request to keep it the way it is.",
+		"name":"Skynet",
+		"status_info":"Stage of development we are in. If you change this modules can break.",
+		"status":"pre-alpha",
+		"modus_info":"Debug level.<br \/> Possible Values:<br \/>- debug: always show debug info<br \/>- localdebug: only show debug on local IP<br \/>- live dont show any debug messages.",
+		"modus":"debug"
+	},
+	"debug":{
+		"core_info":"Display debug messages from core.",
+		"core":true,
+		"query_info":"Display Mysql query info and errors",
+		"query":true,
+		"errors_info":"Enable to display php errors.",
+		"errors":true,
+		"notice_info":"Enable to display php errors.",
+		"notice":true,
+		"output_info":"Output errors to screen.",
+		"output":true,
+		"log_info":"Output errors to log file.",
+		"log":true
+	}
+}
