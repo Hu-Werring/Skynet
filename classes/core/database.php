@@ -6,7 +6,6 @@
 
  * database.php
 
-
  * @package Skynet_core
 
 
