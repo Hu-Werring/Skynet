@@ -20,7 +20,7 @@
      * Absolute path to ducument root
      * @ignore
     */
-    define("basedir",$_SERVER['DOCUMENT_ROOT'] . DS);
+    define("basedir",str_replace("/",DS,$_SERVER['DOCUMENT_ROOT']) . DS);
 
 
     /**
