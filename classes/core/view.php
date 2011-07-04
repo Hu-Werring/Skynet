@@ -162,7 +162,7 @@ class Core_View
                 //log::write("Css file not found. File: `$path`", $this, 'add_css()');
                 return false;
         }
-        $this->css_files[] = $fileLoc;
+        $this->css_files[] = str_replace("\\","/", $fileLoc);
         $this->includeLibs();
     }
 
@@ -195,7 +195,7 @@ class Core_View
                 return false;
         }
         
-        $this->js_files[] = $fileLoc;
+        $this->js_files[] = str_replace("\\","/", $fileLoc);
         $this->includeLibs();
     }
     
