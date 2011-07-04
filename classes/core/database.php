@@ -251,7 +251,7 @@ class Core_Database {
             }
             $query .= "," . PHP_EOL;
         }
-        $query = substr($query,0,-2);
+        $query = substr($query,0,-3);
         $query .= PHP_EOL . ") " . $advance;
         $result = $this->query($query,true);
         return $result['succes'];
