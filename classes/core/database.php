@@ -249,7 +249,7 @@ class Core_Database {
             if(isset($description['advance'])){
                 $query .= $description['advance'];
             }
-            $query .= "," . PHP_EOL;
+            $query .= " ," . PHP_EOL;
         }
         $query = substr($query,0,-3);
         $query .= PHP_EOL . ") " . $advance;
