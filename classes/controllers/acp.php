@@ -83,7 +83,17 @@ class Controllers_Acp {
     private function indexAction()
     {
         $this->view->assign('contentTpl', 'overview');
-        //$this->view->assign('content', 'grapje');
+        
+        $managers =  scandir(basedir . "classes" . DS . "manager");
+        
+        array_shift($managers);array_shift($managers);
+        
+        $base = array_search("base.php",$managers);
+        unset($managers[$base]);
+        $activeManagers = "Active Managers:" . PHP_EOL;
+        foreach($managers as $manager){
+            $activeManagers .= " - " . substr($manager,0,-4) . PHP_EOL;
+        }
         $this->view->draw('main');
     }
 
@@ -202,7 +212,7 @@ class Controllers_Acp {
                 break;
         }
         $this->view->assign('cmsActions', $actions);
-        $this->view->assign('contentTpl', $cmsContent);
+        $this->view->assign('contentTpl', "managers/" . $cmsContent);
         $this->view->draw('main');
         
         
@@ -299,7 +309,7 @@ class Controllers_Acp {
         }
         
         $this->view->assign('cmsActions', $actions);
-        $this->view->assign('contentTpl', $cmsContent);
+        $this->view->assign('contentTpl', "managers/" . $cmsContent);
         $this->view->draw('main');
     }
     
@@ -510,7 +520,7 @@ class Controllers_Acp {
         }
         
         $this->view->assign('cmsActions', $actions);
-        $this->view->assign('contentTpl', $cmsContent);
+        $this->view->assign('contentTpl', "managers/" . $cmsContent);
         $this->view->draw('main');
     }
     /**
@@ -614,7 +624,7 @@ class Controllers_Acp {
             
         }
         $this->view->assign('cmsActions', $actions);
-        $this->view->assign('contentTpl', $cmsContent);
+        $this->view->assign('contentTpl', "managers/" . $cmsContent);
         $this->view->draw('main');
         
         
