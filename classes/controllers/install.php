@@ -1,4 +1,4 @@
-<?php¤
+<?php
 
 /**
  * install.php
