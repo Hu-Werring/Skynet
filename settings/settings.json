@@ -23,7 +23,7 @@
 		"core_info":"Display debug messages from core.",
 		"core":true,
 		"query_info":"Display Mysql query info and errors",
-		"query":true,
+		"query":false,
 		"errors_info":"Enable to display php errors.",
 		"errors":true,
 		"notice_info":"Enable to display php errors.",
