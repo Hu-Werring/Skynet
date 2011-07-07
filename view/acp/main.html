@@ -20,5 +20,6 @@
     <div id="right">{if="isset($contentTpl)"}{include="$contentTpl"}{else}{include="overview"}{/if}</div>
     <br class="cf"/>
 </div>
+{if="isset($debugTxt)"}<div class='debug'>{$debugTxt}</div>{/if}
 </body>
 </html>
