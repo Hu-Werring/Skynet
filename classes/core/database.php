@@ -187,7 +187,9 @@ class Core_Database {
                 }
             break;
         }
-        
+        if($this->sql->errno > 0){
+            $this->reg->debug->msg("error","MYSQL",$this->lastError,"SQLQuery");
+        }
         return $return;
     }
     /**
