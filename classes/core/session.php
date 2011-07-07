@@ -21,7 +21,7 @@ class Core_Session
     */
     private $reg = null;
     
-    static private $loggedIn = null;
+    private $loggedIn = null;
         
     /**
      * __construct
@@ -62,8 +62,8 @@ class Core_Session
     }
     
     public function checkCurrent(){
-        if(!is_null(self::$loggedIn)){
-            return self::$loggedIn;
+        if(!is_null($this->loggedIn)){
+            return $this->loggedIn;
         }
         if(isset($_COOKIE['skynet_loginsession'])){
             $sessionData = json_decode($_COOKIE['skynet_loginsession'],true);
@@ -81,12 +81,12 @@ SQL;
             
             if($result['affected'] == 1){
                 if($result[0]['sHash'] == $sessionData['sHash']){
-                    self::$loggedIn = true;
+                    $this->loggedIn = true;
                     return true;
                 }
             } 
         }
-        self::$loggedIn = false;
+        $this->loggedIn = false;
         return false;
     }
     
