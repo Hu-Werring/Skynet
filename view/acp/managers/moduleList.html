@@ -1,0 +1,48 @@
+<h3>Active Modules</h3>
+<table id="modulelist">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Active</th>
+        <td></td>
+        <td></td>
+    </tr>
+{if="isset($ActiveModules)"}
+    {loop="$ActiveModules"}
+        <tr>
+            <td>{$value.module.name}</td>
+            <td>{$value.module.description}</td>
+            <td><a href="/acp/mngr/module/deactivate?dirname={$value.filelink}">De-Activeren</a></td>
+            <td><a href="#">settings</a></td>
+        </tr>
+    {/loop}
+{else}
+    <tr><td colspan=6>{$msg}</td></tr>
+{/if}
+</table>
+<br><br><br>
+
+
+<h3>Non-Active Modules</h3>
+<table id="modulelist2">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Active</th>
+        <td></td>
+        <td></td>
+    </tr>
+{if="isset($nonActiveModules)"}
+    {loop="$nonActiveModules"}
+        <tr>
+            <td>{$value.module.name}</td>
+            <td>{$value.module.description}</td>
+            <td><a href="/acp/mngr/module/activate?dirname={$value.filelink}">Activeren</a></td>
+            <td><a href="/acp/mngr/module/uninstall?dirname={$value.filelink}">X</a></td>
+        </tr>
+    {/loop}
+{else}
+    <tr><td colspan=6>{$msg}</td></tr>
+{/if}
+</table> 
+
