@@ -20,18 +20,25 @@ class Skynet_Module_Todo implements Modules_Base {
         //run SQL installer
         
     }
+    public function uninstall(){
+        //run SQL uninstaller
+        
+    }
     public function activate(){
         //function triggerd on activation
+        
     }
     public function deactivate(){
         //function triggerd on deactivation
+        
     }
-    
     public function getOutput(){
         //everything the main website should load into the module bar
+        
     }
     public function getACPOutput(){
         //everything the ACP should load in into the module bar
+        
     }
     public function getAllowedMethods(){
         //array of all custom public methods in this module
@@ -39,11 +46,9 @@ class Skynet_Module_Todo implements Modules_Base {
         $public["update"] = array("todo","time");
         $public["remove"] = array("todo");
     }
-    
     public function set($setting,$value=null){
         
     }
-    
     public function add($todo,$time){
         
     }
@@ -53,8 +58,6 @@ class Skynet_Module_Todo implements Modules_Base {
     public function remove($todo){
         
     }
-    
-    
 }
 
 ?>

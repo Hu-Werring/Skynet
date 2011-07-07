@@ -6,6 +6,7 @@ interface Modules_Base {
      * installer functions
      */
     public function install();
+    public function uninstall();
     public function activate();
     public function deactivate();
     
