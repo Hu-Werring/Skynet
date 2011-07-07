@@ -39,16 +39,29 @@ class Controllers_Main {
         //Actie aanroepen. Dus: als www.skynet.nl/test dan TestAction();
         if(isset($_GET['page']))
         {
-            //remove install/ from begin of string and change / to "_"
             $action = str_replace("/","_",$_GET['page']);
-            //substr last char since that is always a /
-            $action = strtolower(substr($action,0,-1)).'Action';
-            if(method_exists($this, $action))
-            {
-                call_user_func(array($this,$action));
+            $subActions = explode("_",$action);
+            array_pop($subActions);
+            $count = count($subActions);
+            $args = array();
+            $actionCalled = false;
+            for($i=0;$i<$count;$i++){
+                $subAction = implode("_",$subActions) . "Action";
+                if(method_exists($this, $subAction ))
+                {
+                    if(count($args) == 0 ){
+                        call_user_func(array($this,$subAction));
+                    } else {
+                        $args = array_reverse($args);
+                        call_user_func(array($this,$subAction), $args);
+                    }
+                    $actionCalled = true;
+                    $this->reg->debug->msg("core","controller","Calling " . $subAction . " with arg: " . var_export($args,true),__CLASS__.":".__LINE__);
+                    break;
+                }
+                $args[] = array_pop($subActions);
             }
-            else
-            {
+            if(!$actionCalled){
                 $this->indexAction();
             }
         }

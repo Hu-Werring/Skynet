@@ -35,30 +35,35 @@ class Controllers_Acp {
         $this->view->add_css('main.css');
         
         if($this->reg->session->checkCurrent() || (isset($_GET['page']) && $_GET['page'] == 'acp/login/')){
-        //Actie aanroepen. Dus: als www.skynet.nl/acp/test dan TestAction();
             if(isset($_GET['page']))
             {
                 
                 $action = str_replace("/","_",str_replace("acp/","",$_GET['page']));
-                $action2 = explode("_", $action);            
-                $actionArgs = $action2[(count($action2)-2)]; #-2 cause last char is also a /
-                $action2 = explode("_", $action, "-2"); 
-                $action2 = implode("_", $action2);
-                //substr last char since that is always a /
-                $action = strtolower(substr($action,0,-1)).'Action';
-                $action2 = strtolower($action2).'Action';
-                if(method_exists($this, $action))
-                {
-                    call_user_func(array($this,$action));
+                $subActions = explode("_",$action);
+                array_pop($subActions);
+                $count = count($subActions);
+                $args = array();
+                $actionCalled = false;
+                for($i=0;$i<$count;$i++){
+                    $subAction = implode("_",$subActions) . "Action";
+                    if(method_exists($this, $subAction ))
+                    {
+                        if(count($args) == 0 ){
+                            call_user_func(array($this,$subAction));
+                        } else {
+                            $args = array_reverse($args);
+                            call_user_func(array($this,$subAction), $args);
+                        }
+                        $actionCalled = true;
+                        $this->reg->debug->msg("core","controller","Calling " . $subAction . " with arg: " . var_export($args,true),__CLASS__.":".__LINE__);
+                        break;
+                    }
+                    $args[] = array_pop($subActions);
                 }
-                elseif(method_exists($this, $action2))
-                {
-                    call_user_func(array($this,$action2), $actionArgs);
-                }
-                else
-                {
+                if(!$actionCalled){
                     $this->indexAction();
                 }
+                
             }
             else
             {
@@ -298,13 +303,13 @@ class Controllers_Acp {
         $this->view->draw('main');
     }
     
-    private function mngr_pageAction($argument=null){
+    private function mngr_pageAction($arguments=null){
         $pMngr = new Manager_Page();
         $actions = array("Page overview"=> "mngr/page/", "New page" => "mngr/page/new/", "Link Content" => "mngr/page/link/");
-        
+        is_null($arguments) ? $arguments[0] = null : "";
         
         $cmsContent=null;
-        switch($argument){
+        switch($arguments[0]){
             case null:
                 $pages = $pMngr->listPages();
                 for($i=0;$i<count($pages)-2;$i++){
