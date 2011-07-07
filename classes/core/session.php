@@ -80,9 +80,8 @@ SQL;
             if($result['affected'] == 1){
                 $name = $result[0]['Name'];
                 $pass = $result[0]['Pass'];
-                $time = $sessionData['ValidTill'];
+                $time = $result[0]['ValidTill'];
                 $sessionHash = sha1($name . "|" . $pass . "|" . $time);
-                //echo $sessionHash . " | " . $sessionData['sHash'];
                 if($sessionHash == $sessionData['sHash']){
                     self::$loggedIn = true;
                     return true;
