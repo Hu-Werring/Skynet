@@ -6,6 +6,7 @@
 /**
  * class Debug_Main
  * @version 0.1
+ * @author Thom Werring <info@werringweb.nl>
  * @author Lucas Weijers <meel_to_lucas@hotmail.com>
  * @copyright Copyright (c) 2011, Thom Werring & Lucas Weijers
  * @package Skynet_debug
@@ -27,6 +28,7 @@ class Debug_Main  {
     */
     private $allowDebug = false;
     
+    public $text = "";
     /**
      * __construct
      * creates debug class.
@@ -80,7 +82,7 @@ class Debug_Main  {
         if($this->allowDebug)
             return @call_user_func_array(array($this, $name),$args);
         else
-            @file_put_contents(date("d_m_y") . ".log","DEBUG:" . $name . " called with " . var_export($args,true));
+            $this->msg("DEBUG","",$name . " called with " . var_export($args,true));
         return false;
     }
     
@@ -98,33 +100,58 @@ class Debug_Main  {
      * Takes care off all notices, messages, errors, warnings, fatals, querys etc
      * @access public
      * @param $type
-     * @param $Name the name of the msg
+     * @param $name the name of the msg
      * @param $comment info or comment on a msg
-     * @param $ref the reference to te script that called this function
+     * @param $ref the reference to te script that called this function (should be __CLASS__:__LINE__)
      */
     
-    //Types: core, query, error, notice. More?thom?
-    public function msg($type, $Name, $comment, $ref)
+    public function msg($type, $name, $comment, $ref="")
     {
-       /* switch($type)
+        $comment = var_export($comment,true);
+        switch($type)
         {
-            case core:
-                //
+            case "core":
+                if($this->reg->settings->settings['debug']["core"] === true){
+                    $msg = "CORE:\t(" . $ref.") " . $comment;
+                }
                 break;
             
-            case query:
-                //
+            case "query":
+                if($this->reg->settings->settings['debug']["query"] === true){
+                    $msg = "QUERY:\t" . $comment;
+                }
                 break;
             
-            case error:
-                //
+            case "error":
+                if($this->reg->settings->settings['debug']["error"] === true){
+                    $msg = "ERROR:\t(".$ref.") " . $comment;
+                }
+
                 break;
             
-            case notice:
+            case "notice":
             default:
-                //
+                if($this->reg->settings->settings['debug']["notice"] === true){
+                    $msg = "NOTICE:\t(".$ref.") " . $comment;
+                }
                 break;
-        }*/
+        }
+        $msg .= PHP_EOL;
+        if($this->reg->settings->settings['debug']["log"] == true && isset($msg)){
+            if(!file_exists(basedir . "logs")) {
+                mkdir(basedir . "logs");
+                chmod(basedir . "logs",0666);
+            }
+            $logFile = basedir . "logs" . DS . $name . "_" . date("d_m_y") . ".log";
+            $fp = fopen($logFile,"a");
+            fwrite($fp, $msg);
+            fclose($fp);
+            chmod($logFile,0666);    
+        }
+        if($this->reg->settings->settings['debug']["output"] == true && isset($msg)){
+            $this->text .= $msg;
+            $this->reg->view->assign("debugTxt",$this->text);
+        }
     }
 }
 
