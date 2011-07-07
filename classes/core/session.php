@@ -21,7 +21,7 @@ class Core_Session
     */
     private $reg = null;
     
-    static private $loggedIn = false;
+    static private $loggedIn = null;
         
     /**
      * __construct
@@ -44,7 +44,7 @@ class Core_Session
         $result = $this->reg->database->select($table,$select,$where);
         if($result['affected'] == 1){
             $time = time()+ 60*60*24*365;
-            $sessionHash = sha1($sname . "|" . $spass . "|" . $time);
+            $sessionHash = md5($sname . "|" . $spass . "|" . $time);
             $sessionData = array();
             $sessionData['uID'] = $result[0]["ID"];
             $sessionData['sHash'] = $sessionHash;
@@ -60,8 +60,8 @@ class Core_Session
     }
     
     public function checkCurrent(){
-        if(self::$loggedIn){
-            return true;
+        if(!is_null(self::$loggedIn)){
+            return self::$loggedIn;
         }
         if(isset($_COOKIE['skynet_loginsession'])){
             $sessionData = json_decode($_COOKIE['skynet_loginsession'],true);
@@ -70,7 +70,7 @@ class Core_Session
             $userT = $this->reg->database->prefixTable("users");
             $sessionT = $this->reg->database->prefixTable("sessions");
             $qry = <<<SQL
-SELECT * FROM $userT
+SELECT $sessionT.sHash FROM $userT
 inner join $sessionT
 on $sessionT.uID = $userT.ID
 WHERE $userT.ID = '$uID'
@@ -78,16 +78,13 @@ SQL;
             $result = $this->reg->database->qry($qry);
             
             if($result['affected'] == 1){
-                $name = $result[0]['Name'];
-                $pass = $result[0]['Pass'];
-                $time = $result[0]['ValidTill'];
-                $sessionHash = sha1($name . "|" . $pass . "|" . $time);
-                if($sessionHash == $sessionData['sHash']){
+                if($result[0]['sHash'] == $sessionData['sHash']){
                     self::$loggedIn = true;
                     return true;
                 }
-            }
+            } 
         }
+        self::$loggedIn = false;
         return false;
     }
 }
