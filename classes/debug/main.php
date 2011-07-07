@@ -140,7 +140,7 @@ class Debug_Main  {
         if($this->reg->settings->settings['debug']["log"] == true && isset($msg)){
             if(!file_exists(basedir . "logs")) {
                 mkdir(basedir . "logs");
-                chmod(basedir . "logs",0666);
+                chmod(basedir . "logs",0755);
             }
             $logFile = basedir . "logs" . DS . $name . "_" . date("d_m_y") . ".log";
             $fp = fopen($logFile,"a");
