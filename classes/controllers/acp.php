@@ -155,7 +155,7 @@ class Controllers_Acp {
         $uMngr = new Manager_User();
         $actions = array("User list"=> "mngr/user", "New user" => "mngr/user/new", "blacklist" => "mngr/user/blacklist");
         
-        switch($arg)
+        switch($arg[0])
         {
             case 'userlist':
             default:
@@ -252,7 +252,7 @@ class Controllers_Acp {
         
         $actions = array( "New Article" => "mngr/article/new/","Article overview"=> "mngr/article/");
         
-        switch($subPage){
+        switch($subPage[0]){
             case 'delete':
                 if(isset($_GET['id'])){
                     $aMngr->remove($_GET['id']);
@@ -560,7 +560,7 @@ class Controllers_Acp {
     {
         $mMngr = new Manager_Module();
         $actions = array("Module list"=> "mngr/module", "Add module" => "mngr/module/add", "General Module settings" => "mngr/module/settings");
-        switch($arg)
+        switch($arg[0])
         {
             case 'moduleList':
             default:
@@ -656,5 +656,14 @@ class Controllers_Acp {
         $this->view->draw('main');
         
         
+    }
+    
+    public function mngrAction($args=null){
+        $manager = array_shift($args);
+        if(file_exists(basedir . "classes" . DS . "managers" . DS . $manager . ".php")){
+            echo "Manager $manager exist!";
+        } else {
+            echo "Manager $manager does not exist!";
+        }
     }
 }
