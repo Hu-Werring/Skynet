@@ -22,13 +22,9 @@
     <div id="menu">
         <div id="begin"></div>
         <ul>
-            <li><a href="#">Overview</a></li>
-            <li><a href="/acp/mngr/user/">User Manager</a></li>
-            <li><a href="#">Group Manager</a></li>
-            <li><a href="/acp/mngr/page/">Page Manager</a></li>
-            <li><a href="/acp/mngr/module/">Module Manager</a></li>
-            <li><a href="/acp/mngr/article/">Content manager</a></li>
-            <li><a href="#">System Settings</a></li>
+            {loop="$menu"}
+                <li><a href="{$value.URL}">{$value.Name}</a></li>
+            {/loop}
         </ul>
     </div>
 </div>
