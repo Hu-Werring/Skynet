@@ -162,6 +162,7 @@ class Core_Database {
      * @return Array array with return data
     */
     public function query($qry,$returnResult=false){
+        $this->reg->debug->msg("query","MYSQL",$qry);
         $this->lastQuery = $qry;
         
         $result = $this->sql->query($qry);
