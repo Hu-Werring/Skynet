@@ -142,7 +142,7 @@ class Debug_Main  {
                 mkdir(basedir . "logs");
                 chmod(basedir . "logs",0755);
             }
-            $logFile = basedir . "logs" . DS . $name . "_" . date("d_m_y") . ".log";
+            $logFile = basedir . "logs" . DS . date("Y_m_d") . "_".strtolower($name).".log";
             $fp = fopen($logFile,"a");
             fwrite($fp, $msg);
             fclose($fp);
