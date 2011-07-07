@@ -33,7 +33,8 @@ class Controllers_Acp {
         $this->reg->controller = $this;
         $this->view = $this->reg->view;
         $this->view->add_css('main.css');
-        if((isset($_SESSION['loggedIn']) && $_SESSION['loggedIn']==true)  || (isset($_GET['page']) && $_GET['page'] == 'acp/login/')){
+        
+        if($this->reg->session->checkCurrent() || (isset($_GET['page']) && $_GET['page'] == 'acp/login/')){
         //Actie aanroepen. Dus: als www.skynet.nl/acp/test dan TestAction();
             if(isset($_GET['page']))
             {
@@ -84,17 +85,20 @@ class Controllers_Acp {
     
 
     private function loginAction(){
+        if($this->reg->session->checkCurrent()){
+            header("Location: /acp/");
+            exit();
+        }
         if($_SERVER['REQUEST_METHOD']=="POST"){
             $name = $_POST['account'];
             $pass = sha1($_POST['pass']);
-            $result = $this->reg->database->select("users","COUNT(*)","WHERE Name='$name' AND Pass='$pass'");
-            if($result['affected']>=1){
-                $_SESSION['loggedIn']=true;
+            $loggedIn = $this->reg->session->create($name,$pass);
+            if($loggedIn){
                 header("Location: /acp/");
                 exit();
             }
-            
         }
+        
         $this->view->assign('contentTpl', 'login');
         $this->view->draw('main');
     }

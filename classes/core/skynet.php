@@ -55,6 +55,7 @@ class Core_Skynet {
         $this->reg = new Core_Registery();
         new Core_Settings();
         new Debug_Main();
+        new Core_Session();
         if($this->disableMysql === false)
             new Core_Database();
         $this->view = new Core_View();
