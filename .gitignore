@@ -1,6 +1,7 @@
 
 *.orig
 .komodotools/
+logs/
 README
 settings/settings.json.old
 test.php
