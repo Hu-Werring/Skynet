@@ -29,7 +29,7 @@
 		"notice_info":"Enable to display php errors.",
 		"notice":true,
 		"output_info":"Output errors to screen.",
-		"output":true,
+		"output":false,
 		"log_info":"Output errors to log file.",
 		"log":true
 	}
