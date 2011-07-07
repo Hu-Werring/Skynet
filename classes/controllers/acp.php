@@ -50,8 +50,9 @@ class Controllers_Acp {
                 foreach($managers as $manager){
                     $i++;
                     $manager = substr($manager,0,-4);
+                    $manClass = "Manager_" . ucwords($manager);
                     $menu[$i]["URL"] = "/acp/mngr/" . $manager;
-                    $menu[$i]["Name"] = ucwords($manager) . " Manager";
+                    $menu[$i]["Name"] = $manClass::$name;
                 }
             }
             $this->view->assign("menu",$menu);
@@ -112,11 +113,14 @@ class Controllers_Acp {
         $base = array_search("base.php",$managers);
         unset($managers[$base]);
         $items[0]["Title"] = "Active Managers";
-        $items[0]["Content"] = "";
+        $items[0]["Content"] = "<dl>";
         foreach($managers as $manager){
             $manager = substr($manager,0,-4);
-            $items[0]["Content"] .= "<a href ='/acp/mngr/".$manager."/'>" . $manager . "</a><br/>";
+            $manClass = "Manager_" . ucwords($manager);
+            $items[0]["Content"] .= "<dt><a href ='/acp/mngr/".$manager."/'>" .$manClass::$name. "</a></dt>" . PHP_EOL;
+            $items[0]["Content"] .= "<dd>".$manClass::$desc."</dd>" . PHP_EOL;
         }
+        $items[0]["Content"] .= "</dl>";
         $this->view->assign("items",$items);
         $this->view->draw('main');
     }
