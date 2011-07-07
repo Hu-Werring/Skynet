@@ -33,6 +33,8 @@ class Core_Session
     {
         $this->reg = Core_Registery::singleton();
         $this->reg->session = $this;
+        
+        $this->clearUnvalid();
     }
     
     public function create($name,$pass){
@@ -86,6 +88,13 @@ SQL;
         }
         self::$loggedIn = false;
         return false;
+    }
+    
+    private function clearUnvalid(){
+        $table = $this->reg->database->prefixTable('sessions');
+        $qry = "DELETE FROM $table WHERE ValidTill < " . time();
+        $this->reg->database->qry($qry);
+        
     }
 }
 
