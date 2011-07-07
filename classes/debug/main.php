@@ -136,9 +136,10 @@ class Debug_Main  {
                 }
                 break;
         }
-        $msg .= PHP_EOL;
+        
         if($this->reg->settings->settings['debug']["log"] == true && isset($msg)){
-            if(!file_exists(basedir . "logs")) {
+        $msg .= PHP_EOL;
+        if(!file_exists(basedir . "logs")) {
                 mkdir(basedir . "logs");
                 chmod(basedir . "logs",0755);
             }
@@ -149,7 +150,7 @@ class Debug_Main  {
             chmod($logFile,0666);    
         }
         if($this->reg->settings->settings['debug']["output"] == true && isset($msg)){
-            $this->text .= $msg;
+            $this->text .= $msg . PHP_EOL;
             $this->reg->view->assign("debugTxt",$this->text);
         }
     }
