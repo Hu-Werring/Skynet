@@ -15,6 +15,8 @@
  */
 abstract class Manager_Base {
     
+    public static $name = "Base Manager";
+    public static $desc = "~No description~";
     /**
      * $reg
      * registery holder
@@ -30,7 +32,7 @@ abstract class Manager_Base {
     
     protected function init($className){
         $this->reg = Core_Registery::singleton();
-        $this->reg->$className = $this;
+        $this->reg->managers->$className = $this;
     }
     
     protected function cmsActions($actions)

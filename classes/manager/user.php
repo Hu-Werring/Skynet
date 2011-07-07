@@ -15,6 +15,9 @@
 
 class Manager_User extends Manager_Base {
         
+    public static $name = "User Manager";
+    public static $desc = "Add, edit or delete users for your skynet CMS system";
+    
     function __construct() {
         $this->init("user");
         

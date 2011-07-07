@@ -14,7 +14,10 @@
  */
 
 class Manager_Article extends Manager_Base {
-        
+    
+    public static $name = "Article Manager";
+    public static $desc = "Manage your articles for you";
+    
     function __construct() {
         $this->init("user");
     }

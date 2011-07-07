@@ -16,6 +16,8 @@
 
 class Manager_Page extends Manager_Base {
     
+    public static $name = "Page Manager";
+    public static $desc = "Add, modify and delete pages";
     /**
      * __construct
      * Manager constructor

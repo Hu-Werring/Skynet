@@ -14,6 +14,8 @@
  */
 
 class Manager_Module extends Manager_Base {
+    public static $name = "Module Manager";
+    public static $desc = "install, uninstall, activate and deactivate your modules";
     
     public $dir;
     
