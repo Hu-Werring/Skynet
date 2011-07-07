@@ -35,6 +35,27 @@ class Controllers_Acp {
         $this->view->add_css('main.css');
         
         if($this->reg->session->checkCurrent() || (isset($_GET['page']) && $_GET['page'] == 'acp/login/')){
+            if(!$this->reg->session->checkCurrent()){
+                
+                $menu[0]["URL"] =  "/acp/login/";
+                $menu[0]["Name"] =  "Login";
+            } else {
+                $menu[0]["URL"] =  "/acp/";
+                $menu[0]["Name"] =  "Overview";
+                $managers =  scandir(basedir . "classes" . DS . "manager");
+                array_shift($managers);array_shift($managers);
+                $base = array_search("base.php",$managers);
+                unset($managers[$base]);
+                $i=0;
+                foreach($managers as $manager){
+                    $i++;
+                    $manager = substr($manager,0,-4);
+                    $menu[$i]["URL"] = "/acp/mngr/" . $manager;
+                    $menu[$i]["Name"] = ucwords($manager) . " Manager";
+                }
+            }
+            $this->view->assign("menu",$menu);
+            
             if(isset($_GET['page']))
             {
                 
