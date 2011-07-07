@@ -51,7 +51,7 @@ class Controllers_Acp {
                     $i++;
                     $manager = substr($manager,0,-4);
                     $manClass = "Manager_" . ucwords($manager);
-                    $menu[$i]["URL"] = "/acp/mngr/" . $manager;
+                    $menu[$i]["URL"] = "/acp/mngr/" . $manager . "/";
                     $menu[$i]["Name"] = $manClass::$name;
                 }
             }
