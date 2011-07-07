@@ -51,6 +51,7 @@ body {
 	padding-left: 20px;
 	float:left;
 	height: 100%;
+	width: 70%;
 }
 #menu ul {
 	float:left;
@@ -107,4 +108,17 @@ body {
 	height:20px;
 	width:90%;
 	background:url(../images/arrow.png) no-repeat right;
+	text-decoration: none;
+	color: #000;
+}
+
+.overviewBlock {
+	float: left;
+	width: 350px;
+	height: 300px;
+}
+.overviewBlock div {
+	height: 98%;
+	overflow-y: auto;
+	overflow-x: auto;
 }
