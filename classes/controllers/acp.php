@@ -90,10 +90,13 @@ class Controllers_Acp {
         
         $base = array_search("base.php",$managers);
         unset($managers[$base]);
-        $activeManagers = "Active Managers:" . PHP_EOL;
+        $items[0]["Title"] = "Active Managers";
+        $items[0]["Content"] = "";
         foreach($managers as $manager){
-            $activeManagers .= " - " . substr($manager,0,-4) . PHP_EOL;
+            $manager = substr($manager,0,-4);
+            $items[0]["Content"] .= "<a href ='/acp/mngr/".$manager."/'>" . $manager . "</a><br/>";
         }
+        $this->view->assign("items",$items);
         $this->view->draw('main');
     }
 
