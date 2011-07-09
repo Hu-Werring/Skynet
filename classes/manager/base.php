@@ -69,5 +69,9 @@ abstract class Manager_Base {
             }
         }
     }
+    
+    public function page($args){
+        $this->reg->view->assign("content", "There is no page for this manager, someone did a boo boo.");
+    }
 }
 ?>
