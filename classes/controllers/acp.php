@@ -660,10 +660,12 @@ class Controllers_Acp {
     
     public function mngrAction($args=null){
         $manager = array_shift($args);
-        if(file_exists(basedir . "classes" . DS . "managers" . DS . $manager . ".php")){
-            echo "Manager $manager exist!";
-        } else {
-            echo "Manager $manager does not exist!";
+        if(file_exists(basedir . "classes" . DS . "manager" . DS . $manager . ".php")){
+            $this->view->assign('contentTpl', "content");
+            $class = "Manager_" . ucwords($manager);
+            $mngr = new $class();
+            $mngr->page($args);
         }
+        $this->view->draw('main');
     }
 }
