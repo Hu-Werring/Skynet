@@ -26,11 +26,11 @@ class Skynet_Module_Todo implements Modules_Base {
     }
     public function activate(){
         //function triggerd on activation
-        
+        var_dump(copy(__DIR__ . DS . "test.php",basedir . "classes" . DS . "manager" . DS . "test.php"));
     }
     public function deactivate(){
         //function triggerd on deactivation
-        
+        unlink(basedir . "classes" . DS . "manager" . DS . "test.php");
     }
     public function getOutput(){
         //everything the main website should load into the module bar
