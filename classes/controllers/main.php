@@ -80,7 +80,7 @@ class Controllers_Main {
     private function indexAction()
     {
         $page = isset($_GET['page']) ? substr($_GET['page'],0,-1) : "home" ;
-        $this->reg->pages->getPageContent(strtolower($page));
+        $this->reg->managers->pages->getPageContent(strtolower($page));
     }
 
     
