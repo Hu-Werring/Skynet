@@ -122,3 +122,9 @@ body {
 	overflow-y: auto;
 	overflow-x: auto;
 }
+
+.error {
+	font-family: monospace;
+	color: #990000;
+	font-style: italic;
+}

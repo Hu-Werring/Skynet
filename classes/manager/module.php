@@ -65,6 +65,7 @@ class Manager_Module extends Manager_Base {
         if(is_dir($this->dir.'install'.DS.$dirname))
         {
             rename($this->dir.'install'.DS.$dirname, $this->dir.'non-active'.DS.$dirname);
+            
         }
     }
     
@@ -72,7 +73,18 @@ class Manager_Module extends Manager_Base {
     {
         if(is_dir($this->dir.'non-active'.DS.$dirname))
         {
-            rename($this->dir.'non-active'.DS.$dirname, $this->dir.'active'.DS.$dirname);
+
+            if(file_exists($this->dir.'non-active'.DS.$dirname . DS . "index.php")){
+                require_once $this->dir.'non-active'.DS.$dirname . DS . "index.php";
+                $modClassName = "Skynet_Module_" . ucwords($dirname);
+                $modClass = new $modClassName();
+                
+                if($modClass->activate()){
+                    rename($this->dir.'non-active'.DS.$dirname, $this->dir.'active'.DS.$dirname);
+                } else {
+                    $this->reg->view->assign("error",$dirname . " was not activated due to errors while trying to activate it.");
+                }
+            }
         }
     }
     
@@ -80,6 +92,14 @@ class Manager_Module extends Manager_Base {
     {
         if(is_dir($this->dir.'active'.DS.$dirname))
         {
+            if(file_exists($this->dir.'active'.DS.$dirname . DS . "index.php")){
+                require_once $this->dir.'active'.DS.$dirname . DS . "index.php";
+                $modClassName = "Skynet_Module_" . ucwords($dirname);
+                $modClass = new $modClassName();
+                
+                $modClass->deactivate();
+                
+            }
             rename($this->dir.'active'.DS.$dirname, $this->dir.'non-active'.DS.$dirname);
         }
     }
