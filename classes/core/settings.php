@@ -45,6 +45,19 @@ class Core_Settings
         $this->setJson(basedir .'settings'. DS .'settings.json');
     }
     
+    public function readJson($file){
+        
+        //check if file exists
+        if(!is_readable($file) == true)
+        {
+                throw new Exception('json file not found ' . $file);
+        }
+        
+        //return JSON
+        return json_decode(file_get_contents($file), true);
+    }
+    
+    
     /**
      * setJson
      * check if our json settings file exists
@@ -53,16 +66,9 @@ class Core_Settings
      * @access Public
      * @param String $file Path to json file
     */
-    public function setJson($file) 
+    private function setJson($file) 
     {	
-        #check if file exists
-        if(!is_readable($file) == true)
-        {
-                throw new Exception('json file not found ' . $file);
-        }
-        
-        #set json vars in class
-        $this->settings = json_decode(file_get_contents($file), true);
+        $this->settings = $this->readJson($file);
     }
     
     /**
