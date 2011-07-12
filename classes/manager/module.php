@@ -132,7 +132,12 @@ class Manager_Module extends Manager_Base {
     
     public function uninstallManager($name){
         
-        if(file_exists(basedir . "classes" . DS . "manager" . DS . $name . ".php")){
+        if(
+            file_exists(basedir . "classes" . DS . "manager" . DS . $name . ".php")
+        ||
+            array_search($file,$this->protectedManagers)!==false
+        )
+        {
                 unlink(basedir . "classes" . DS . "manager" . DS . $name . ".php");
         }
 
