@@ -19,9 +19,12 @@ class Manager_Module extends Manager_Base {
     
     public $dir;
     
+    private $protectedManagers = array();
+    
     function __construct() {
         $this->init("module");
         $this->dir = basedir.'classes'.DS.'modules'.DS;
+        $this->protectedManagers = array("module","article","base","page","user","group","catagory");
     }
 
     public function getModules($moduleDir)
@@ -110,6 +113,30 @@ class Manager_Module extends Manager_Base {
         {
             rename($this->dir.'non-active'.DS.$dirname, $this->dir.'install'.DS.$dirname);
         }
+    }
+    
+    public function installManager($path,$file){
+        if(
+            !$this->reg->debug->validatePHP($path . $file . ".php")
+        ||
+            !file_exists($path .$file.".php")
+        ||
+            array_search($file,$this->protectedManagers)!==false
+        )
+        {
+            return false;
+        }
+        copy($path .$file . ".php",basedir . "classes" . DS . "manager" . DS . $file . ".php");
+        return true;
+    }
+    
+    public function uninstallManager($name){
+        
+        if(file_exists(basedir . "classes" . DS . "manager" . DS . $name . ".php")){
+                unlink(basedir . "classes" . DS . "manager" . DS . $name . ".php");
+        }
+
+        return true;
     }
     
 }
