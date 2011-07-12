@@ -53,6 +53,7 @@ class Core_Installer {
      * @access public
     */
     public function showSettings(){
+        $this->reg->debug->msg("NOTICE","INSTALL","Display settings from settings.json",__CLASS__ . ":" . __LINE__);
             $sets = $this->reg->settings->settings;
             $this->output.="<form action='/install/step/2/' method='POST'>" . PHP_EOL;
             $i=0;
@@ -114,6 +115,7 @@ class Core_Installer {
      * @access private
     */
     public function checkTables($force=false){
+        $this->reg->debug->msg("NOTICE","INSTALL","Checking for earlier install of skynet",__CLASS__ . ":" . __LINE__);
         //Init Core_Database, it won't autostart in the installer due to step 1
         new Core_Database();
         $exists = false;
@@ -137,9 +139,13 @@ class Core_Installer {
             }
         }
         if($exists && !$force){
+            $this->reg->debug->msg("NOTICE","INSTALL","Old skynet install has been found",__CLASS__ . ":" . __LINE__);
             $this->output = "We have detected a possible earlier install of skynet,<br /> please go back to step 1 and change your prefix.<br/>Or check the box to override your old Skynet install.<br/><strong>All data will be lost if you override the old system.</strong>";
             $this->disAllowNextStep=true;
         } else {
+            if($force){
+                $this->reg->debug->msg("NOTICE","INSTALL","Old skynet install has been found, but force new install",__CLASS__ . ":" . __LINE__);
+            }
             $this->output = "Start creating tables...<br />";
             $this->createTables();
         }
@@ -154,6 +160,7 @@ class Core_Installer {
      * @access private
     */
     private function createTables(){
+        $this->reg->debug->msg("NOTICE","INSTALL","Installing tables",__CLASS__ . ":" . __LINE__);
         $dbStruct = base64_decode(file_get_contents(basedir . "install" . DS . "databaseStructure"));
         $tables = json_decode($dbStruct,true);
         foreach($tables as $table=>$fields){
@@ -162,10 +169,14 @@ class Core_Installer {
             $succes = $this->reg->database->createTable($table,$fields,true);
             $this->output .= ($succes ? "Succeeded" : "Failed") . "<br />" . PHP_EOL;
             if(!$succes){
+                $this->reg->debug->msg("NOTICE","INSTALL","Error: " . $this->reg->database->lastError(),__CLASS__ . ":" . __LINE__);
                 $this->output .= $this->reg->database->lastError();
             }
         }
         
+        
+        //insert default data
+        $this->reg->debug->msg("NOTICE","INSTALL","installing default setup",__CLASS__ . ":" . __LINE__);
         $this->reg->database->insert("templates",array("Naam"=>"Default","Description"=>"The standard Skynet Template","Locatie"=>"home"));
         $this->reg->database->insert("categorieen",array("Naam"=>"Default","Description"=>"The standard Skynet Category"));
         $this->reg->database->insert("artikelen",array("cID"=>"1","Content"=>"Welcome to SkyNet","LastUpdate"=>time(),"Titel"=>"Welcome"));
@@ -186,6 +197,7 @@ class Core_Installer {
      * @param String $pass unencoded password for admin account
     */
     public function createAdminAccount($name,$email,$pass){
+        $this->reg->debug->msg("NOTICE","INSTALL","Creating first admin account (".$name.")",__CLASS__ . ":" . __LINE__);
         if(!isset($this->reg->database)){
             $sql = new Core_Database();
         } else {
@@ -208,6 +220,7 @@ class Core_Installer {
      * @access public
     */
     public function createAdminAccountForm(){
+        $this->reg->debug->msg("NOTICE","INSTALL","Create new Admin account",__CLASS__ . ":" . __LINE__);
         if(!isset($this->reg->database)){
             $sql = new Core_Database();
         } else {

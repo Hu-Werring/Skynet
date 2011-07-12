@@ -67,6 +67,9 @@ class Core_Registery {
     */
     public function __set($name, $value){
         $this->classes[$name] = $value;
+        if(isset($this->classes["debug"])){
+            $this->classes["debug"]->msg("CORE","REGISTERY","Added (".$name.") to registery",__CLASS__ . ":" . __LINE__);
+        }
     }
     
     /**

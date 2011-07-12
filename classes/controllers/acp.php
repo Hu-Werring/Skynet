@@ -77,7 +77,12 @@ class Controllers_Acp {
                             call_user_func(array($this,$subAction), $args);
                         }
                         $actionCalled = true;
-                        $this->reg->debug->msg("core","controller","Calling " . $subAction . " with arg: " . var_export($args,true),__CLASS__.":".__LINE__);
+                        $argList = "";
+                        foreach($args as $arg){
+                            $argList .= ", " . $arg;
+                        }
+                        $argList = substr($argList,2);
+                        $this->reg->debug->msg("core","controller","Calling " . $subAction . " with args: " . $argList,__CLASS__.":".__LINE__);
                         break;
                     }
                     $args[] = array_pop($subActions);

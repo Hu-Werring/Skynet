@@ -45,9 +45,11 @@ class Core_Database {
             $db_user = $this->reg->settings->settings['db']['user'];
             $db_pass = $this->reg->settings->settings['db']['pass'];
             $db_daba = $this->reg->settings->settings['db']['name'];
-            $this->sql = new mysqli($db_host,$db_user,$db_pass,$db_daba);
+            $this->sql = @new mysqli($db_host,$db_user,$db_pass,$db_daba);
             if (mysqli_connect_error()) {
+                $this->reg->debug->msg("CORE","MYSQL","Could not connect to database: " . mysqli_connect_error(),__CLASS__ . ":" . __LINE__);
                 header("Location: /install/");
+                exit();
             }
         }
         $this->reg->database = $this;
