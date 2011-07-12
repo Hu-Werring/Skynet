@@ -112,7 +112,7 @@ class Debug_Main  {
         {
             case "core":
                 if($this->reg->settings->settings['debug']["core"] === true){
-                    $msg = "CORE:\t(" . $ref.") " . $comment;
+                    $msg = "CORE:\t(" . $ref.")\t" . $comment;
                 }
                 break;
             
@@ -124,7 +124,7 @@ class Debug_Main  {
             
             case "error":
                 if($this->reg->settings->settings['debug']["error"] === true){
-                    $msg = "ERROR:\t(".$ref.") " . $comment;
+                    $msg = "ERROR:\t(".$ref.")\t" . $comment;
                 }
 
                 break;
@@ -132,13 +132,14 @@ class Debug_Main  {
             case "notice":
             default:
                 if($this->reg->settings->settings['debug']["notice"] === true){
-                    $msg = "NOTICE:\t(".$ref.") " . $comment;
+                    $msg = "NOTICE:\t(".$ref.")\t" . $comment;
                 }
                 break;
         }
         
         if($this->reg->settings->settings['debug']["log"] == true && isset($msg)){
         $msg .= PHP_EOL;
+        $msg = date("H:i:s") . "\t" . $msg;
         if(!file_exists(basedir . "logs")) {
                 mkdir(basedir . "logs");
                 chmod(basedir . "logs",0755);
